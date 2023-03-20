@@ -16,7 +16,6 @@ import com.imsi.car.config.auth.PrincipalOauth2UserService;
 
 import lombok.RequiredArgsConstructor;
 
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -33,7 +32,7 @@ public class SecurityConfig {
 
     };
 
-    private PrincipalOauth2UserService principalOAuth2UserService;
+    private final PrincipalOauth2UserService principalOAuth2UserService;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -59,17 +58,16 @@ public class SecurityConfig {
                         .requestMatchers(AUTH_WHITE_LIST).permitAll()
                         .requestMatchers(AUTH_USER_LIST).access(userAuth)
                         .requestMatchers(AUTH_ADMIN_LIST).access(adminAuth)
-                        .anyRequest().denyAll())
+                        // .anyRequest().denyAll()
+                        .anyRequest().permitAll())
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/")
-                        .failureUrl("/login")
-                        .loginProcessingUrl("/login"))
-                .oauth2Login(form->form
+                        .failureUrl("/login"))
+                .oauth2Login(form -> form
                         .loginPage("/login")
                         .userInfoEndpoint()
-                        .userService(principalOAuth2UserService)
-                );
+                        .userService(principalOAuth2UserService));
 
         return http.build();
     }
