@@ -26,6 +26,8 @@ public class User {
 	private String password;
 	private String email;
 	private String role; //ROLE_USER, ROLE_ADMIN
+	private String nickname;
+	private int exp;
 	@CreationTimestamp
 	private Timestamp createDate;
 
@@ -33,7 +35,7 @@ public class User {
 	private String providerId;
 
 	@Builder
-	public User(String username, String password, String email, String role, Timestamp createDate,String provider, String providerId){
+	public User(String username, String password, String email, String role, Timestamp createDate,String provider, String providerId, int exp, String nickname){
 		this.username = username;
 		this.password = password;
 		this.email = email;
@@ -41,5 +43,7 @@ public class User {
 		this.createDate = createDate;
 		this.provider = provider;
 		this.providerId = providerId;
+		this.exp = exp;
+		this.nickname = nickname;
 	}
 }

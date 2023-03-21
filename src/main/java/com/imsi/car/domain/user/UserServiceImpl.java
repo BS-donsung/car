@@ -21,6 +21,7 @@ public class UserServiceImpl implements UserService {
         try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRole("ROLE_USER");
+            user.setExp(0);
             userRepo.save(user);
         } catch (Exception e) {
             result = false;

@@ -2,6 +2,7 @@ package com.imsi.car.config.auth;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -10,6 +11,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.uuid.Generators;
 import com.imsi.car.config.auth.provider.FacebookUserInfo;
 import com.imsi.car.config.auth.provider.GoogleUserInfo;
 import com.imsi.car.config.auth.provider.KakaoUserInfo;
@@ -64,6 +66,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             user.setEmail(oAuth2UserInfo.getEmail());
             userRepo.save(user);
         } else {
+            UUID uuid = Generators.timeBasedEpochGenerator().generate();
             // user의 패스워드가 null이기 때문에 OAuth 유저는 일반적인 로그인을 할 수 없음.
             user = User.builder()
                     .username(oAuth2UserInfo.getProvider() + "_" + oAuth2UserInfo.getProviderId())
@@ -72,6 +75,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .role("ROLE_USER")
                     .provider(oAuth2UserInfo.getProvider())
                     .providerId(oAuth2UserInfo.getProviderId())
+                    .exp(0)
+                    .nickname("user"+uuid.toString())
                     .build();
             userRepo.save(user);
         }
