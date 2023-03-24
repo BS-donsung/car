@@ -31,6 +31,14 @@ public class User {
 	@CreationTimestamp
 	private Timestamp createDate;
 
+
+	// mail, email 수신 여부 설정
+	@Column(columnDefinition="tinyint(1) default 1")
+    private boolean allowEmail;
+    @Column(columnDefinition="tinyint(1) default 1")
+    private boolean allowSms;
+
+
 	private String provider;
 	private String providerId;
 
