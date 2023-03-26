@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.uuid.Generators;
+import com.imsi.car.domain.mail.model.AdsDTO;
 import com.imsi.car.domain.user.repo.UserRepo;
 
 import jakarta.mail.Authenticator;
@@ -18,19 +19,27 @@ import jakarta.mail.Transport;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class MailServiceImpl implements MailService{
     private final UserRepo userRepo;
 
     @Override
-    public String adsEmail(String title, String content) {
+    public String adsEmail(AdsDTO adsDTO) {
+        String msg = "";
         List<String> emails = userRepo.findEmailByAllowEmail(true);
         String[] emailsArr = emails.toArray(new String[emails.size()]);
 
-        sendEmail(title, content, emailsArr);
-        return null;
+        try {
+            sendEmail(adsDTO.getTitle(), adsDTO.getMsg(),emailsArr);
+        } catch (Exception e) {
+            log.error("mailerr",e);
+            msg = "mailerr";
+        }
+        return msg;
     }
 
     @Override
@@ -39,7 +48,12 @@ public class MailServiceImpl implements MailService{
         String code = generateCode(); // code를 이용해서 content를 만들기
         String content = "대충 회원가입 이메일확인 내용";
 
-        sendEmail(title, content, email);
+        try {
+            sendEmail(title, content, email);
+        } catch (Exception e) {
+            log.error("mailerr",e);
+            code = "mailerr";
+        }
         
         return code;
     }
@@ -50,12 +64,17 @@ public class MailServiceImpl implements MailService{
         String code = generateCode(); // code를 이용해서 content를 만들기
         String content = "대충 임시비밀번호 쓰여있는 내용";
 
-        sendEmail(title, content, email);
+        try {
+            sendEmail(title, content, email);
+        } catch (Exception e) {
+            log.error("mailerr",e);
+            code = "mailerr";
+        }
 
         return code;
     }
 
-    public void sendEmail(String title, String content,String... tomails){
+    public void sendEmail(String title, String content,String... tomails) throws Exception{
         final String KEY = "";
 
         Properties props = new Properties();
@@ -72,18 +91,14 @@ public class MailServiceImpl implements MailService{
 			}
 		});
         Message message = new MimeMessage(session);
-        try {
-            message.setFrom(new InternetAddress("kimsw3445@gmail.com","관리자","utf-8"));
-            for (String tomail : tomails) {
-                message.addRecipient(Message.RecipientType.TO, new InternetAddress(tomail));
-            }
-            message.setSubject(title);
-            message.setContent(content,"text/html; charset=utf-8");
-
-            Transport.send(message);
-        } catch (Exception e) {
-            e.printStackTrace();
+        message.setFrom(new InternetAddress("kimsw3445@gmail.com","관리자","utf-8"));
+        for (String tomail : tomails) {
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(tomail));
         }
+        message.setSubject(title);
+        message.setContent(content,"text/html; charset=utf-8");
+
+        Transport.send(message);
     }
 
     public String generateCode(){
