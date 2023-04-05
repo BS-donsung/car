@@ -1,19 +1,20 @@
 package com.imsi.car.domain.car;
 
+import java.util.List;
+
+import com.imsi.car.domain.car.model.Brand;
+import com.imsi.car.domain.car.model.Car;
+import com.imsi.car.domain.car.model.Segment;
+
 public interface CarService {
     
-    // TODO : DG 차량 Brand 리스트
-    public void listBrand();
+    public List<Brand> listBrand();
 
-    // TODO : DG Brand에 따른 차량 리스트
-    public void listCarByBrand();
+    public List<Segment> listSegment();
 
-    // TODO : DG 차량 급 리스트
-    public void listSegment();
+    public List<Car> listCarByBrand(Brand brand);
 
-    // TODO : DG 급에 따른 차량 리스트
-    public void listCarBySegment();
+    public List<Car> listCarBySegment(Segment segment);
 
-    // TODO : DG 차량 정보 받아오기
-    public void carInfo();
+    public Car carInfo(Car car);
 }
