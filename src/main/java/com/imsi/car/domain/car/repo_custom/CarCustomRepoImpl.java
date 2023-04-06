@@ -13,13 +13,12 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class CarCustomRepoImpl implements CarCustomRepo{
-    @Autowired
-    EntityManager em;
+    private final EntityManager em;
 
     public List<Car> findAllByBrand(Brand brand) {
-        final String SQL  = "SELECT c from CAR c" +
+        final String SQL  = "SELECT c from CAR c " +
         "WHERE c.brand = :brand";
-        List<Car> result = em.createQuery(SQL, Car.class)
+        List<Car> result = em.createNativeQuery(SQL, Car.class)
         .setParameter("brand", brand.getBrand())
         .getResultList();
         em.clear();
@@ -27,9 +26,9 @@ public class CarCustomRepoImpl implements CarCustomRepo{
     }
 
     public List<Car> findAllBySegment(Segment segment) {
-        final String SQL  = "SELECT c from CAR c" +
-        "WHERE c.segment = :segment";
-        List<Car> result = em.createQuery(SQL, Car.class)
+        final String SQL  = "SELECT c.* from car c "+
+        "WHERE c.segment = (SELECT sid FROM segment WHERE segment LIKE :segment)";
+        List<Car> result = em.createNativeQuery(SQL, Car.class)
         .setParameter("segment", segment.getSegment())
         .getResultList();
         em.clear();
@@ -37,10 +36,11 @@ public class CarCustomRepoImpl implements CarCustomRepo{
     }
 
     public List<Car> findAllByBrandAndSegment(Brand brand, Segment segment){
-        final String SQL  = "SELECT c from CAR c" +
-        "WHERE c.brand = :brand" +
-        "AND c.segment = :segment";
-        List<Car> result = em.createQuery(SQL, Car.class)
+        final String SQL  = "SELECT c from CAR c " +
+        "inner join segment s" + 
+        "on s.segment = :segment" +
+        "WHERE c.brand = :brand";
+        List<Car> result = em.createNativeQuery(SQL, Car.class)
         .setParameter("brand", brand.getBrand())
         .setParameter("segment", segment.getSegment())
         .getResultList();

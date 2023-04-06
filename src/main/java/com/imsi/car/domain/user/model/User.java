@@ -15,11 +15,10 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@Builder
 @NoArgsConstructor
 public class User {
     @Id // primary key
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
     @Column(nullable=false)
 	private String username;
     @Column(nullable=false)
@@ -30,6 +29,8 @@ public class User {
 	private int exp;
 	@CreationTimestamp
 	private Timestamp createDate;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int sid; // 중요한 정보가 담겨있지 않지만, unique한 sid
 
 	private String provider;
 	private String providerId;

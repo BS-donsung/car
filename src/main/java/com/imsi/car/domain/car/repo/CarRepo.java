@@ -8,4 +8,5 @@ import com.imsi.car.domain.car.repo_custom.CarCustomRepo;
 public interface CarRepo extends JpaRepository<Car,Integer>, CarCustomRepo{
     
     public Car findById(int id);
+    public Car findByName(String name);
 }
