@@ -15,6 +15,7 @@ public class CarDTO {
     private String engine;
     private String segment;
     private String imgurl;
+    private int cost;
 
     
 }

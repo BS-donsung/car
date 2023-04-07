@@ -2,7 +2,7 @@ package com.imsi.car.domain.car.repo_custom;
 
 import java.util.Map;
 
-import com.imsi.car.domain.car.dto.StoreDTO;
+import com.imsi.car.domain.car.dto.UserOptionDTO;
 
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +14,11 @@ public class UserOptionCustomRepoImpl implements UserOptionCustomRepo {
 
     private final EntityManager em;
 
-    public void saveUserOptions(StoreDTO storeDTO) {
+    public void saveUserOptions(UserOptionDTO optionDTO) {
         String sql = "insert into useroption(car, option, isopt, user) values";
         
         
-        for (Map.Entry<Integer, Integer> entry : storeDTO.getOptions().entrySet()) {
+        for (Map.Entry<Integer, Integer> entry : optionDTO.getOptions().entrySet()) {
             int strKey = entry.getKey();
             int strValue = entry.getValue();
             sql += "(:car, "+strKey+", "+strValue+", :user),";
@@ -26,8 +26,8 @@ public class UserOptionCustomRepoImpl implements UserOptionCustomRepo {
         sql = sql.substring(0, sql.length() - 1);
         log.info(sql);
         em.createNativeQuery(sql)
-        .setParameter("car", storeDTO.getCid())
-        .setParameter("user", storeDTO.getUser())
+        .setParameter("car", optionDTO.getCid())
+        .setParameter("user", optionDTO.getUser())
         .executeUpdate();
 
         em.clear();

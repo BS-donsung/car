@@ -1,9 +1,13 @@
 package com.imsi.car.domain.car.repo;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.imsi.car.domain.car.model.CarOption;
+import com.imsi.car.domain.car.repo_custom.CarOptionCustomRepo;
 
-public interface CarOptionRepo extends JpaRepository<CarOption, Integer>{
+public interface CarOptionRepo extends JpaRepository<CarOption, Integer>, CarOptionCustomRepo{
 
+    
 }

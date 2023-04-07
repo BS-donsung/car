@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.imsi.car.domain.car.CarService;
 import com.imsi.car.domain.car.dto.CarDTO;
-import com.imsi.car.domain.car.dto.StoreDTO;
+import com.imsi.car.domain.car.dto.UserOptionDTO;
 
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +26,8 @@ public class CarController {
     private final CarService carService;
     
     @GetMapping("/search")
-    public List<CarDTO> searchCar(@RequestParam @Nullable String segment, @RequestParam @Nullable String brand){
-        log.info("seg and brand : {} {}",segment, brand);
+    public List<CarDTO> searchCars(@RequestParam @Nullable String segment, @RequestParam @Nullable String brand){
+        log.info("/search : {} {}",segment, brand);
         List<CarDTO> list = null;
         CarDTO carDTO = CarDTO.builder()
         .segment(segment)
@@ -41,20 +41,27 @@ public class CarController {
             list = carService.listCarBySegment(carDTO);
         }
         for (CarDTO dto : list) {
-            log.info("dto : {}",dto);
+            log.info("car : {}",dto);
         }
         return list;
     }
 
-    // store에 차를 추가??
     @PostMapping("/store")
-    public List<CarDTO> storeCar(@RequestBody StoreDTO storeDTO){
-        log.info(storeDTO);
+    public List<CarDTO> storeCar(@RequestBody UserOptionDTO optionDTO){
+        log.info("/stroe : {}",optionDTO);
         List<CarDTO> list = null;
-        carService.storeUserOption(storeDTO);
+        carService.storeUserOption(optionDTO);
 
 
         return list;
+    }
+    @GetMapping("/search/car")
+    public CarDTO searchCar(@RequestParam String cid){
+        log.info("/search/car : {} ",cid);
+        CarDTO carDTO = null;
+        carDTO = carService.carInfo(cid);
+
+        return carDTO;
     }
     
 

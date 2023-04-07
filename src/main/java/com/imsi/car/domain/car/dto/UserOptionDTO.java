@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class StoreDTO {
+public class UserOptionDTO {
     private int cid; // 이건 car 테이블의 pk, 어떤 car를 골랐는지를 알려줌
     private String user; // 이건 user 테이블의 name, user의 아이디를 통해 어떤 유저가 이걸 저장했는지를 알려줌
     // 여기부터는 UserOption임
