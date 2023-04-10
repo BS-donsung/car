@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.imsi.car.domain.car.CarService;
 import com.imsi.car.domain.car.dto.CarDTO;
-import com.imsi.car.domain.car.dto.UserOptionDTO;
+import com.imsi.car.domain.car.dto.StoreDTO;
 
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
@@ -47,19 +47,14 @@ public class CarController {
     }
 
     @PostMapping("/store")
-    public List<CarDTO> storeCar(@RequestBody UserOptionDTO optionDTO){
+    public void storeCar(@RequestBody StoreDTO optionDTO){
         log.info("/stroe : {}",optionDTO);
-        List<CarDTO> list = null;
         carService.storeUserOption(optionDTO);
-
-
-        return list;
     }
     @GetMapping("/search/car")
     public CarDTO searchCar(@RequestParam String cid){
         log.info("/search/car : {} ",cid);
-        CarDTO carDTO = null;
-        carDTO = carService.carInfo(cid);
+        CarDTO carDTO = carService.carInfo(cid);
 
         return carDTO;
     }

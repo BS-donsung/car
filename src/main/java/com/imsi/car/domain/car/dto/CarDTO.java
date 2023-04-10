@@ -1,6 +1,8 @@
 package com.imsi.car.domain.car.dto;
 
 
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,6 +18,8 @@ public class CarDTO {
     private String segment;
     private String imgurl;
     private int cost;
+
+    private List<OptionDTO> options;
 
     
 }

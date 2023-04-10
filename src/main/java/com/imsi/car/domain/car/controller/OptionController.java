@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imsi.car.domain.car.CarService;
-import com.imsi.car.domain.car.dto.UserOptionDTO;
+import com.imsi.car.domain.car.dto.StoreDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -19,10 +19,9 @@ public class OptionController {
     private final CarService carService;
 
     @GetMapping("/search/option")
-    public UserOptionDTO searchOption(@RequestParam String cid){
+    public StoreDTO searchOption(@RequestParam String cid){
         log.info("/search/option : {}",cid);
-        UserOptionDTO optionDTO = null;
-        optionDTO = carService.optionInfo(cid);
+        StoreDTO optionDTO = carService.optionInfo(cid);
         return optionDTO;
     }
     

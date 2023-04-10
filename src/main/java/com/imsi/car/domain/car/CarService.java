@@ -3,7 +3,7 @@ package com.imsi.car.domain.car;
 import java.util.List;
 
 import com.imsi.car.domain.car.dto.CarDTO;
-import com.imsi.car.domain.car.dto.UserOptionDTO;
+import com.imsi.car.domain.car.dto.StoreDTO;
 import com.imsi.car.domain.car.model.Brand;
 import com.imsi.car.domain.car.model.Car;
 import com.imsi.car.domain.car.model.Segment;
@@ -22,10 +22,10 @@ public interface CarService {
 
     public List<CarDTO> listCarByBrandAndSegment(CarDTO carDTO);
 
-    public void storeUserOption(UserOptionDTO optionDTO);
+    public void storeUserOption(StoreDTO optionDTO);
 
     public CarDTO carInfo(String cid);
 
-    public UserOptionDTO optionInfo(String cid);
+    public StoreDTO optionInfo(String cid);
 
 }

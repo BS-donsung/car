@@ -13,4 +13,6 @@ public class Option {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int opk;
     private String oname; // 옵션 이름
+    private String oimg; // 옵션 사진
+    private String oexpl; // 옵션 설명
 }

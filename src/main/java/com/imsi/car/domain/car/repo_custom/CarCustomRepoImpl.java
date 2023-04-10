@@ -2,7 +2,7 @@ package com.imsi.car.domain.car.repo_custom;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.imsi.car.domain.car.model.Brand;
 import com.imsi.car.domain.car.model.Car;
@@ -17,37 +17,43 @@ import lombok.extern.log4j.Log4j2;
 public class CarCustomRepoImpl implements CarCustomRepo{
     private final EntityManager em;
 
+    @Transactional
     public List<Car> findAllByBrand(Brand brand) {
         log.info("brand : {}",brand.getBrand());
-        final String SQL  = "SELECT c.* from CAR c " +
+        final String SQL  = "SELECT c from Car c " +
         "WHERE c.brand = :brand";
-        List<Car> result = em.createNativeQuery(SQL, Car.class)
-        .setParameter("brand", brand.getBrand())
+        List<Car> result = em.createQuery(SQL, Car.class)
+        .setParameter("brand", brand)
         .getResultList();
-        em.clear();
+        // em.clear();
         return result;
     }
 
+    @Transactional
     public List<Car> findAllBySegment(Segment segment) {
-        final String SQL  = "SELECT c.* from car c "+
-        "WHERE c.segment = (SELECT sid FROM segment WHERE segment LIKE :segment)";
-        List<Car> result = em.createNativeQuery(SQL, Car.class)
+        final String SQL  = "SELECT c from Car c "+
+        "WHERE c.segment = (SELECT sid FROM Segment WHERE segment LIKE :segment)";
+        // "WHERE c.segment = :segment";
+        List<Car> result = em.createQuery(SQL, Car.class)
         .setParameter("segment", segment.getSegment())
         .getResultList();
-        em.clear();
+        // em.clear();
         return result;
     }
 
+
+
+    @Transactional
     public List<Car> findAllByBrandAndSegment(Brand brand, Segment segment){
         log.info("brand : {}",brand.getBrand());
-        final String SQL  = "SELECT c.* from CAR c " +
+        final String SQL  = "SELECT c from Car c " +
         "WHERE c.brand = :brand " + 
-        "AND c.segment = (SELECT sid FROM segment WHERE segment LIKE :segment)";
-        List<Car> result = em.createNativeQuery(SQL, Car.class)
-        .setParameter("brand", brand.getBrand())
-        .setParameter("segment", segment.getSegment())
+        "AND c.segment = (SELECT sid FROM Segment WHERE segment LIKE :segment)";
+        List<Car> result = em.createQuery(SQL, Car.class)
+        .setParameter("brand", brand)
+        .setParameter("segment", segment)
         .getResultList();
-        em.clear();
+        // em.clear();
         return result;
     }
     
