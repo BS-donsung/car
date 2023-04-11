@@ -1,26 +1,25 @@
 package com.imsi.car.domain.car;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.imsi.car.domain.car.dto.CarDTO;
 import com.imsi.car.domain.car.dto.StoreDTO;
 import com.imsi.car.domain.car.model.Brand;
 import com.imsi.car.domain.car.model.Car;
 import com.imsi.car.domain.car.model.CarOption;
-import com.imsi.car.domain.car.model.Engine;
+import com.imsi.car.domain.car.model.Option;
 import com.imsi.car.domain.car.model.Segment;
+import com.imsi.car.domain.car.model.Store;
+import com.imsi.car.domain.car.model.StoreOption;
 import com.imsi.car.domain.car.repo.BrandRepo;
 import com.imsi.car.domain.car.repo.CarOptionRepo;
 import com.imsi.car.domain.car.repo.CarRepo;
 import com.imsi.car.domain.car.repo.OptionRepo;
 import com.imsi.car.domain.car.repo.SegmentRepo;
 import com.imsi.car.domain.car.repo.StoreOptionRepo;
+import com.imsi.car.domain.car.repo.StoreRepo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -32,10 +31,11 @@ public class CarServiceImpl implements CarService {
 
     private final BrandRepo brandRepo;
     private final SegmentRepo segmentRepo;
-    private final CarOptionRepo carOptionRepo;
     private final CarRepo carRepo;
+    private final CarOptionRepo carOptionRepo;
     private final OptionRepo optionRepo;
-    private final StoreOptionRepo userOptionRepo;
+    private final StoreRepo storeRepo ;
+    private final StoreOptionRepo storeOptionRepo;
 
     private final CarUtils carUtils;
 
@@ -86,15 +86,20 @@ public class CarServiceImpl implements CarService {
         return carUtils.CarListToDTO(list);
     }
 
-    public void storeUserOption(StoreDTO optionDTO) {
-        userOptionRepo.saveUserOptions(optionDTO);
+    public void storeUserOption(StoreDTO storeDTO) {
+        Store store = carUtils.dtoToEntity(storeDTO);
+        store = storeRepo.save(store);
+        // 이젠 storeDTO의 options를 저장하자
+        List<StoreOption> options = carUtils.dtoListToStoreOptions(storeDTO.getOptions(),store.getSpk());
+        storeOptionRepo.saveAll(options);
+        
     }
 
     public StoreDTO optionInfo(String cid) {
-        List<CarOption> list = carOptionRepo.findByCar(Integer.parseInt(cid));
+        Car car = carRepo.findById(Integer.parseInt(cid));
         StoreDTO optionDTO = StoreDTO.builder()
-        // .sid(list.get(0).getCar().getCid())
-        .user("banana")
+        .options(carUtils.carOptionListToDTO(car.getCarOptions()))
+        .carDTO(carUtils.entityToDto(car))
         .build();
         
         

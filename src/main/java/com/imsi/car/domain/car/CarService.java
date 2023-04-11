@@ -22,7 +22,7 @@ public interface CarService {
 
     public List<CarDTO> listCarByBrandAndSegment(CarDTO carDTO);
 
-    public void storeUserOption(StoreDTO optionDTO);
+    public void storeUserOption(StoreDTO storeDTO);
 
     public CarDTO carInfo(String cid);
 

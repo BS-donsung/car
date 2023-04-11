@@ -30,9 +30,9 @@ public class StoreOption {
     @Id // primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int sopk;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "car")
-    private Car car;
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "car")
+    // private Car car;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "option")
     private Option option; // 옵션 이름

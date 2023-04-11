@@ -18,6 +18,6 @@ public class OptionDTO {
     private String oname;
     private String oimg;
     private String oexpl;
-    private boolean ischk;
+    private boolean chk;
 
 }

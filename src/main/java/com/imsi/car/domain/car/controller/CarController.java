@@ -27,6 +27,9 @@ public class CarController {
     
     @GetMapping("/search")
     public List<CarDTO> searchCars(@RequestParam @Nullable String segment, @RequestParam @Nullable String brand){
+        // http://localhost:9000/car/search?segment=소형차
+        // http://localhost:9000/car/search?brand=현대
+        // http://localhost:9000/car/search?segment=소형차&brand=현대
         log.info("/search : {} {}",segment, brand);
         List<CarDTO> list = null;
         CarDTO carDTO = CarDTO.builder()
@@ -47,12 +50,25 @@ public class CarController {
     }
 
     @PostMapping("/store")
-    public void storeCar(@RequestBody StoreDTO optionDTO){
-        log.info("/stroe : {}",optionDTO);
-        carService.storeUserOption(optionDTO);
+    public void storeCar(@RequestBody StoreDTO storeDTO){
+        // http://localhost:9000/car/store
+        /*
+        {
+            "carDTO" : {
+                "cid" : 1
+            },
+            "user" : "banana",
+            "options" : [
+                { "opk" : 1, "opt" : 1 }
+            ]
+        }
+         */
+        log.info("/stroe : {}",storeDTO);
+        carService.storeUserOption(storeDTO);
     }
     @GetMapping("/search/car")
     public CarDTO searchCar(@RequestParam String cid){
+        // http://localhost:9000/car/search/car?cid=1
         log.info("/search/car : {} ",cid);
         CarDTO carDTO = carService.carInfo(cid);
 

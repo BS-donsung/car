@@ -51,7 +51,7 @@ public class CarCustomRepoImpl implements CarCustomRepo{
         "AND c.segment = (SELECT sid FROM Segment WHERE segment LIKE :segment)";
         List<Car> result = em.createQuery(SQL, Car.class)
         .setParameter("brand", brand)
-        .setParameter("segment", segment)
+        .setParameter("segment", segment.getSegment())
         .getResultList();
         // em.clear();
         return result;

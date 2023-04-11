@@ -23,6 +23,7 @@ public class SegmentController {
     
     @GetMapping("/all")
     public List<Segment> listBrand(){
+        // http://localhost:9000/segment/all
         log.info("/all");
         return carService.listSegment();
     }

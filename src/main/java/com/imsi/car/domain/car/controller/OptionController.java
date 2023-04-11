@@ -18,11 +18,11 @@ import lombok.extern.log4j.Log4j2;
 public class OptionController {
     private final CarService carService;
 
-    @GetMapping("/search/option")
-    public StoreDTO searchOption(@RequestParam String cid){
-        log.info("/search/option : {}",cid);
-        StoreDTO optionDTO = carService.optionInfo(cid);
-        return optionDTO;
+    @GetMapping("/search")
+    public StoreDTO searchOption(){
+        // TODO : 얘는 뭐 하는 애임???
+        return null;
+        
     }
     
 }

@@ -7,9 +7,15 @@ import org.springframework.stereotype.Component;
 
 import com.imsi.car.domain.car.dto.CarDTO;
 import com.imsi.car.domain.car.dto.OptionDTO;
+import com.imsi.car.domain.car.dto.StoreDTO;
+import com.imsi.car.domain.car.model.Brand;
 import com.imsi.car.domain.car.model.Car;
 import com.imsi.car.domain.car.model.CarOption;
+import com.imsi.car.domain.car.model.Engine;
+import com.imsi.car.domain.car.model.Option;
+import com.imsi.car.domain.car.model.Store;
 import com.imsi.car.domain.car.model.StoreOption;
+import com.imsi.car.domain.user.model.User;
 
 @Component
 public class CarUtils {
@@ -28,6 +34,14 @@ public class CarUtils {
             result.add(entityToDto(carOption));
         }
 
+        return result;
+    }
+
+    public List<StoreOption> dtoListToStoreOptions(List<OptionDTO> list,int spk){
+        List<StoreOption> result = new ArrayList<>();
+        for (OptionDTO optionDTO : list){
+            result.add(dtoToEntity(optionDTO,spk));
+        }
         return result;
     }
 
@@ -52,9 +66,9 @@ public class CarUtils {
                 .cid(carDTO.getCid())
                 .name(carDTO.getName())
                 // .brand(new Brand(carDTO.getBrand()))
-                .capacity(carDTO.getCapacity())
-                .fuel_efficiency(carDTO.getFuel_efficiency())
                 // .engine(new Engine(carDTO.getEngine()))
+                // .capacity(carDTO.getCapacity())
+                // .fuel_efficiency(carDTO.getFuel_efficiency())
                 // .segment(new Segment(0, carDTO.getSegment()))
                 .cost(carDTO.getCost())
                 .imgurl(carDTO.getImgurl())
@@ -69,7 +83,7 @@ public class CarUtils {
         .oname(carOption. getOption().getOname())
         .oimg(carOption.getOption().getOimg())
         .oexpl(carOption.getOption().getOexpl())
-        .ischk(carOption.isOpt())
+        .chk(carOption.isOpt())
         .build();
         return optionDTO;
     }
@@ -80,8 +94,25 @@ public class CarUtils {
         .oname(storeOption.getOption().getOname())
         .oimg(storeOption.getOption().getOimg())
         .oexpl(storeOption.getOption().getOexpl())
-        .ischk(storeOption.isOpt())
+        .chk(storeOption.isOpt())
         .build();
         return optionDTO;
+    }
+
+    public Store dtoToEntity(StoreDTO storeDTO){
+        Store store = Store.builder()
+        .car(dtoToEntity(storeDTO.getCarDTO()))
+        .user(User.builder().username(storeDTO.getUser()).build())
+        .build();
+        return store;
+    }
+    
+    public StoreOption dtoToEntity(OptionDTO optionDTO,int spk){
+        StoreOption storeOption = StoreOption.builder()
+        .opt(optionDTO.isChk())
+        .option(Option.builder().opk(optionDTO.getOpk()).build())
+        .store(Store.builder().spk(spk).build())
+        .build();
+        return storeOption;
     }
 }
