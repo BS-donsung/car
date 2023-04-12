@@ -1,29 +1,11 @@
 <template>
-  <header class="header">
-    <a
-      href="#"
-      class="logo">LOGO</a>
-
-    <nav class="navbar">
-      <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">Service</a>
-      <a href="#">Content</a>
-      <button
-        class="btnLogin-popup"
-        @click="btnPopup">
-        로그인
-      </button>
-    </nav>
-  </header>
-
-  <section class="section">
+  <div class="section">
     <div
       class="wrapper"
       :class="wrapper.classList">
       <span
         class="
-        icon-close"
+          icon-close"
         @click="iconClose">
         <font-awesome-icon :icon="['fas', 'x']" />
       </span>
@@ -180,18 +162,13 @@
         </a>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script setup>
 import { reactive } from 'vue'
 
 let wrapper = reactive({ classList: [] })
-
-const btnPopup = () => {
-  wrapper.classList.push('active-popup')
-  alert('회원가입을 하시겠습니까?')
-}
 
 const registerLink = () => {
   wrapper.classList.push('active')
@@ -237,12 +214,13 @@ const tokenlogin = async () => {
 const register_data = reactive({
   username: '',
   email: '',
-  password:'',
-  nickname:''
+  password: '',
+  nickname: ''
 })
 
 const registerUser = async () => {
   console.log(register_data)
+  alert('회원가입 하시겠습니까?')
   const url = 'http://192.168.0.113:9000/user/join'
   const requestOptions = {
     method: 'POST',
@@ -259,45 +237,6 @@ const registerUser = async () => {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Popins', sans-serif;
-}
-
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 20px 100px;
-  background: transparent;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 99;
-}
-
-.logo {
-  font-size: 32px;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 700;
-  pointer-events: none;
-}
-
-.navbar a {
-  font-size: 18px;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 500;
-  margin-right: 40px;
-}
-
 .navbar .btnLogin-popup {
   position: relative;
   background: transparent;
@@ -321,10 +260,9 @@ const registerUser = async () => {
 }
 
 .section {
-  background: url('./img/car.jpg') no-repeat;
   min-height: 100vh;
-  background-size: cover;
-  background-position: center;
+  /* position: fixed;
+  opacity: 0.1; */
 }
 
 .wrapper {

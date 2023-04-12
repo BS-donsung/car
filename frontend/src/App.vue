@@ -1,9 +1,8 @@
 <template>
-  <HeaderVue />
+  <router-view />
 </template>
 
 <script setup>
-import HeaderVue from './components/ToHeaber.vue'
 
 </script>
 
