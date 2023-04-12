@@ -7,15 +7,17 @@ import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authorization.AuthorityAuthorizationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.imsi.car.config.auth.PrincipalDetailsService;
 import com.imsi.car.config.auth.PrincipalOauth2UserService;
 
 import lombok.RequiredArgsConstructor;
-
 
 @Configuration
 @EnableWebSecurity
@@ -33,6 +35,8 @@ public class SecurityConfig {
     };
 
     private final PrincipalOauth2UserService principalOAuth2UserService;
+    private final PrincipalDetailsService principalDetailsService;
+    private final JwtProperties jwtProperties;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -53,7 +57,12 @@ public class SecurityConfig {
                 .<RequestAuthorizationContext>hasRole("USER");
         var adminAuth = AuthorityAuthorizationManager
                 .<RequestAuthorizationContext>hasRole("ADMIN");
-        http.csrf().disable()
+
+        return http.csrf().disable()
+                .addFilterBefore(new JwtAuthorizationFilter(jwtProperties), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProperties), UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(AUTH_WHITE_LIST).permitAll()
                         .requestMatchers(AUTH_USER_LIST).access(userAuth)
@@ -67,8 +76,7 @@ public class SecurityConfig {
                 .oauth2Login(form -> form
                         .loginPage("/login")
                         .userInfoEndpoint()
-                        .userService(principalOAuth2UserService));
-
-        return http.build();
+                        .userService(principalOAuth2UserService))
+                .build();
     }
 }
