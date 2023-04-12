@@ -23,7 +23,7 @@
       :class="wrapper.classList">
       <span
         class="
-      icon-close"
+        icon-close"
         @click="iconClose">
         <font-awesome-icon :icon="['fas', 'x']" />
       </span>
@@ -37,16 +37,18 @@
 
           <form action="#">
             <div class="input-box">
-              <span class="icon"><font-awesome-icon :icon="['fas', 'envelope']" /></span>
+              <span class="icon"><font-awesome-icon :icon="['fas', 'id-card']" /></span>
               <input
-                type="email"
+                v-model="login_data.username"
+                type="id"
                 required />
-              <label>이메일</label>
+              <label>아이디</label>
             </div>
 
             <div class="input-box">
               <span class="icon"><font-awesome-icon :icon="['fas', 'lock']" /></span>
               <input
+                v-model="login_data.password"
                 type="password"
                 required />
               <label>비밀번호</label>
@@ -59,7 +61,8 @@
 
             <button
               type="submit"
-              class="btn">
+              class="btn"
+              @click.prevent="tokenlogin">
               로그인
             </button>
 
@@ -94,17 +97,37 @@
             <div class="input-box">
               <span class="icon"><font-awesome-icon :icon="['fas', 'envelope']" /></span>
               <input
+                v-model="register_data.email"
                 type="email"
                 required />
               <label>이메일</label>
             </div>
 
             <div class="input-box">
+              <span class="icon"><font-awesome-icon :icon="['fas', 'id-card']" /></span>
+              <input
+                v-model="register_data.username"
+                type="id"
+                required />
+              <label>아이디</label>
+            </div>
+
+            <div class="input-box">
               <span class="icon"><font-awesome-icon :icon="['fas', 'lock']" /></span>
               <input
+                v-model="register_data.password"
                 type="password"
                 required />
               <label>비밀번호</label>
+            </div>
+
+            <div class="input-box">
+              <span class="icon"><font-awesome-icon :icon="['fas', 'lock']" /></span>
+              <input
+                v-model="register_data.nickname"
+                type="text"
+                required />
+              <label>닉네임</label>
             </div>
 
             <div class="remember-forgot">
@@ -113,7 +136,8 @@
 
             <button
               type="submit"
-              class="btn">
+              class="btn"
+              @click.prevent="registerUser">
               회원가입
             </button>
 
@@ -134,7 +158,7 @@
         <a href="#">
           <font-awesome-icon
             :icon="['fab', 'google']"
-            style="color: #006af5;" 
+            style="color: #006af5;"
             class="i" />
           <span>Login with Google</span>
         </a>
@@ -162,12 +186,11 @@
 <script setup>
 import { reactive } from 'vue'
 
-let wrapper = reactive({classList: []})
+let wrapper = reactive({ classList: [] })
 
 const btnPopup = () => {
   wrapper.classList.push('active-popup')
-  console.log('눌럿디')
-  console.log(wrapper.classList)
+  alert('회원가입을 하시겠습니까?')
 }
 
 const registerLink = () => {
@@ -183,6 +206,56 @@ const iconClose = () => {
   wrapper.classList.pop('active')
 }
 
+// login api
+const login_data = reactive({
+  username: '',
+  password: '',
+})
+const url = 'http://192.168.0.113:9000/login'
+
+const tokenlogin = async () => {
+  console.log(login_data)
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Request-Headers': 'Authorization'
+    },
+    body: JSON.stringify(login_data),
+    credentials: 'include'
+  }
+  try {
+    const res = await fetch(url, requestOptions)
+    console.log(res.headers)
+    console.log(res.headers['Authorization'])
+  } catch (error) {
+    console.log('니 실패함', error)
+  }
+}
+
+// register api
+const register_data = reactive({
+  username: '',
+  email: '',
+  password:'',
+  nickname:''
+})
+
+const registerUser = async () => {
+  console.log(register_data)
+  const url = 'http://192.168.0.113:9000/user/join'
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(register_data)
+  }
+  try {
+    const reg = await fetch(url, requestOptions)
+    console.log(reg.json())
+  } catch (error) {
+    console.log('니 실패함', error)
+  }
+}
 </script>
 
 <style>
