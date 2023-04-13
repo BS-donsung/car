@@ -10,9 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OptionDTO {
-    // TODO : 이걸 UserOptionDTO에 넣기
-    // Option Entity를 UserOptionDTO에서 OptionDTO에 담기
-    // 그렇게 해서 OptionController에서는 UserOptionDTO를 Front로 보내주자
+    // TODO : 디폴트로 해당 옵션이 무조건 존재하는지 안 하는지!
+    // A B C 옵션에 따른 해당 옵션 선택 여부
 
     private int opk;
     private String oname;

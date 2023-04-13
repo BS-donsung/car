@@ -188,7 +188,7 @@ const login_data = reactive({
   username: '',
   password: '',
 })
-const url = 'http://192.168.0.113:9000/login'
+const url = 'http://localhost:9000/login'
 
 const tokenlogin = async () => {
   console.log(login_data)
@@ -221,7 +221,7 @@ const register_data = reactive({
 const registerUser = async () => {
   console.log(register_data)
   alert('회원가입 하시겠습니까?')
-  const url = 'http://192.168.0.113:9000/user/join'
+  const url = 'http://localhost:9000/user/join'
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
