@@ -1,166 +1,164 @@
 <template>
-  <div class="section">
-    <div
-      class="wrapper"
-      :class="wrapper.classList">
-      <span
-        class="
+  <div
+    class="wrapper"
+    :class="wrapper.classList">
+    <span
+      class="
           icon-close"
-        @click="iconClose">
-        <font-awesome-icon :icon="['fas', 'x']" />
-      </span>
-      <div class="logreg-box">
-        <!-- login form -->
-        <div class="form-box login">
-          <div class="logreg-title">
-            <h2>로그인</h2>
-            <p>플랫폼을 이용하시려면 로그인 해주세요</p>
-          </div>
-
-          <form action="#">
-            <div class="input-box">
-              <span class="icon"><font-awesome-icon :icon="['fas', 'id-card']" /></span>
-              <input
-                v-model="login_data.username"
-                type="id"
-                required />
-              <label>아이디</label>
-            </div>
-
-            <div class="input-box">
-              <span class="icon"><font-awesome-icon :icon="['fas', 'lock']" /></span>
-              <input
-                v-model="login_data.password"
-                type="password"
-                required />
-              <label>비밀번호</label>
-            </div>
-
-            <div class="remember-forgot">
-              <label><input type="checkbox" />자동로그인</label>
-              <a href="#">비밀번호를 잃어버리셨나요?</a>
-            </div>
-
-            <button
-              type="submit"
-              class="btn"
-              @click.prevent="tokenlogin">
-              로그인
-            </button>
-
-            <div class="logreg-link">
-              <p>
-                계정이 없습니까?
-                <a
-                  href="#"
-                  class="register-link"
-                  @click="registerLink">가입하기</a>
-              </p>
-            </div>
-          </form>
+      @click="iconClose">
+      <font-awesome-icon :icon="['fas', 'x']" />
+    </span>
+    <div class="logreg-box">
+      <!-- login form -->
+      <div class="form-box login">
+        <div class="logreg-title">
+          <h2>로그인</h2>
+          <p>플랫폼을 이용하시려면 로그인 해주세요</p>
         </div>
 
-        <!-- register form -->
-        <div class="form-box register">
-          <div class="logreg-title">
-            <h2>회원가입</h2>
-            <p>귀하의 신원을 확인하기 위해 다음을 제공하십시오</p>
+        <form action="#">
+          <div class="input-box">
+            <span class="icon"><font-awesome-icon :icon="['fas', 'id-card']" /></span>
+            <input
+              v-model="login_data.username"
+              type="id"
+              required />
+            <label>아이디</label>
           </div>
 
-          <form action="#">
-            <div class="input-box">
-              <span class="icon"><font-awesome-icon :icon="['fas', 'user']" /></span>
-              <input
-                type="text"
-                required />
-              <label>이름</label>
-            </div>
+          <div class="input-box">
+            <span class="icon"><font-awesome-icon :icon="['fas', 'lock']" /></span>
+            <input
+              v-model="login_data.password"
+              type="password"
+              required />
+            <label>비밀번호</label>
+          </div>
 
-            <div class="input-box">
-              <span class="icon"><font-awesome-icon :icon="['fas', 'envelope']" /></span>
-              <input
-                v-model="register_data.email"
-                type="email"
-                required />
-              <label>이메일</label>
-            </div>
+          <div class="remember-forgot">
+            <label><input type="checkbox" />자동로그인</label>
+            <a href="#">비밀번호를 잃어버리셨나요?</a>
+          </div>
 
-            <div class="input-box">
-              <span class="icon"><font-awesome-icon :icon="['fas', 'id-card']" /></span>
-              <input
-                v-model="register_data.username"
-                type="id"
-                required />
-              <label>아이디</label>
-            </div>
+          <button
+            type="submit"
+            class="btn"
+            @click.prevent="tokenlogin">
+            로그인
+          </button>
 
-            <div class="input-box">
-              <span class="icon"><font-awesome-icon :icon="['fas', 'lock']" /></span>
-              <input
-                v-model="register_data.password"
-                type="password"
-                required />
-              <label>비밀번호</label>
-            </div>
+          <div class="logreg-link">
+            <p>
+              계정이 없습니까?
+              <a
+                href="#"
+                class="register-link"
+                @click="registerLink">가입하기</a>
+            </p>
+          </div>
+        </form>
+      </div>
 
-            <div class="input-box">
-              <span class="icon"><font-awesome-icon :icon="['fas', 'lock']" /></span>
-              <input
-                v-model="register_data.nickname"
-                type="text"
-                required />
-              <label>닉네임</label>
-            </div>
-
-            <div class="remember-forgot">
-              <label><input type="checkbox" />이용약관에 동의합니다</label>
-            </div>
-
-            <button
-              type="submit"
-              class="btn"
-              @click.prevent="registerUser">
-              회원가입
-            </button>
-
-            <div class="logreg-link">
-              <p>
-                이미 회원이신가요?
-                <a
-                  href="#"
-                  class="login-link"
-                  @click="loginLink">돌아가기</a>
-              </p>
-            </div>
-          </form>
+      <!-- register form -->
+      <div class="form-box register">
+        <div class="logreg-title">
+          <h2>회원가입</h2>
+          <p>귀하의 신원을 확인하기 위해 다음을 제공하십시오</p>
         </div>
+
+        <form action="#">
+          <div class="input-box">
+            <span class="icon"><font-awesome-icon :icon="['fas', 'user']" /></span>
+            <input
+              type="text"
+              required />
+            <label>이름</label>
+          </div>
+
+          <div class="input-box">
+            <span class="icon"><font-awesome-icon :icon="['fas', 'envelope']" /></span>
+            <input
+              v-model="register_data.email"
+              type="email"
+              required />
+            <label>이메일</label>
+          </div>
+
+          <div class="input-box">
+            <span class="icon"><font-awesome-icon :icon="['fas', 'id-card']" /></span>
+            <input
+              v-model="register_data.username"
+              type="id"
+              required />
+            <label>아이디</label>
+          </div>
+
+          <div class="input-box">
+            <span class="icon"><font-awesome-icon :icon="['fas', 'lock']" /></span>
+            <input
+              v-model="register_data.password"
+              type="password"
+              required />
+            <label>비밀번호</label>
+          </div>
+
+          <div class="input-box">
+            <span class="icon"><font-awesome-icon :icon="['fas', 'lock']" /></span>
+            <input
+              v-model="register_data.nickname"
+              type="text"
+              required />
+            <label>닉네임</label>
+          </div>
+
+          <div class="remember-forgot">
+            <label><input type="checkbox" />이용약관에 동의합니다</label>
+          </div>
+
+          <button
+            type="submit"
+            class="btn"
+            @click.prevent="registerUser">
+            회원가입
+          </button>
+
+          <div class="logreg-link">
+            <p>
+              이미 회원이신가요?
+              <a
+                href="#"
+                class="login-link"
+                @click="loginLink">돌아가기</a>
+            </p>
+          </div>
+        </form>
       </div>
+    </div>
 
-      <div class="media-options">
-        <a href="#">
-          <font-awesome-icon
-            :icon="['fab', 'google']"
-            style="color: #006af5;"
-            class="i" />
-          <span>Login with Google</span>
-        </a>
+    <div class="media-options">
+      <a href="#">
+        <font-awesome-icon
+          :icon="['fab', 'google']"
+          style="color: #006af5;"
+          class="i" />
+        <span>Login with Google</span>
+      </a>
 
-        <a href="#">
-          <font-awesome-icon
-            :icon="['fas', 'k']"
-            style="color: #faf200;"
-            class="i" />
-          <span>Login with KaKao</span>
-        </a>
+      <a href="#">
+        <font-awesome-icon
+          :icon="['fas', 'k']"
+          style="color: #faf200;"
+          class="i" />
+        <span>Login with KaKao</span>
+      </a>
 
-        <a href="#">
-          <font-awesome-icon
-            :icon="['fab', 'neos']"
-            style="color: #62f500;"
-            class="i" />
-          <span>Login with Naver</span>
-        </a>
-      </div>
+      <a href="#">
+        <font-awesome-icon
+          :icon="['fab', 'neos']"
+          style="color: #62f500;"
+          class="i" />
+        <span>Login with Naver</span>
+      </a>
     </div>
   </div>
 </template>
@@ -188,7 +186,7 @@ const login_data = reactive({
   username: '',
   password: '',
 })
-const url = 'http://192.168.0.113:9000/login'
+const url = 'http://localhost:9000/login'
 
 const tokenlogin = async () => {
   console.log(login_data)
@@ -221,7 +219,7 @@ const register_data = reactive({
 const registerUser = async () => {
   console.log(register_data)
   alert('회원가입 하시겠습니까?')
-  const url = 'http://192.168.0.113:9000/user/join'
+  const url = 'http://localhost:9000/user/join'
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -444,38 +442,5 @@ const registerUser = async () => {
   text-decoration: underline;
 }
 
-.media-options {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
 
-.media-options a {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 200%;
-  height: 50px;
-  border: 2px solid #fff;
-  margin: 10px 0;
-  background: transparent;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  border-radius: 40px;
-  color: #fff;
-  text-decoration: none;
-}
-
-.media-options a:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.media-options a .i {
-  font-size: 16px;
-  margin: 0 8px 1.5px 0;
-}
-
-.media-options a span {
-  font-size: 16px;
-  font-weight: 500;
-}
 </style>
