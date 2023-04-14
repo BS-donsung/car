@@ -1,6 +1,7 @@
 package com.imsi.car.config.filter;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -36,7 +37,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter{
     }
 
     private String resolveToken(HttpServletRequest request){
-        String token = request.getHeader(jwtProperties.HEADER_AUTH);
+        String token = request.getHeader("Authorization");
+        log.info("token : {}",token);
+
         String result = null;
         try{
             for(Cookie c : request.getCookies()){
@@ -46,11 +49,11 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter{
         }catch (Exception e){
             log.error(e);
         }
-        if(StringUtils.hasText(token)){
-            // if(StringUtils.hasText(bearerToken)){
-            // return bearerToken.substring(7);
-            result = token;
-        }
+        // if(StringUtils.hasText(token)){
+        //     // if(StringUtils.hasText(bearerToken)){
+        //     // return bearerToken.substring(7);
+        //     result = token;
+        // }
         return result;
     }
     

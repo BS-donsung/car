@@ -64,7 +64,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         log.info("success login, generate token : {}", token);
         ResponseCookie accessTokenCookie = ResponseCookie.from(jwtProperties.HEADER_AUTH, token)
                 .path("/")
-                .httpOnly(true)
+                // .httpOnly(true)
                 .secure(true)
                 .sameSite("None")
                 .build();

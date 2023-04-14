@@ -83,26 +83,34 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive,defineEmits } from 'vue'
 import OAuth from '@/components/OAuthComp.vue'
-const loginLink = () => {}
 const register_data = reactive({
   username: '',
   email: '',
   password: '',
   nickname: '',
 })
+const url = 'http://localhost:9000'
+const emit = defineEmits(['closeJoin','openLogin'])
+const iconClose = () => {
+  emit('closeJoin')
+}
+const loginLink = () => {
+  emit('openLogin')
+  emit('closeJoin')
+}
 const registerUser = async () => {
   console.log(register_data)
-  const url = 'http://localhost:9000/user/join'
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(register_data),
   }
   try {
-    const reg = await fetch(url, requestOptions)
-    console.log(reg.json())
+    const reg = await fetch(`${url}/user/join`, requestOptions)
+    console.log(reg)
+    loginLink()
   } catch (error) {
     console.log('니 실패함', error)
   }

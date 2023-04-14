@@ -27,7 +27,8 @@
       @open-join="openJoin" />
     <join-comp
       v-if="isJoin"
-      @close-join="closeJoin" />
+      @close-join="closeJoin"
+      @open-login="openLogin" />
   </Teleport>
 </template>
 
@@ -38,30 +39,11 @@ import JoinComp from '@/components/JoinComp.vue'
 
 const isLogin = ref(false)
 const isJoin = ref(false)
-const openLogin = () => {
-  console.log('openLogin call')
-  isLogin.value = true
-}
-const openJoin = () => {
-  console.log('oepnJoin call')
-  isJoin.value = true
-}
+const openLogin = () => { isLogin.value = true }
+const openJoin = () => { isJoin.value = true }
+const closeLogin = () => { isLogin.value = false }
+const closeJoin = () => { isJoin.value = false }
 
-const closeLogin = () => {
-  console.log('closeLogin call')
-  isLogin.value = false
-}
-const closeJoin = () => {
-  console.log('closeJoin call')
-  isJoin.value = false
-}
-// const registerLink = () => {
-//   wrapper.classList.push('active')
-// }
-// const loginLink = () => {
-//   wrapper.classList.pop('active')
-// }
-// register api
 </script>
 
 <style scoped>

@@ -57,17 +57,23 @@
       </div>
     </div>
     <OAuth />
+    <button @click="testSession">
+      테스트
+    </button>
   </div>
 </template>
 
 <script setup>
 import { reactive, defineEmits } from 'vue'
 import OAuth from '@/components/OAuthComp.vue'
+import cookies from 'vue-cookies'
+
+
 const login_data = reactive({
   username: '',
   password: '',
 })
-const url = 'http://localhost:9000/'
+const url = 'http://localhost:9000'
 const emit = defineEmits(['closeLogin','openJoin'])
 const iconClose = () => {
   emit('closeLogin')
@@ -90,11 +96,20 @@ const tokenlogin = async () => {
     credentials: 'include',
   }
   try {
-    const res = await fetch(url, requestOptions)
-    console.log(res.headers)
-    console.log(res.headers['Authorization'])
+    const res = await fetch(`${url}/login`, requestOptions)
+    console.log(res)
   } catch (error) {
     console.log('니 실패함', error)
+  }
+}
+
+const testSession = async () => {
+  console.log('test : ',cookies.get('Authorization'))
+  try{
+    const res = await fetch(`${url}` ,{credentials: 'include' })
+    console.log(res)
+  } catch (err) {
+    console.log(err)
   }
 }
 </script>
