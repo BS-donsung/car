@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CarApplication {
 
 	public static void main(String[] args) {
-		System.out.println("Hello world");
 		SpringApplication.run(CarApplication.class, args);
+		System.out.println("http://localhost:8180/board");
 	}
 
 }
