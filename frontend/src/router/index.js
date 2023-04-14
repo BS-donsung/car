@@ -1,15 +1,13 @@
 import {createRouter, createWebHistory} from 'vue-router/dist/vue-router'
-import Home from '@/components/ToMainPage.vue'
-import Comparison from '@/components/Comparison.vue'
-import Login from '@/components/ToLoginFrm'
-// import Register from '@/components/RegisterForm.vue'
+import Home from '@/view/ToMainPage.vue'
+import Comparison from '@/view/Comparison.vue'
+import Login from '@/view/ToLoginFrm.vue'
 
 
 const routes = [
   {path: '/', component: Home},
   {path: '/comparison', component: Comparison},
   {path: '/login', component: Login},
-  // {path: '/register', component: Register},
 ]
 
 const router = createRouter({
