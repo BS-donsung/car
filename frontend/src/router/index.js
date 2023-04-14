@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router/dist/vue-router'
-import Home from '@/components/ToMainPage.vue'
-import Comparison from '@/components/Comparison.vue'
-import Login from '@/components/ToLoginFrm'
+import Home from '@/view/ToMainPage.vue'
+import Comparison from '@/view/Comparison.vue'
+import Login from '@/view/ToLoginFrm'
 import TestLogin from '@/components/LoginComp.vue'
 import TestJoin from '@/components/JoinComp.vue'
 
