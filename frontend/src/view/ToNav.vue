@@ -14,25 +14,43 @@
       <a href="#">Content</a>
       <button
         class="btnLogin-popup"
-        @click="btnPopup">
+        @click="openLogin">
         로그인
       </button>
     </nav>
   </header>
-
-  <!-- <Teleport to=".header">
-    <AddEvent />
-  </Teleport> -->
+  <div id="user"></div>
+  <Teleport to="#user">
+    <login-comp
+      v-if="isLogin"
+      @close-login="closeLogin"
+      @open-join="openJoin" />
+    <join-comp
+      v-if="isJoin"
+      @close-join="closeJoin"
+      @open-login="openLogin" />
+  </Teleport>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-// import AddEvent from '@/components/ToLoginFrm.vue'
+import LoginComp from '@/components/LoginComp.vue'
+import JoinComp from '@/components/JoinComp.vue'
 
-const isLoginEvent = ref(false)
-
-const btnPopup = () => {
-  isLoginEvent.value = true
+const isLogin = ref(false)
+const isJoin = ref(false)
+const openLogin = () => {
+  console.log('open!!')
+  isLogin.value = true
+}
+const openJoin = () => {
+  isJoin.value = true
+}
+const closeLogin = () => {
+  isLogin.value = false
+}
+const closeJoin = () => {
+  isJoin.value = false
 }
 </script>
 
@@ -56,7 +74,6 @@ const btnPopup = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 99;
   background-color: black;
 }
 

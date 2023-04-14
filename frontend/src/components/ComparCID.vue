@@ -1,5 +1,4 @@
 <template>
-  <Nav />
   <div class="cidcontain">
     <div class="image-box">
       <button
@@ -73,7 +72,6 @@ import { URL } from '@/components/global'
 import { onMounted, reactive, ref } from 'vue'
 import { defineProps } from 'vue'
 import { useCompStore } from '@/store/index'
-import Nav from '@/view/ToNav.vue'
 
 const store = useCompStore()
 
