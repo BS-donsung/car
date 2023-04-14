@@ -1,0 +1,49 @@
+User의 pk를 fk로 변경해야함(reply의 replyer, board의 writer)
+
+
+
+
+회원정보 넣기 쿼리
+INSERT INTO user (nickname, createdDate, email, exp,  password, provider, providerId, role, username)
+VALUES
+('유저1','2023-04-09 00:00:00', 'user1@example.com', 100,  'password1', NULL, NULL, 'USER', 'user1'),
+('유저2','2023-04-09 00:01:00', 'user2@example.com', 200,  'password2', NULL, NULL, 'USER', 'user2'),
+('유저3','2023-04-09 00:02:00', 'user3@example.com', 300,  'password3', NULL, NULL, 'USER', 'user3');
+
+-- 댓글 넣기 쿼리
+INSERT INTO car.reply (createdDate, modifyDate, text, board_id, user) VALUES 
+('2023-04-09 12:00:00', '2023-04-09 12:00:00', '유저1이 쓴 첫 번째 게시글의 첫 번째 댓글입니다.', 1, 1),
+('2023-04-09 12:01:00', '2023-04-09 12:01:00', '유저2가 쓴 두 번째 게시글의 첫 번째 댓글입니다.', 2, 2),
+('2023-04-09 12:02:00', '2023-04-09 12:02:00', '유저3이 쓴 두 번째 게시글의 두 번째 댓글입니다.', 2, 3),
+('2023-04-09 12:03:00', '2023-04-09 12:03:00', '유저1이 쓴 두 번째 게시글의 세 번째 댓글입니다.', 2, 1);
+
+http://localhost:8180/board/post
+yarc에서 글 쓰기
+포스트로 변경
+{
+    "title": "검색용 게시글",
+    "content": "가나다라마바사",
+    "writer": {"id": 1}
+}
+
+{
+    "title": "안녕하세요",
+    "content": "반가워요",
+    "writer": {"id": 2}
+}
+
+{
+    "title": "글입니다",
+    "content": "일이삼사오",
+    "writer": {"id": 3}
+}
+
+샌드 리퀘스트
+
+
+수정용 게시글
+
+{
+    "title": "수정완료 게시글2",
+    "content": "수정했읍니다"
+}
