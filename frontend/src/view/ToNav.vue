@@ -19,38 +19,13 @@
       </button>
     </nav>
   </header>
-  <div id="user"></div>
-  <Teleport to="#user">
-    <login-comp
-      v-if="isLogin"
-      @close-login="closeLogin"
-      @open-join="openJoin" />
-    <join-comp
-      v-if="isJoin"
-      @close-join="closeJoin"
-      @open-login="openLogin" />
-  </Teleport>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import LoginComp from '@/components/LoginComp.vue'
-import JoinComp from '@/components/JoinComp.vue'
+import router from '@/router'
 
-const isLogin = ref(false)
-const isJoin = ref(false)
 const openLogin = () => {
-  console.log('open!!')
-  isLogin.value = true
-}
-const openJoin = () => {
-  isJoin.value = true
-}
-const closeLogin = () => {
-  isLogin.value = false
-}
-const closeJoin = () => {
-  isJoin.value = false
+  router.push({ path: '/loginfrm' })
 }
 </script>
 
@@ -90,5 +65,27 @@ const closeJoin = () => {
   text-decoration: none;
   font-weight: 500;
   margin-right: 40px;
+}
+
+.navbar .btnLogin-popup {
+  position: relative;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.navbar .btnLogin-popup::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  bottom: -4px;
+  left: 0;
+  opacity: 0.85;
 }
 </style>
