@@ -1,184 +1,101 @@
 <template>
-  <div
-    class="wrapper"
-    :class="wrapper.classList">
-    <span
-      class="
-          icon-close"
-      @click="iconClose">
-      <font-awesome-icon :icon="['fas', 'x']" />
-    </span>
-    <div class="logreg-box">
-      <!-- login form -->
-      <div class="form-box login">
-        <div class="logreg-title">
-          <h2>로그인</h2>
-          <p>플랫폼을 이용하시려면 로그인 해주세요</p>
-        </div>
+  <section class="container forms">
+    <div class="form login">
+      <div class="logohome">
+        <router-link
+          to="/"
+          class="logo">
+          LOGO
+        </router-link>
+      </div>
+      <div class="form-content">
+        <header>Login</header>
 
         <form action="#">
-          <div class="input-box">
-            <span class="icon"><font-awesome-icon :icon="['fas', 'id-card']" /></span>
+          <div class="field input-field">
             <input
-              v-model="login_data.username"
               type="id"
-              required />
-            <label>아이디</label>
+              class="input"
+              placeholder="ID (아이디 또는 이메일)" />
           </div>
 
-          <div class="input-box">
-            <span class="icon"><font-awesome-icon :icon="['fas', 'lock']" /></span>
+          <div class="field input-field">
             <input
-              v-model="login_data.password"
               type="password"
-              required />
-            <label>비밀번호</label>
+              class="password"
+              placeholder="비밀번호" />
+            <font-awesome-icon
+              :icon="['fas', 'eye-slash']"
+              class="eye-slash" />
           </div>
 
-          <div class="remember-forgot">
-            <label><input type="checkbox" />자동로그인</label>
-            <a href="#">비밀번호를 잃어버리셨나요?</a>
+          <div class="form-link">
+            <a
+              href="#"
+              class="forgot-pass">아이디 찾기</a>
+            <a
+              href="#"
+              class="forgot-pass">비밀번호 찾기</a>
           </div>
 
-          <button
-            type="submit"
-            class="btn"
-            @click.prevent="tokenlogin">
-            로그인
-          </button>
+          <div class="field button-field">
+            <button
+              @click.prevent="loginBtn">
+              로그인
+            </button>
+          </div>
 
-          <div class="logreg-link">
-            <p>
-              계정이 없습니까?
-              <a
-                href="#"
-                class="register-link"
-                @click="registerLink">가입하기</a>
-            </p>
+          <div class="form-link">
+            <span>회원이 아닌가요?</span> <a
+              href="#"
+              class="signup-link"
+              @click="registerfrm">회원가입</a>
           </div>
         </form>
       </div>
 
-      <!-- register form -->
-      <div class="form-box register">
-        <div class="logreg-title">
-          <h2>회원가입</h2>
-          <p>귀하의 신원을 확인하기 위해 다음을 제공하십시오</p>
-        </div>
+      <div class="line"></div>
 
-        <form action="#">
-          <div class="input-box">
-            <span class="icon"><font-awesome-icon :icon="['fas', 'user']" /></span>
-            <input
-              type="text"
-              required />
-            <label>이름</label>
-          </div>
+      <!-- 로그인 a => button으로 교환 -->
+      <div class="media-options">
+        <a
+          href="#"
+          class="field facebook">
+          <span class="facebook-icon"></span>
+          <span>Facebook 로그인</span>
+        </a>
+      </div>
 
-          <div class="input-box">
-            <span class="icon"><font-awesome-icon :icon="['fas', 'envelope']" /></span>
-            <input
-              v-model="register_data.email"
-              type="email"
-              required />
-            <label>이메일</label>
-          </div>
+      <div class="media-options">
+        <a
+          href="#"
+          class="field google">
+          <span class="google-icon"></span>
+          <span>Google 로그인</span>
+        </a>
+      </div>
 
-          <div class="input-box">
-            <span class="icon"><font-awesome-icon :icon="['fas', 'id-card']" /></span>
-            <input
-              v-model="register_data.username"
-              type="id"
-              required />
-            <label>아이디</label>
-          </div>
-
-          <div class="input-box">
-            <span class="icon"><font-awesome-icon :icon="['fas', 'lock']" /></span>
-            <input
-              v-model="register_data.password"
-              type="password"
-              required />
-            <label>비밀번호</label>
-          </div>
-
-          <div class="input-box">
-            <span class="icon"><font-awesome-icon :icon="['fas', 'lock']" /></span>
-            <input
-              v-model="register_data.nickname"
-              type="text"
-              required />
-            <label>닉네임</label>
-          </div>
-
-          <div class="remember-forgot">
-            <label><input type="checkbox" />이용약관에 동의합니다</label>
-          </div>
-
-          <button
-            type="submit"
-            class="btn"
-            @click.prevent="registerUser">
-            회원가입
-          </button>
-
-          <div class="logreg-link">
-            <p>
-              이미 회원이신가요?
-              <a
-                href="#"
-                class="login-link"
-                @click="loginLink">돌아가기</a>
-            </p>
-          </div>
-        </form>
+      <div class="media-options">
+        <a
+          href="#"
+          class="field naver">
+          <span class="naver-icon"></span>
+          <span>NAVER 로그인</span>
+        </a>
       </div>
     </div>
-
-    <div class="media-options">
-      <a href="#">
-        <font-awesome-icon
-          :icon="['fab', 'google']"
-          style="color: #006af5;"
-          class="i" />
-        <span>Login with Google</span>
-      </a>
-
-      <a href="#">
-        <font-awesome-icon
-          :icon="['fas', 'k']"
-          style="color: #faf200;"
-          class="i" />
-        <span>Login with KaKao</span>
-      </a>
-
-      <a href="#">
-        <font-awesome-icon
-          :icon="['fab', 'neos']"
-          style="color: #62f500;"
-          class="i" />
-        <span>Login with Naver</span>
-      </a>
-    </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
+import router from '@/router'
 import { reactive } from 'vue'
+import { URL } from '@/components/global'
 
-let wrapper = reactive({ classList: [] })
 
-const registerLink = () => {
-  wrapper.classList.push('active')
-}
-
-const loginLink = () => {
-  wrapper.classList.pop('active')
-}
-
-const iconClose = () => {
-  wrapper.classList.pop('active-popup')
-  wrapper.classList.pop('active')
+const registerfrm = () => {
+  alert('회원가입 하시겠습니까?')
+  router.push({ path: '/registerfrm' })
 }
 
 // login api
@@ -186,9 +103,9 @@ const login_data = reactive({
   username: '',
   password: '',
 })
-const url = 'http://localhost:9000/login'
 
-const tokenlogin = async () => {
+const loginBtn = async () => {
+  alert('로그인되었습니다.')
   console.log(login_data)
   const requestOptions = {
     method: 'POST',
@@ -200,247 +117,201 @@ const tokenlogin = async () => {
     credentials: 'include'
   }
   try {
-    const res = await fetch(url, requestOptions)
+    const res = await fetch(URL + '/login', requestOptions)
     console.log(res.headers)
     console.log(res.headers['Authorization'])
   } catch (error) {
-    console.log('니 실패함', error)
-  }
-}
-
-// register api
-const register_data = reactive({
-  username: '',
-  email: '',
-  password: '',
-  nickname: ''
-})
-
-const registerUser = async () => {
-  console.log(register_data)
-  alert('회원가입 하시겠습니까?')
-  const url = 'http://localhost:9000/user/join'
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(register_data)
-  }
-  try {
-    const reg = await fetch(url, requestOptions)
-    console.log(reg.json())
-  } catch (error) {
-    console.log('니 실패함', error)
+    console.log('로그인에 실패했습니다', error)
   }
 }
 </script>
 
-<style>
-.navbar .btnLogin-popup {
-  position: relative;
-  background: transparent;
-  border: none;
-  outline: none;
-  font-size: 18px;
-  color: #fff;
-  font-weight: 500;
-  cursor: pointer;
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Open+Sans:ital,wght@0,300;0,600;1,300;1,600&family=Poor+Story&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
-.navbar .btnLogin-popup::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  background: #fff;
-  bottom: -4px;
-  left: 0;
-  opacity: 0.85;
-}
-
-.section {
-  min-height: 100vh;
-  /* position: fixed;
-  opacity: 0.1; */
-}
-
-.wrapper {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 450px;
-  height: 100%;
-  background: transparent;
-  backdrop-filter: blur(20px);
-  box-shadow: -1px 0 10px rgba(0, 0, 0, 0.2);
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 40px;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.wrapper.active-popup {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.icon-close {
-  top: 0;
-  right: 0;
-  position: absolute;
-  width: 45px;
-  height: 45px;
-  background: #fff;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-bottom-left-radius: 10px;
-}
-
-.icon-close .i {
+.logohome {
   font-size: 32px;
-  color: #333;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
-.wrapper .logreg-box {
-  width: 100%;
-}
-
-.wrapper .form-box.login {
-  display: block;
-}
-
-.wrapper.active .form-box.login {
-  display: none;
-}
-
-.wrapper .form-box.register {
-  display: none;
-}
-
-.wrapper.active .form-box.register {
-  display: block;
-}
-
-.logreg-box .logreg-title {
+header {
+  font-size: 28px;
+  font-weight: 600;
+  color: #232836;
   text-align: center;
-  margin-bottom: 40px;
-  color: #fff;
 }
 
-.logreg-title h2 {
-  font-size: 32px;
+form {
+  margin-top: 30px;
 }
 
-.logreg-title p {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.logreg-box .input-box {
-  position: relative;
+.container {
+  height: 100vh;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}
+
+.form {
+  max-width: 460px;
+  width: 100%;
+  padding: 30px;
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid #cacaca;
+}
+
+/* 미디어 field 버튼 */
+.form .field {
+  position: relative;
   height: 50px;
-  margin: 30px 0;
-  border-bottom: 2px solid #fff;
+  width: 400px;
+  margin-top: 20px;
+  border-radius: 6px;
 }
 
-.input-box input {
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  border: none;
-  outline: none;
+.field input,
+.field button {
+  height: 50px;
+  width: 400px;
   font-size: 16px;
-  color: #fff;
-  font-weight: 500;
-  padding-right: 25px;
+  font-weight: 400;
+  border: none;
+  border-radius: 6px;
 }
 
-.input-box label {
+.field input {
+  border: 1px solid #cacaca;
+  padding: 0 15px;
+  outline: none;
+}
+
+.field input:hover {
+  border-bottom-width: 2px;
+}
+
+.eye-slash {
   position: absolute;
   top: 50%;
-  left: 0;
+  right: 10px;
   transform: translateY(-50%);
-  font-size: 16px;
-  color: #fff;
-  font-weight: 500;
-  transition: 0.5s ease;
-}
-
-.input-box .icon {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  font-size: 19px;
-  color: #fff;
-  transform: translateY(-50%);
-}
-
-.input-box input:focus~label,
-.input-box input:valid~label {
-  top: -5px;
-}
-
-.logreg-box .remember-forgot {
-  font-size: 14.5px;
-  color: #fff;
-  font-weight: 500;
-  margin: -15px 0 15px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.remember-forgot label input {
-  accent-color: #fff;
-  margin-right: 3px;
-}
-
-.remember-forgot a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.remember-forgot a:hover {
-  text-decoration: underline;
-}
-
-.logreg-box .btn {
-  width: 100%;
-  height: 45px;
-  background: #fff;
-  border: none;
-  outline: none;
-  border-radius: 40px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  font-size: 18px;
+  color: #8b8b8b;
   cursor: pointer;
-  font-size: 16px;
-  color: #222;
-  font-weight: 600;
 }
 
-.logreg-box .logreg-link {
-  font-size: 14.5px;
+.field button {
   color: #fff;
+  background-color: #0171d3;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+.field button:hover {
+  background-color: #016dcb;
+}
+
+.form-link {
   text-align: center;
-  font-weight: 500;
-  margin-right: 25px;
-  margin: 25px 0 15px;
+  margin-top: 10px;
 }
 
-.logreg-link p a {
-  color: #fff;
+.form-link a {
+  margin-right: 30px;
+}
+
+.form-link span,
+.form-link a {
+  font-size: 14px;
+  font-weight: 400;
+  color: #232836;
+}
+
+.form a {
+  color: #0171d3;
   text-decoration: none;
-  font-weight: 600;
 }
 
-.logreg-link p a:hover {
+form a:hover {
   text-decoration: underline;
 }
 
+.line {
+  position: relative;
+  height: 1px;
+  width: 100%;
+  margin: 36px 0;
+  background-color: #d4d4d4;
+}
 
+.line::before {
+  content: 'OR';
+  position: absolute;
+  top: -10px;
+  left: 40%;
+  background-color: #fff;
+  color: #232836;
+  padding: 0 15px;
+  transform: translate(-60% -50%);
+}
+
+/* 미디어 로그인 */
+.media-options a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+a.facebook,
+a.google,
+a.naver {
+  color: #232836;
+  border: 1px solid #cacaca;
+}
+
+.facebook-icon {
+  width: 21px;
+  height: 21px;
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  background: url(https://rs.nxfs.nexon.com/nxlogin/images/set_logo.svg) no-repeat 0 -100px;
+}
+
+.google-icon {
+  width: 21px;
+  height: 21px;
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  background: url(https://rs.nxfs.nexon.com/nxlogin/images/set_logo.svg) no-repeat 0 -150px;
+}
+
+.naver-icon {
+  width: 21px;
+  height: 21px;
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  background: url(https://rs.nxfs.nexon.com/nxlogin/images/set_logo.svg) no-repeat 0 -200px;
+}
 </style>
