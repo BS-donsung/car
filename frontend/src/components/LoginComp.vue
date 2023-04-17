@@ -57,8 +57,11 @@
       </div>
     </div>
     <OAuth />
-    <button @click="testSession">
-      테스트
+    <button @click="testAll">
+      테스트 all
+    </button>
+    <button @click="testUser">
+      테스트 user
     </button>
   </div>
 </template>
@@ -103,15 +106,25 @@ const tokenlogin = async () => {
   }
 }
 
-const testSession = async () => {
+const testAll = async () => {
   console.log('test : ',cookies.get('Authorization'))
   try{
-    const res = await fetch(`${url}` ,{credentials: 'include' })
+    const res = await fetch(`${url}/all/hihi` ,{credentials: 'include' })
     console.log(res)
   } catch (err) {
     console.log(err)
   }
 }
+const testUser = async () => {
+  console.log('test : ',cookies.get('Authorization'))
+  try{
+    const res = await fetch(`${url}/user/hihi` ,{credentials: 'include' })
+    console.log(res)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 </script>
 
 <style scoped>
