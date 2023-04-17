@@ -14,7 +14,16 @@
         커뮤니티
       </router-link>
       <a href="#">문의하기</a>
+      <span>{{ username }}</span>
       <button
+        v-if="username != ''"
+        class="btnLogin-popup"
+        @click="logoutBtn">
+        로그아웃
+      </button>
+
+      <button
+        v-else
         class="btnLogin-popup"
         @click="openLogin">
         로그인
@@ -25,13 +34,49 @@
 
 <script setup>
 import router from '@/router'
+import Cookies from 'js-cookie'
+import { onMounted, ref } from 'vue'
+// import { URL } from '@/components/global'
+
+const username = ref('qw')
+const token = Cookies.get('Authorization')
+
+function gettoken() {
+  console.log(token)
+}
 
 const openLogin = () => {
   router.push({ path: '/loginfrm' })
 }
+
+const getUsername = () => {
+  // const requestOptions = {
+  //   credentials: 'include'
+  // }
+  // fetch(URL + '/getuser', requestOptions)
+  //   .then(res => res.text())
+  //   .then(text => {
+  //     username.value = text
+  //     alert(`${username.value}님 환영합니다.`)
+  //   })
+  //   .catch(console.log('username을 받아오는데 실패하였습니다.'))
+}
+
+const logoutBtn = () =>{
+  if (username.value!='') {
+    username.value =''
+  }
+}
+
+
+
+onMounted(() => {
+  gettoken(), getUsername()
+
+})
 </script>
 
-<style>
+<style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
 * {
@@ -39,6 +84,11 @@ const openLogin = () => {
   padding: 0;
   box-sizing: border-box;
   font-family: 'Popins', sans-serif;
+}
+
+span {
+  color: white;
+  margin-right: 30px;
 }
 
 .header {

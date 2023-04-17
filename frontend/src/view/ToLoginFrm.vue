@@ -95,6 +95,7 @@ import { reactive } from 'vue'
 import { URL } from '@/components/global'
 
 
+
 const registerfrm = () => {
   alert('회원가입 하시겠습니까?')
   router.push({ path: '/registerfrm' })
@@ -122,6 +123,7 @@ const loginBtn = async () => {
     const res = await fetch(URL + '/login', requestOptions)
     console.log(res.headers)
     console.log(res.headers['Authorization'])
+    router.push({ path: '/' })
   } catch (error) {
     console.log('로그인에 실패했습니다', error)
   }
