@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.util.Enumeration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.imsi.car.config.JwtProperties;
 
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -32,6 +35,12 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter{
         String token = resolveToken(req);
         log.info("filter : {}",request.getRequestURL().toString());
         log.info("token : {}",token);
+        if(token!=null){
+            Authentication authentication = jwtProperties.getAuthentication(token);
+            SecurityContextHolder.getContext().setAuthentication(authentication );
+            req.setAttribute("token", token);
+        }
+        
 
         filterChain.doFilter(req, res);
     }
@@ -43,17 +52,14 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter{
         String result = null;
         try{
             for(Cookie c : request.getCookies()){
-                if (c.getName().equals((jwtProperties.HEADER_AUTH)))
-                log.info("cookie : {}",c.getValue());
+                if (c.getName().equals((jwtProperties.HEADER_AUTH))){
+                    log.info("cookie : {}",c.getValue());
+                    result = c.getValue();
+                }
             }
         }catch (Exception e){
             log.error(e);
         }
-        // if(StringUtils.hasText(token)){
-        //     // if(StringUtils.hasText(bearerToken)){
-        //     // return bearerToken.substring(7);
-        //     result = token;
-        // }
         return result;
     }
     

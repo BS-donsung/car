@@ -29,14 +29,27 @@ public class Car {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand")
     private Brand brand; // 차량 브랜드
+
+    // 제원 정보
     private int capacity; // 배기량
     private double fuel_efficiency; // 키로미터당 연비
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "engine")
-    private Engine engine; // 엔진 방식
+    private Engine engine; // 구동방식
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "segment")
-    private Segment segment;
+    private Segment segment; // 차급
+    private int length; // 전장
+    private int width; // 전폭
+    private int height; // 전고
+    private int wheelBase; // 축거
+    private int frontThread; //윤거전
+    private int rearThread; //윤거후
+    private String frontSuspension; // 전륜 서스펜션
+    private String rearSuspension; // 후륜 서스펜션
+
+
+
     private String imgurl;
     private int cost;
 

@@ -15,16 +15,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UserDto {
-    @Id // primary key
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-    @Column(nullable=false)
 	private String username;
 	private String nickname;
 
     
     public UserDto(User user) {
-        this.id = user.getId();
         this.username = user.getUsername();
         this.nickname = user.getNickname();
     }
