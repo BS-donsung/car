@@ -14,6 +14,7 @@
         <form action="#">
           <div class="field input-field">
             <input
+              v-model="login_data.username"
               type="id"
               class="input"
               placeholder="ID (아이디 또는 이메일)" />
@@ -21,6 +22,7 @@
 
           <div class="field input-field">
             <input
+              v-model="login_data.password"
               type="password"
               class="password"
               placeholder="비밀번호" />
