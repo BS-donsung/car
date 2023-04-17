@@ -8,10 +8,12 @@
 
     <nav class="navbar">
       <router-link to="/comparison">
-        비교
+        모델비교
       </router-link>
-      <a href="#">Service</a>
-      <a href="#">Content</a>
+      <router-link to="/community">
+        커뮤니티
+      </router-link>
+      <a href="#">문의하기</a>
       <button
         class="btnLogin-popup"
         @click="openLogin">
