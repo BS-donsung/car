@@ -21,4 +21,8 @@ public class TestController {
         log.info("setAttr : {}",req.getAttribute("token"));
         return "hiih";
     }
+    @GetMapping("/getuser")
+    public String getUser(HttpServletRequest req) {
+        return (String)req.getAttribute("username");
+    }
 }

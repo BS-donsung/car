@@ -38,7 +38,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter{
         if(token!=null){
             Authentication authentication = jwtProperties.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication );
-            req.setAttribute("token", token);
+            req.setAttribute("username", jwtProperties.getUsername(token));
         }
         
 
