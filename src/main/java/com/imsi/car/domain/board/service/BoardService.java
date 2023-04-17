@@ -9,13 +9,13 @@ import com.imsi.car.domain.board.model.Review;
 
 public interface BoardService {
 
-    public List<BoardDto> BoardView(long id);
+    public BoardDto BoardView(Long id);
 
     // TODO : DG page번째 게시물들 가져오기
     public List<BoardDto> listBoardPage(int page);
     
     // TODO : DG 게시물 검색. 메소드 안에서 댓글,제목,내용,아이디 검색 모두 구현
-    public List<BoardDto> searchBoard(String keyword, int flag);
+    public List<BoardDto> searchBoard(String keyword, int flag, int page);
     // TODO : DG board 저장
     public void writeBoard(Board board);
 

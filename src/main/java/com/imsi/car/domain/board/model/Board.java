@@ -1,5 +1,6 @@
 package com.imsi.car.domain.board.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,15 +18,18 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 @ToString(exclude = { "writer", "replies" })
+@Builder(toBuilder = true)
 @Table(name = "board")
 public class Board extends BaseTimeEntity {
     
@@ -55,6 +59,8 @@ public class Board extends BaseTimeEntity {
     // 게시글의 추천수
     @Column(length = 100, nullable = false)
     private int likes;
+
+    private LocalDateTime modifyDate;
     
     //보드 - 리플 관계 //리포지토리의 find 어쩌고가 참조하는 것으로 인한 무한참조 이슈
     // @JsonManagedReference(value = "board-replies") // replies 필드를 직렬화할 때 참조하는 객체를 정의(무한참조 방지)
@@ -68,7 +74,6 @@ public class Board extends BaseTimeEntity {
     }
 
     // 빌더
-    @Builder(toBuilder = true)
     public Board(Long id, String title, String content, User writer, int viewCount, int likes) {
         this.id = id;
         this.writer = writer;

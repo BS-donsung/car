@@ -22,12 +22,10 @@ public class BoardDto {
     private String title;
     private String content;
     private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
+    private LocalDateTime modifyDate;
     private int viewCount;
     private int likes;
-    // @ToString.Exclude
     private List<Reply> replies;
-    // @ToString.Exclude
     private UserDto writerDto;
 
     public BoardDto(Board board) {
@@ -37,8 +35,8 @@ public class BoardDto {
         this.content = board.getContent();
         this.viewCount = board.getViewCount();
         this.likes = board.getLikes();
-        // this.createdDate = board.getCreatedDate();
-        // this.modifiedDate = board.getModifiedDate();
+        this.createdDate = board.getCreatedDate();
+        this.modifyDate = board.getModifyDate();
     }
 
     public Board toEntity(){
@@ -54,7 +52,7 @@ public class BoardDto {
     }
 
     @Builder
-    public BoardDto(Long id, String title, String content, UserDto writerDto, LocalDateTime createdDate, LocalDateTime modifiedDate,int viewCount,int likes
+    public BoardDto(Long id, String title, String content, UserDto writerDto, LocalDateTime createdDate, LocalDateTime modifyDate,int viewCount,int likes
     , List<Reply> replies
     ){
         this.id = id;
@@ -62,6 +60,6 @@ public class BoardDto {
         this.title = title;
         this.content = content;
         this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
+        this.modifyDate = modifyDate;
     }
 }

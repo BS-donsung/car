@@ -3,6 +3,7 @@ package com.imsi.car.domain.board.repo;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,23 +11,22 @@ import org.springframework.data.jpa.repository.Query;
 import com.imsi.car.domain.board.model.Board;
 
 public interface BoardRepo extends JpaRepository<Board, Long> {
+    
     //게시글 삭제
     void delete(Board board);
-
     //내림차순 검색
     List<Board> findByOrderByIdDesc();
     //제목으로 검색
-    List<Board> findByTitleContaining(String keyword);
+    List<Board> findByTitleContaining(String keyword, Pageable pageable);
     //내용으로 검색
-    List<Board> findByContentContaining(String keyword);
+    List<Board> findByContentContaining(String keyword, Pageable pageable);
     //댓글 내용으로 검색
-    List<Board> findByRepliesTextContaining(String keyword);
-    //글쓴이로 검색 
-        //닉네임 검색(글쓴이 정보 검색)
-        @Query(value = "select b from Board b where b.writer.nickname = :nickname", nativeQuery = false)
-        List<Board> getBoardListByNickname(@Param("nickname") String nickname);
-            //검색한 정보를 바탕으로writer로 검색
-            List<Board> findByWriterId(Long writer);
+    List<Board> findByRepliesTextContaining(String keyword, Pageable pageable);
+    //닉네임 검색(글쓴이 정보 검색)
+    @Query(value = "select b from Board b where b.writer.nickname = :nickname", nativeQuery = false)
+    List<Board> getBoardListByNickname(@Param("nickname") String nickname);
+    //위에서 검색한 정보를 바탕으로writer로 검색
+    List<Board> findByWriterId(Long writer, Pageable pageable);
 
     //게시글 상세보기
     // Optional<Board> findById(Long id);

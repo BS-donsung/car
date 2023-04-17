@@ -32,15 +32,17 @@ public class BoardController {
     @GetMapping("")
     // http://localhost:8180/board?page=2와 같은 식으로 찍어준다.
     public List<BoardDto> getBoardlist(@RequestParam(defaultValue = "1") Integer page) {
-        log.info("page : {}",page);
+        // log.info("page : {}",page);
         List<BoardDto> boardDtoList = bsi.listBoardPage(page);
         return boardDtoList;
     }
+
     /* 게시글 상세 보기*/
     @GetMapping("/view/{id}")
-    public List<BoardDto> BoardView( @PathVariable Long id) {
+    public BoardDto BoardView( @PathVariable Long id) {
         return bsi.BoardView(id);
     }
+
     // 글쓰기 요청을 보내는 컨트롤러 (YARC 이용)
     @PostMapping("/post")
     public ResponseEntity<Board> createBoard(@RequestBody Board board) {
@@ -64,8 +66,7 @@ public class BoardController {
 
     // 검색한 게시글 목록 출력(flag값 1=제목,2=내용,3=글쓴이,4=덧글내용 검색)
     @GetMapping("/search/{flag}/{keyword}")
-    public List<BoardDto> searchBoard(@PathVariable int flag, @PathVariable String keyword) {
-        return bsi.searchBoard(keyword, flag);
+    public List<BoardDto> searchBoard(@PathVariable String keyword, @PathVariable int flag, @RequestParam(defaultValue = "1") Integer page) {
+        return bsi.searchBoard(keyword, flag, page);
     }
-
 }

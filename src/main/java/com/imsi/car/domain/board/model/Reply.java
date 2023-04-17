@@ -17,12 +17,12 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 
-@Entity
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Getter
-@ToString(exclude = { "board", "user" })
+@Entity
+@ToString(exclude = { "board", "review", "user" })
 public class Reply extends BaseTimeEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,4 +38,8 @@ public class Reply extends BaseTimeEntity {
   @ManyToOne(fetch = FetchType.EAGER)
   @JsonBackReference//무한 참조 방지용
   private Board board;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  // @JsonBackReference//무한 참조 방지용
+  private Review review;
 }
