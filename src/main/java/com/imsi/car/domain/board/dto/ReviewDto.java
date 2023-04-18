@@ -2,27 +2,23 @@ package com.imsi.car.domain.board.dto;
 
 import java.time.LocalDateTime;
 
-import com.imsi.car.domain.board.model.Board;
+import com.imsi.car.domain.board.model.Review;
 import com.imsi.car.domain.user.dto.UserDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.log4j.Log4j2;
 
-@Log4j2
 @ToString
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BoardDto {
+public class ReviewDto {
 
-    private Long bno;
+    private Long rvno;
     private String title;
     private String content;
     private LocalDateTime createdDate;
@@ -33,21 +29,21 @@ public class BoardDto {
     private int replyCount;
     private UserDto writerDto;
 
-    public BoardDto(Board board) {
-        this.bno = board.getBno();
-        this.writerDto = new UserDto(board.getWriter());
-        this.title = board.getTitle();
-        this.content = board.getContent();
-        this.viewCount = board.getViewCount();
-        this.likes = board.getLikes();
-        this.replyCount = board.getReplyCount();
-        this.createdDate = board.getCreatedDate();
-        this.modifyDate = board.getModifyDate();
+    public ReviewDto(Review review) {
+        this.rvno = review.getRvno();
+        this.writerDto = new UserDto(review.getWriter());
+        this.title = review.getTitle();
+        this.content = review.getContent();
+        this.viewCount = review.getViewCount();
+        this.likes = review.getLikes();
+        this.createdDate = review.getCreatedDate();
+        this.modifyDate = review.getModifyDate();
+        this.replyCount = review.getReplyCount();
     }
 
-    public Board toEntity() {
-        Board board = Board.builder()
-                .bno(bno)
+    public Review toEntity() {
+        Review review = Review.builder()
+                .rvno(rvno)
                 .writer(writerDto.toEntity())
                 .title(title)
                 .content(content)
@@ -55,7 +51,6 @@ public class BoardDto {
                 .likes(likes)
                 .replyCount(replyCount)
                 .build();
-        log.info("로그 :" + writerDto.toEntity());
-        return board;
+        return review;
     }
 }

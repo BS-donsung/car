@@ -30,7 +30,7 @@ import lombok.ToString;
 public class Review extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long rvno;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "writer", updatable = false)
@@ -40,16 +40,18 @@ public class Review extends BaseTimeEntity{
     private String content;
     private int viewCount;
     private int likes;
+    private int replyCount;
 
     @OneToMany(mappedBy = "review", fetch = FetchType.EAGER, cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<Reply> replies = new ArrayList<>();
 
-    public Review(Long id, User writer, String title, String content, int viewCount, int likes){
-        this.id = id;
+    public Review(Long rvno, User writer, String title, String content, int viewCount, int likes, int replyCount){
+        this.rvno = rvno;
         this.writer = writer;
         this.title = title;
         this.content = content;
         this.viewCount = 0;
         this.likes = 0;
-    }
+        this.replyCount = 0;
+        }
 }
