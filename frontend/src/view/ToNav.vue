@@ -13,7 +13,9 @@
       <router-link to="/community">
         커뮤니티
       </router-link>
-      <a href="#">문의하기</a>
+      <router-link to="/inquiry">
+        문의하기
+      </router-link>
       <span>{{ username }}</span>
       <button
         v-if="username != ''"
@@ -38,7 +40,7 @@ import Cookies from 'js-cookie'
 import { onMounted, ref } from 'vue'
 // import { URL } from '@/components/global'
 
-const username = ref('qw')
+const username = ref('')
 const token = Cookies.get('Authorization')
 
 function gettoken() {
@@ -102,6 +104,7 @@ span {
   justify-content: space-between;
   align-items: center;
   background-color: black;
+  z-index: 1;
 }
 
 .logo {

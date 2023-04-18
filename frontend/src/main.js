@@ -1,17 +1,24 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from '@/router/index'
-import { createPinia } from 'pinia'
+import VueCookies from 'vue-cookies'
+
 
 // awsome icon import
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import VueCookies from 'vue-cookies'
 
 library.add(fas, fab)
 
+// bootstrap import
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
+import 'bootstrap/dist/js/bootstrap.js'
+
+// pinia store import
+import { createPinia } from 'pinia'
 const pinia = createPinia()
 
 createApp(App)

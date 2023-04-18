@@ -22,8 +22,8 @@ public class UserController {
     public String doJoin(@RequestBody User user){
         // 회원가입 메소드
         log.info("user : {}",user);
-        String remsg = "로그인 실패";
-        if(userService.join(user)) remsg = "로그인 성공";
+        String remsg = "회원가입 실패";
+        if(userService.join(user)) remsg = "회원가입 성공";
         return remsg;
     }
     @PostMapping("/chkuser")

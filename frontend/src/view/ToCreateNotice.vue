@@ -1,56 +1,56 @@
 <template>
   <Nav />
-  <div class="container notice_container">
-    <div class="notice_write">
-      <div class="wright_wrap">
-        <h3 class="box_title">
-          커뮤니티 글쓰기
-        </h3>
+  <div id="wrap">
+    <div class="container notice_container">
+      <div class="notice_write">
+        <div class="wright_wrap">
+          <h3 class="box_title">
+            커뮤니티 글쓰기
+          </h3>
 
-        <form class="form_box">
-          <div class="in_title">
-            <h3 class="sub_title">
-              제목
-            </h3>
-            <textarea maxlength="100"></textarea>
-          </div>
+          <form class="form_box">
+            <div class="in_title">
+              <h3 class="sub_title">
+                제목
+              </h3>
+              <textarea
+                v-model="notice_data.title"
+                maxlength="100"></textarea>
+            </div>
 
-          <div class="in_title">
-            <h3 class="sub_title">
-              작성자
-            </h3>
-            <textarea maxlength="100"></textarea>
-          </div>
+            <div class="in_title contents">
+              <h3 class="sub_title">
+                내용
+              </h3>
+              <!-- <textarea v-model="form.description"></textarea> -->
+              <QuillEditor
+                v-model:content="notice_data.content"
+                content-type="text"
+                :options="form.editorOption"
+                style="height:400px;"
+                theme="snow" />
+            </div>
 
-          <div class="in_title contents">
-            <h3 class="sub_title">
-              내용
-            </h3>
-            <!-- <textarea v-model="form.description"></textarea> -->
-            <QuillEditor
-              content-type="html"
-              :options="form.editorOption"
-              style="height:400px;"
-              theme="snow" />
-          </div>
-
-          <div class="button_wrap">
-            <button
-              class="writing_btn back_btn"
-              @click="back()">
-              목록
-            </button>
-            <button
-              type="reset"
-              class="writing_btn del_btn">
-              취소
-            </button>
-            <button
-              class="writing_btn writing_done">
-              작성 완료
-            </button>
-          </div>
-        </form>
+            <div class="button_wrap">
+              <button
+                class="writing_btn back_btn"
+                @click="backComFrm">
+                목록
+              </button>
+              <button
+                type="reset"
+                class="writing_btn del_btn"
+                @click="backComFrm">
+                취소
+              </button>
+              <button
+                class="writing_btn writing_done"
+                @click.prevent="completeBtn">
+                작성 완료
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -58,7 +58,9 @@
 
 <script setup>
 import Nav from '@/view/ToNav.vue'
-import { ref } from 'vue'
+import router from '@/router'
+import { reactive, ref } from 'vue'
+import { URL } from '@/components/global'
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
@@ -80,15 +82,56 @@ const form = ref({
   }, //내용
 })
 
+const notice_data = reactive({
+  title: '',
+  writerDto: {
+    username:'username1',
+    nickname:'유저1',
+  },
+  content: '',
+})
+
+const completeBtn = async () => {
+  console.log(notice_data)
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(notice_data),
+  }
+  try {
+    const res = await fetch(URL + '/board/post', requestOptions)
+    console.log(res.json())
+    console.log('작성완료')
+    router.push({
+      path: '/community',
+    })
+  } catch (error) {
+    console.log('게시글 등록에 실패했습니다', error)
+  }
+}
+  const backComFrm = () => {
+    router.push({
+      path: '/community',
+    })
+  }
 </script>
 
 <style scoped>
 @charset "UTF-8";
+@import "@/assets/notice.css";
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Open+Sans:ital,wght@0,300;0,600;1,300;1,600&family=Poor+Story&family=Poppins:wght@300;400;500;600;700&display=swap');
 
 * {
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
+}
+
+#wrap {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 .container.notice_container {
