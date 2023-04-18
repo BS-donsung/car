@@ -20,7 +20,7 @@ import com.imsi.car.domain.user.model.User;
 @Component
 public class CarUtils {
     // util
-    public List<CarDTO> CarListToDTO(List<Car> list) {
+    public List<CarDTO> CarListToDtos(List<Car> list) {
         List<CarDTO> result = new ArrayList<>();
         for (Car car : list) {
             result.add(entityToDto(car));
@@ -28,7 +28,7 @@ public class CarUtils {
 
         return result;
     }
-    public List<OptionDTO> carOptionListToDTO(List<CarOption> list){
+    public List<OptionDTO> carOptionListToDtos(List<CarOption> list){
         List<OptionDTO> result = new ArrayList<>();
         for (CarOption carOption : list) {
             result.add(entityToDto(carOption));
@@ -45,6 +45,22 @@ public class CarUtils {
         return result;
     }
 
+    public List<OptionDTO> storeOptionListToDtos(List<StoreOption> list){
+        List<OptionDTO> result = new ArrayList<>();
+        for(StoreOption storeOptions : list){
+            result.add(entityToDto(storeOptions));
+        }
+        return result;
+    }
+
+    public List<StoreDTO> storeListToStoreDtos(List<Store> list){
+        List<StoreDTO> result = new ArrayList<>();
+        for(Store store : list){
+            result.add(entityToDto(store));
+        }
+        return result;
+    }
+
     public CarDTO entityToDto(Car car) {
         CarDTO carDTO = CarDTO.builder()
                 .cid(car.getCid())
@@ -56,7 +72,7 @@ public class CarUtils {
                 .segment(car.getSegment().getSegment())
                 .imgurl(car.getImgurl())
                 .cost(car.getCost())
-                .options(carOptionListToDTO(car.getCarOptions()))
+                .options(carOptionListToDtos(car.getCarOptions()))
                 .build();
         return carDTO;
     }
@@ -97,6 +113,15 @@ public class CarUtils {
         .chk(storeOption.isOpt())
         .build();
         return optionDTO;
+    }
+
+    public StoreDTO entityToDto(Store store){
+        StoreDTO storeDTO = StoreDTO.builder()
+        .carDTO(entityToDto(store.getCar()))
+        .user(store.getUser().getUsername())
+        .options(storeOptionListToDtos(store.getStoreOptions())) // List<OptionDTO> 가 필요함 List<StoreOption> 가지고 해야함
+        .build();
+        return storeDTO;
     }
 
     public Store dtoToEntity(StoreDTO storeDTO){

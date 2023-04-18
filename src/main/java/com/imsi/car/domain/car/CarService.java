@@ -28,4 +28,8 @@ public interface CarService {
 
     public StoreDTO optionInfo(String cid);
 
+    public List<StoreDTO> listOptionByUsername(String username);
+
+    
+
 }

@@ -20,6 +20,7 @@ import com.imsi.car.domain.car.repo.OptionRepo;
 import com.imsi.car.domain.car.repo.SegmentRepo;
 import com.imsi.car.domain.car.repo.StoreOptionRepo;
 import com.imsi.car.domain.car.repo.StoreRepo;
+import com.imsi.car.domain.user.model.User;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -70,20 +71,20 @@ public class CarServiceImpl implements CarService {
         for (Car car : list) {
             log.info("car : {} ",car);
         }
-        return carUtils.CarListToDTO(list);
+        return carUtils.CarListToDtos(list);
     }
 
     public List<CarDTO> listCarBySegment(CarDTO carDTO) {
         List<Car> list = carRepo.findAllBySegment(new Segment(0, carDTO.getSegment()));
 
-        return carUtils.CarListToDTO(list);
+        return carUtils.CarListToDtos(list);
     }
 
     public List<CarDTO> listCarByBrandAndSegment(CarDTO carDTO) {
         List<Car> list = carRepo.findAllByBrandAndSegment(new Brand(carDTO.getBrand()),
                 new Segment(0, carDTO.getSegment()));
 
-        return carUtils.CarListToDTO(list);
+        return carUtils.CarListToDtos(list);
     }
 
     public void storeUserOption(StoreDTO storeDTO) {
@@ -98,13 +99,17 @@ public class CarServiceImpl implements CarService {
     public StoreDTO optionInfo(String cid) {
         Car car = carRepo.findById(Integer.parseInt(cid));
         StoreDTO optionDTO = StoreDTO.builder()
-        .options(carUtils.carOptionListToDTO(car.getCarOptions()))
+        .options(carUtils.carOptionListToDtos(car.getCarOptions()))
         .carDTO(carUtils.entityToDto(car))
         .build();
         
-        
-
         return optionDTO;
+    }
+
+    public List<StoreDTO> listOptionByUsername(String username){
+        List<Store> stores= storeRepo.findByUsername(User.builder().username(username).build());
+        List<StoreDTO> result = carUtils.storeListToStoreDtos(stores);
+        return result;
     }
 
     

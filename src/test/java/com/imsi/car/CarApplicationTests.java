@@ -35,11 +35,8 @@ class CarApplicationTests {
 	@Test
 	@Transactional
 	void contextLoads2() {
-		List<Store> list = storeRepo.findBySotreID("1");
-		for (Store store : list) {
-			System.out.println(store);
-			
-		}
+		Store store = storeRepo.findBySotreID("1");
+		System.out.println(store);
 	}
 
 	@Test
