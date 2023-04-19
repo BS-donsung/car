@@ -42,8 +42,9 @@
 import Nav from '@/view/ToNav.vue'
 import PNav from '@/components/PrivateNav.vue'
 import { ref, onMounted } from 'vue'
+import { URL } from '@/components/global'
 
-const username = ref('banana')
+const username = ref('')
 const nickname = ref('별명')
 const email = ref('이메일')
 const exp = ref('56')
@@ -57,6 +58,13 @@ const getUserInfo = () => {
   console.log('대충 username, nickname, email, exp 가져오는 로직')
   console.log('대충 exp가지고 lv이랑 percentage 가공하는 로직')
   console.log('대충 provider가지고 isCloak 조정해서 oapacity 설정하는 로직')
+
+  const requestOptions = {
+    credentials: 'include'
+  }
+  fetch(`${URL}/getuser`, requestOptions)
+  .then(res => res.text())
+  .then(text => username.value = text)
 }
 onMounted(()=>{
   getUserInfo()

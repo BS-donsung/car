@@ -6,9 +6,9 @@
       v-for="store in data.stores"
       :key="store"
       class="store-box">
-      <router-link :to="'/mypage/store?cid='+store.carDTO.cid">
+      <router-link :to="'/mypage/store?cid='+store.carDto.cid">
         <button class="store-inner">
-          {{ store.carDTO.name }}
+          {{ store.carDto.name }}
         </button>
       </router-link>
     </div>

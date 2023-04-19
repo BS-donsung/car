@@ -3,6 +3,7 @@ package com.imsi.car.domain.user;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.imsi.car.domain.user.dto.UserDto;
 import com.imsi.car.domain.user.model.User;
 import com.imsi.car.domain.user.repo.UserRepo;
 
@@ -34,4 +35,9 @@ public class UserServiceImpl implements UserService {
         boolean result = userRepo.findByUsername(user.getUsername()) != null;
         return result;
     }
+    public UserDto findUserByUsername(String username){
+        User user = userRepo.findByUsername(username);
+        return new UserDto(user);
+    }
+
 }

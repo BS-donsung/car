@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imsi.car.domain.car.CarService;
-import com.imsi.car.domain.car.dto.StoreDTO;
+import com.imsi.car.domain.car.dto.StoreDto;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -22,15 +22,15 @@ public class StoreController {
     private final CarService carService;
 
     @GetMapping("/mystores")
-    public List<StoreDTO> findMyStores(HttpServletRequest req){
+    public List<StoreDto> findMyStores(HttpServletRequest req){
         log.info("/mystores : {}", req.getAttribute("usernmae"));
         
         return carService.listOptionByUsername("gi");
     }
     @GetMapping("/mystore")
-    public StoreDTO findMyStore(HttpServletRequest req, @RequestParam String cid){
+    public StoreDto findMyStore(HttpServletRequest req, @RequestParam String cid){
         log.info("/mystore : {} , {}",req.getAttribute("username"), cid);
-        StoreDTO storeDTO = carService.optionInfo(cid);
-        return storeDTO;
+        StoreDto storeDto = carService.optionInfo(cid);
+        return storeDto;
     }
 }
