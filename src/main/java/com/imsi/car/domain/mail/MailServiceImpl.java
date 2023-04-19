@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.uuid.Generators;
-import com.imsi.car.domain.mail.model.AdsDTO;
+import com.imsi.car.domain.mail.model.AdsDto;
 import com.imsi.car.domain.user.repo.UserRepo;
 
 import jakarta.mail.Authenticator;
@@ -28,7 +28,7 @@ public class MailServiceImpl implements MailService{
     private final UserRepo userRepo;
 
     @Override
-    public String adsEmail(AdsDTO adsDTO) {
+    public String adsEmail(AdsDto adsDTO) {
         String msg = "";
         List<String> emails = userRepo.findEmailByAllowEmail(true);
         String[] emailsArr = emails.toArray(new String[emails.size()]);
@@ -93,6 +93,7 @@ public class MailServiceImpl implements MailService{
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress("kimsw3445@gmail.com","관리자","utf-8"));
         for (String tomail : tomails) {
+            log.info("tomail : {}",tomail);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(tomail));
         }
         message.setSubject(title);

@@ -7,7 +7,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @Getter
 @Setter
-public class AdsDTO {
+public class AdsDto {
     public final String title;
     public final String msg;
 }

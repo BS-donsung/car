@@ -1,6 +1,6 @@
 package com.imsi.car.domain.mail;
 
-import com.imsi.car.domain.mail.model.AdsDTO;
+import com.imsi.car.domain.mail.model.AdsDto;
 
 public interface MailService {
     
@@ -12,7 +12,7 @@ public interface MailService {
     public String passwordEmail(String email);
 
     // 전체 광고 메일
-    public String adsEmail(AdsDTO adsDTO);
+    public String adsEmail(AdsDto adsDTO);
 
     
 }
