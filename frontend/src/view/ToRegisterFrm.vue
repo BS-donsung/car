@@ -135,6 +135,7 @@ const registerBtn = async () => {
   try {
     const reg = await fetch(URL + '/user/join', requestOptions)
     console.log(reg.json())
+    router.push({ path: '/loginfrm' })
   } catch (error) {
     console.log('회원가입에 실패했습니다.', error)
   }
