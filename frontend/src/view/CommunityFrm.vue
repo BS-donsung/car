@@ -47,6 +47,9 @@
                 <td class="text_center">
                   {{ forms.writerDto.username }}
                 </td>
+                <td class="text_center">
+                  {{ forms.createdDate }}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -146,7 +149,7 @@ const NoticeWrite = () => {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  margin-top: 150px;
+  margin-top: 100px;
 }
 
 .writing_btn {
