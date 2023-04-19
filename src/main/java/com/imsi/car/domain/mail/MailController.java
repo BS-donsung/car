@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imsi.car.domain.mail.model.AdsDto;
-import com.imsi.car.domain.mail.model.EmailDto;
+import com.imsi.car.domain.mail.model.MailDto;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/email")
+@RequestMapping("/mail")
 @Log4j2
 public class MailController  {
     
@@ -22,15 +22,15 @@ public class MailController  {
     // 이에 맞게 mailerr 문자열을 받았을시 vue에서의 처리가 필요합니다
     
     @PostMapping("/join")
-    public String joinEmail(@RequestBody EmailDto emailDto){
-        log.info("joining email : {}",emailDto);
-        String msg = mailService.joinEmail(emailDto.getEmail());
+    public String joinEmail(@RequestBody MailDto mailDto){
+        log.info("joining email : {}",mailDto);
+        String msg = mailService.joinEmail(mailDto.getEmail());
         return msg;
     }
     @PostMapping("/passreset")
-    public String passReset(@RequestBody EmailDto emailDto){
-        log.info("reseting email : {}",emailDto);
-        String msg = mailService.passwordEmail(emailDto.getEmail());
+    public String passReset(@RequestBody MailDto mailDto){
+        log.info("reseting email : {}",mailDto);
+        String msg = mailService.passwordEmail(mailDto.getEmail());
         return msg;
     }
 
@@ -38,6 +38,14 @@ public class MailController  {
     public String adsEmail(@RequestBody AdsDto adsDTO){
         log.info("joining email : {}",adsDTO);
         String msg = mailService.adsEmail(adsDTO);
+        return msg;
+    }
+
+    @PostMapping("/inquiry")
+    public String inquiryEmail(@RequestBody MailDto mailDto){
+        log.info("/inquiry : {}",mailDto );
+        String msg = mailService.inquiryMail(mailDto);
+        log.info("msg : {}",msg);
         return msg;
     }
     

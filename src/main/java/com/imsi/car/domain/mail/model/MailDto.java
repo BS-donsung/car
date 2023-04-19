@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmailDto {
+public class MailDto {
     private String email;
+    private String name;
+    private String content;
 }

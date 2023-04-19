@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.uuid.Generators;
 import com.imsi.car.domain.mail.model.AdsDto;
+import com.imsi.car.domain.mail.model.MailDto;
 import com.imsi.car.domain.user.repo.UserRepo;
 
 import jakarta.mail.Authenticator;
@@ -26,6 +27,8 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class MailServiceImpl implements MailService{
     private final UserRepo userRepo;
+
+    private final String ADMIM_MAIL = "kimsw3445@gmail.com";
 
     @Override
     public String adsEmail(AdsDto adsDTO) {
@@ -74,6 +77,24 @@ public class MailServiceImpl implements MailService{
         return code;
     }
 
+    @Override
+    public String inquiryMail(MailDto mailDto){
+        String title = "==문의 메일==";
+        String content = mailDto.getContent();
+        content+="<br>"+mailDto.getEmail()+"님의 메일입니다";
+
+        String msg = "";
+
+        try{
+            sendEmail(title, content,ADMIM_MAIL );
+        }catch(Exception e){
+            log.error("mailerr",e);
+            msg = "mailerr";
+        }
+        return msg;
+    }
+
+
     public void sendEmail(String title, String content,String... tomails) throws Exception{
         final String KEY = "";
 
@@ -87,11 +108,11 @@ public class MailServiceImpl implements MailService{
         Session session = Session.getInstance(props, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("kimsw3445@gmail.com", KEY);
+				return new PasswordAuthentication(ADMIM_MAIL, KEY);
 			}
 		});
         Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress("kimsw3445@gmail.com","관리자","utf-8"));
+        message.setFrom(new InternetAddress(ADMIM_MAIL,"관리자","utf-8"));
         for (String tomail : tomails) {
             log.info("tomail : {}",tomail);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(tomail));
