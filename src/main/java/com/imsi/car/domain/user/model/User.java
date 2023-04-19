@@ -46,8 +46,19 @@ public class User {
 	private String nickname;
 	@ColumnDefault("0")
 	private int exp;
+	@CreationTimestamp
+	private Timestamp createDate;
+
+
+	// mail, email 수신 여부 설정
+	@Column(columnDefinition="tinyint(1) default 1")
+    private boolean allowEmail;
+    @Column(columnDefinition="tinyint(1) default 1")
+    private boolean allowSms;
+
 	@CreatedDate
 	private Date createdDate;
+
 	private String provider;
 	private String providerId;
 	@Column(unique = true)
