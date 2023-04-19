@@ -2,27 +2,27 @@
   <Nav />
   <PNav />
   <div class="myBody">
-    <span>{{ username }}님 반갑습니다</span>
+    <span>{{ user.username }}님 반갑습니다</span>
     <span>
       닉네임 : <input
-        v-model="nickname"
+        v-model="user.nickname"
         type="text" />
       <button
         class="changeNick"
         @click="changeNick">수정하기</button>
     </span>
     <span> 이메일 : <input
-      v-model="email"
+      v-model="user.email"
       type="email"
       disabled /> </span>
     <span>
       exp :
       <progress
         class="todo-progress"
-        :value="exp"
+        :value="user.exp"
         min="0"
         max="100"></progress>
-      {{ level }}Lv
+      {{ user.level }}Lv
     </span>
     <span>
       <i
@@ -44,29 +44,29 @@ import PNav from '@/components/PrivateNav.vue'
 import { ref, onMounted } from 'vue'
 import { URL } from '@/components/global'
 
-const username = ref('')
-const nickname = ref('별명')
-const email = ref('이메일')
-const exp = ref('56')
-const level = ref('6')
-const isCloak = ref(['cloaking', 'cloaking', ''])
+const user = ref('')
+const isCloak = ref(['', '', ''])
+const requestOptions = {
+  credentials: 'include',
+}
 
 const changeNick = () => {
-  console.log('대충 닉네임 바꾸는 로직')
+  
 }
 const getUserInfo = () => {
-  console.log('대충 username, nickname, email, exp 가져오는 로직')
-  console.log('대충 exp가지고 lv이랑 percentage 가공하는 로직')
-  console.log('대충 provider가지고 isCloak 조정해서 oapacity 설정하는 로직')
-
-  const requestOptions = {
-    credentials: 'include'
-  }
-  fetch(`${URL}/getuser`, requestOptions)
-  .then(res => res.text())
-  .then(text => username.value = text)
+  fetch(`${URL}/user/getuser`, requestOptions)
+    .then((res) => res.json())
+    .then((body) => {
+      user.value = body
+      isCloak.value = [
+        user.value.provider == 'google' ? '' : 'cloaking',
+        user.value.provider == 'naver' ? '' : 'cloaking',
+        user.value.provider == 'facebook' ? '' : 'cloaking',
+      ]
+    })
 }
-onMounted(()=>{
+
+onMounted(() => {
   getUserInfo()
 })
 </script>
