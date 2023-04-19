@@ -58,24 +58,29 @@
           <form action="#">
             <div class="input-box">
               <input
+                v-model="postemail.name"
                 type="text"
                 placeholder="이름을 입력하시오." />
             </div>
 
             <div class="input-box">
               <input
+                v-model="postemail.email"
                 type="email"
                 placeholder="이메일을 입력하시오." />
             </div>
 
             <div class="input-box message-box">
-              <textarea placeholder="내용을 입력하시오."></textarea>
+              <textarea
+                v-model="postemail.content"
+                placeholder="내용을 입력하시오."></textarea>
             </div>
 
             <div class="button">
               <input
                 type="button"
-                value="보내기" />
+                value="보내기"
+                @click="send" />
             </div>
           </form>
         </div>
@@ -86,6 +91,41 @@
 
 <script setup>
 import Nav from '@/view/ToNav.vue'
+import { URL } from '@/components/global'
+import { reactive } from 'vue'
+import router from '@/router'
+import axios from 'axios'
+
+const postemail = reactive({
+  name: '',
+  email: '',
+  content: '',
+})
+
+const send = () => {
+  console.log(postemail)
+  let data = {
+    name: postemail.name,
+    email: postemail.email,
+    content: postemail.content,
+  }
+
+  axios.post(URL + '/mail/inquiry', data)
+    .then(res => {
+      console.log('텍', res)
+      if (res.data == 'mailerr') {
+        throw new Error('메일전송에 실패했습니다.')
+      }
+      alert('메일전송 하였습니다. 최선을 다하여 해결하겠습니다.')
+      router.push({
+        path: '/inquiry',
+      })
+      window.location.reload(true)
+    })
+    .catch( (e) => {
+      console.log(e)
+    })
+}
 </script>
 
 <style scoped>
