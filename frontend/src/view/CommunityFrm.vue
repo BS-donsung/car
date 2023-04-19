@@ -25,16 +25,16 @@
                 작성자
               </th>
               <th class="th_date">
-                작성날짜
+                등록일자
               </th>
             </thead>
 
             <tbody>
               <tr
                 v-for="forms in posts"
-                :key="forms.id"
+                :key="forms.bno"
                 style="cursor: pointer;"
-                @click="NoticeDetail(forms.id)">
+                @click="NoticeDetail(forms.bno)">
                 <p
                   class="notice_date"
                   style="text-align: center;">
@@ -53,24 +53,6 @@
               </tr>
             </tbody>
           </table>
-
-          <div
-            v-for="forms in posts"
-            :key="forms.id"
-            class="mobile_notice_wrap"
-            style="cursor: pointer;"
-            @click="NoticeDetail(forms.id)">
-            <ul class="mobi_notice_list">
-              <li>
-                <a class="notice_title">{{ forms.title }}</a>
-                <p class="notice_date">
-                  {{ forms.writerDto.username }}
-                </p>
-                <p class="right_icon"></p>
-              </li>
-            </ul>
-          </div>
-
           <AppPagination
             :current-page="params._page"
             :page-count="pageCount"
@@ -131,14 +113,15 @@ const NoticeWrite = () => {
   })
 }
 
-// const NoticeDetail = id => {
-//   router.push({
-//     name: 'noticedetail',
-//     params: {
-//       id
-//     }
-//   })
-// }
+const NoticeDetail = bno => {
+  router.push({
+    name: 'detailnotice',
+    params: {
+      bno
+    }
+  })
+  
+}
 </script>
 
 <style scoped>
@@ -147,9 +130,9 @@ const NoticeWrite = () => {
 
 #wrap {
   display: flex;
-  min-height: 100vh;
+  height: 100%;
   flex-direction: column;
-  margin-top: 100px;
+  background: #F0F1F8;
 }
 
 .writing_btn {

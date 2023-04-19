@@ -5,6 +5,7 @@ import Login from '@/view/ToLoginFrm.vue'
 import Register from '@/view/ToRegisterFrm.vue'
 import Community from '@/view/CommunityFrm.vue'
 import CreateNotice from '@/view/ToCreateNotice.vue'
+import DetailNotice from '@/view/ToDetailNotice.vue'
 import Inquiry from '@/view/InquiryFrm.vue'
 
 
@@ -14,8 +15,9 @@ const routes = [
   {path: '/comparison', component: Comparison},
   {path: '/loginfrm', component: Login},
   {path: '/registerfrm', component: Register},
-  {path: '/community', component: Community},
+  {path: '/community', component: Community, name: 'community'},
   {path: '/cratenotice', component: CreateNotice},
+  {path: '/community/:bno', component: DetailNotice, name: 'detailnotice' , props:true},
   {path: '/inquiry', component: Inquiry},
 ]
 
