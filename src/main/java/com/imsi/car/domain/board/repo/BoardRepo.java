@@ -1,9 +1,9 @@
 package com.imsi.car.domain.board.repo;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -48,5 +48,4 @@ public interface BoardRepo extends JpaRepository<Board, Long> {
     @Query("UPDATE Board b SET b.title = :title, b.content = :content WHERE b.bno = :bno")
     void updateBoard(@Param("bno") Long bno, @Param("title") String title, @Param("content") String content);
 
-    // public Map<Long, Integer> getReplyCountByBno();
 }

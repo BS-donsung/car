@@ -1,6 +1,7 @@
 package com.imsi.car.domain.board.dto;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.imsi.car.domain.board.model.Board;
 import com.imsi.car.domain.board.model.Reply;
@@ -25,8 +26,8 @@ public class ReplyDto {
     private User user;
     private Board board;
     private Review review;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifyDate;
+    private String createdDate;
+    private String modifyDate;
     private BoardDto boardDto;
     private UserDto userDto;
     private ReviewDto reviewDto;
@@ -37,22 +38,37 @@ public class ReplyDto {
         this.user = reply.getUser();
         this.board = reply.getBoard();
         this.review = reply.getReview();
-        this.createdDate = reply.getCreatedDate();
-        this.modifyDate = reply.getModifyDate();
-        this.userDto = new UserDto();
+        this.createdDate = reply.getFormattedCreatedDate();
+        this.createdDate = reply.getCreatedDate() != null ? reply.getFormattedCreatedDate()
+                : LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.modifyDate = reply.getModifyDate() != null ? reply.getFormattedModifyDate()
+                : LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.userDto = new UserDto(reply.getUser());
+        this.boardDto = new BoardDto(reply.getBoard());
+    }
+
+    // 추가
+    public void setUserDto(UserDto userDto) {
+        this.userDto = userDto;
+    }
+
+    public void setBoardDto(BoardDto boardDto) {
+        this.boardDto = boardDto;
+    }
+
+    public void setReviewDto(ReviewDto reviewDto) {
+        this.reviewDto = reviewDto;
     }
 
     public Reply toEntity() {
         Reply reply = Reply.builder()
                 .rno(rno)
                 .text(text)
-                // .user(user)
-                // .board(board)
-                // .review(review)
-                .user(userDto.toEntity())
-                .board(boardDto.toEntity())
-                .review(reviewDto.toEntity())
+                .user(userDto != null ? userDto.toEntity() : null)
+                .board(boardDto != null ? boardDto.toEntity() : (board != null ? board : null))
+                .review(reviewDto != null ? reviewDto.toEntity() : (review != null ? review : null))
                 .build();
         return reply;
     }
+
 }

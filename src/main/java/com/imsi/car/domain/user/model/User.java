@@ -3,11 +3,14 @@ package com.imsi.car.domain.user.model;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.imsi.car.domain.board.model.Board;
+import com.imsi.car.domain.board.model.Reply;
+import com.imsi.car.domain.board.model.Review;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -23,10 +26,10 @@ import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
-@JsonIgnoreProperties({ "boards" }) // boards 속성은 JSON으로 변환하지 않음(무한참조 방지 코드)
+@JsonIgnoreProperties({ "boards", "reviews", "replies" }) // boards 속성은 JSON으로 변환하지 않음(무한참조 방지 코드)
 @Getter
 @Setter
-@ToString(exclude = { "boards" })
+@ToString(exclude = { "boards", "reviews", "replies" })
 
 public class User {
 	@Id // primary key
@@ -47,6 +50,12 @@ public class User {
 	@OneToMany(mappedBy = "writer", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<Board> boards = new ArrayList<>();
 
+	@OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
+	private List<Reply> replies = new ArrayList<>();
+
+	@OneToMany(mappedBy = "writer", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
+	private List<Review> reviews = new ArrayList<>();
+
 	@Builder
 	public User(String username, String password, String email, String role, Timestamp createdDate, String provider,
 			String providerId, int exp, String nickname) {
@@ -60,4 +69,15 @@ public class User {
 		this.exp = exp;
 		this.nickname = nickname;
 	}
+
+	public List<Board> getBoards() {
+		return boards;
+	}
+
+	public List<Reply> getReplies() {
+		return boards.stream()
+				.flatMap(board -> board.getReplies().stream())
+				.collect(Collectors.toList());
+	}
+
 }

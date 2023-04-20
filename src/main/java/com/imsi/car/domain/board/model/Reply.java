@@ -1,7 +1,5 @@
 package com.imsi.car.domain.board.model;
 
-import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.imsi.car.domain.user.model.User;
 
@@ -36,15 +34,14 @@ public class Reply extends BaseTimeEntity {
   @JsonBackReference(value = "user-replies")
   private User user;
 
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.EAGER, optional = true)
   @JsonBackReference // 무한 참조 방지용
   @JoinColumn(name = "board")
   private Board board;
 
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.EAGER, optional = true)
   // @JsonBackReference//무한 참조 방지용
   @JoinColumn(name = "review")
   private Review review;
 
-  private LocalDateTime modifyDate;
 }

@@ -1,6 +1,5 @@
 package com.imsi.car.domain.board.model;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,8 +63,6 @@ public class Board extends BaseTimeEntity {
     @Builder.Default
     private int replyCount = 0;
 
-    private LocalDateTime modifyDate;
-
     // 보드 - 리플 관계 //리포지토리의 find 어쩌고가 참조하는 것으로 인한 무한참조 이슈
     // @JsonManagedReference(value = "board-replies") // replies 필드를 직렬화할 때 참조하는 객체를
     // 정의(무한참조 방지)
@@ -83,15 +80,16 @@ public class Board extends BaseTimeEntity {
         this.replyCount++;
     }
 
+    public void subtractReplyCount() {
+        this.replyCount--;
+    }
+
     // 빌더
     public Board(Long bno, String title, String content, User writer, int viewCount, int likes, int replyCount) {
         this.bno = bno;
         this.writer = writer;
         this.title = title;
         this.content = content;
-        // this.viewCount = 0;
-        // this.likes = 0;
-        // this.replyCount = 0;
         this.viewCount = viewCount;
         this.likes = likes;
         this.replyCount = replyCount;

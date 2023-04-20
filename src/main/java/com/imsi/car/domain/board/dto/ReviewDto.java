@@ -1,7 +1,5 @@
 package com.imsi.car.domain.board.dto;
 
-import java.time.LocalDateTime;
-
 import com.imsi.car.domain.board.model.Review;
 import com.imsi.car.domain.user.dto.UserDto;
 
@@ -9,10 +7,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @ToString
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,13 +23,13 @@ public class ReviewDto {
     private Long rvno;
     private String title;
     private String content;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifyDate;
     private int viewCount;
     private int likes;
-    // private List<Reply> replies;
     private int replyCount;
     private UserDto writerDto;
+    private String createdDate;
+    private String modifyDate;
+    // private List<Reply> replies;
 
     public ReviewDto(Review review) {
         this.rvno = review.getRvno();
@@ -36,9 +38,9 @@ public class ReviewDto {
         this.content = review.getContent();
         this.viewCount = review.getViewCount();
         this.likes = review.getLikes();
-        this.createdDate = review.getCreatedDate();
-        this.modifyDate = review.getModifyDate();
         this.replyCount = review.getReplyCount();
+        this.createdDate = review.getFormattedCreatedDate();
+        this.modifyDate = review.getFormattedModifyDate();
     }
 
     public Review toEntity() {
@@ -51,6 +53,7 @@ public class ReviewDto {
                 .likes(likes)
                 .replyCount(replyCount)
                 .build();
+        log.info("ReviewToEntity로그 :" + writerDto.toEntity());
         return review;
     }
 }

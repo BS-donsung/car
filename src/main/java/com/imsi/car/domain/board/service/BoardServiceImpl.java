@@ -2,9 +2,7 @@ package com.imsi.car.domain.board.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
@@ -14,8 +12,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.imsi.car.domain.board.dto.BoardDto;
+import com.imsi.car.domain.board.dto.ReplyDto;
 import com.imsi.car.domain.board.model.Board;
-import com.imsi.car.domain.board.model.Review;
+import com.imsi.car.domain.board.model.Reply;
 import com.imsi.car.domain.board.repo.BoardRepo;
 import com.imsi.car.domain.board.repo.ReplyRepo;
 import com.imsi.car.domain.user.dto.UserDto;
@@ -31,20 +30,9 @@ public class BoardServiceImpl implements BoardService {
     private final UserRepo userRepo;
     private final ReplyRepo replyRepo;
 
-    // public Map<Long, Integer> getReplyCountByBno() {
-    // List<Object[]> result = replyRepo.countRepliesByBno();
-    // Map<Long, Integer> replyCountByBno = new HashMap<>();
-    // for (Object[] row : result) {
-    // Long bno = (Long) row[0];
-    // Long replyCount = (Long) row[1];
-    // replyCountByBno.put(bno, replyCount.intValue());
-    // }
-    // return replyCountByBno;
-    // }
-
     @Override
     public List<BoardDto> listBoardPage(int page) {
-        Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("bno").descending());
+        Pageable pageable = PageRequest.of(page - 1, 100, Sort.by("bno").descending());
         Page<Board> result = boardRepo.findAll(pageable);
         List<BoardDto> boardDtoList = new ArrayList<>();
         for (Board board : result) {
@@ -53,6 +41,8 @@ public class BoardServiceImpl implements BoardService {
                     .title(board.getTitle())
                     .content(board.getContent())
                     .writerDto(new UserDto(board.getWriter()))
+                    .createdDate(board.getFormattedCreatedDate())
+                    .modifyDate(board.getFormattedModifyDate())
                     .build();
             boardDtoList.add(boardDto);
         }
@@ -66,12 +56,6 @@ public class BoardServiceImpl implements BoardService {
         boardRepo.save(board);
     }
 
-    @Override
-    public void writeReview(Review review) {
-        // TODO Auto-generated method stub
-
-    }
-
     // 게시글 수정
     @Override
     public void modifyBoard(Long bno, BoardDto boardDto) {
@@ -83,12 +67,6 @@ public class BoardServiceImpl implements BoardService {
         boardRepo.save(board);
     }
 
-    @Override
-    public void modifyReview(Review reivew) {
-        // TODO Auto-generated method stub
-
-    }
-
     // 게시글 삭제
     public void deleteBoard(Long bno) {
         Board board = boardRepo.getById(bno);
@@ -98,12 +76,6 @@ public class BoardServiceImpl implements BoardService {
         } else {
             // log.info("해당 bno({})의 게시글이 존재하지 않습니다.", bno);
         }
-    }
-
-    @Override
-    public void deleteReview(Review review) {
-        // TODO Auto-generated method stub
-
     }
 
     // 게시글 조회
@@ -120,7 +92,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<BoardDto> searchBoard(String keyword, int flag, int page) {
-        Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("bno").descending());
+        Pageable pageable = PageRequest.of(page - 1, 100, Sort.by("bno").descending());
         List<Board> boardList = new ArrayList<>();
         switch (flag) {
             case 1: // 제목 검색
@@ -139,10 +111,58 @@ public class BoardServiceImpl implements BoardService {
             case 4: // 댓글 검색
                 boardList = boardRepo.findByRepliesTextContaining(keyword, pageable);
                 break;
+            case 5: // 해당 닉네임이 쓴 댓글 보기 //1 닉네임 찾기, 2, 해당 닉네임이 쓴 댓글이 있는 글 전부출력하기
+                List<Reply> replyList = replyRepo.findAll()
+                        .stream()
+                        .filter(reply -> reply.getUser().getNickname().contains(keyword))// equals(keyword)를 사용하면 정확한
+                                                                                         // 검색결과만 걸러낼 수 있음
+                        .collect(Collectors.toList()); // 리스트에 담음
+                boardList.clear(); // 보드 중복을 방지하기 위한 클리어
+                boardList.addAll(replyList.stream()
+                        .map(Reply::getBoard)// Reply에서 Board를 get함
+                        .distinct() // 중복 게시글 쳐내는 메서드
+                        .collect(Collectors.toList())); // 콜렉터 메소드로 보드리스트에 추가함
+                break;
+
             default:
                 break;
         }
         return boardList.stream().map(BoardDto::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public BoardDto listMyPage(String username, int page) {
+        // 게시글 페이지 조회
+        Pageable boardPageable = PageRequest.of(page - 1, 10, Sort.by("bno").descending());
+        List<Board> boardPage = boardRepo.findByWriterUsername(username, boardPageable);
+        List<BoardDto> boardDtos = boardPage.stream()
+                .map(board -> BoardDto.builder()
+                        .bno(board.getBno())
+                        .title(board.getTitle())
+                        .content(board.getContent())
+                        .writerDto(new UserDto(board.getWriter()))
+                        .createdDate(board.getFormattedCreatedDate())
+                        .modifyDate(board.getFormattedModifyDate())
+                        .build())
+                .collect(Collectors.toList());
+
+        // 댓글 페이지 조회
+        Pageable replyPageable = PageRequest.of(page - 1, 10, Sort.by("rno").descending());
+        Page<Reply> replyPage = replyRepo.findByUserUsername(username, replyPageable);
+        List<ReplyDto> replyDtos = replyPage.stream()
+                .map(reply -> ReplyDto.builder()
+                        .rno(reply.getRno())
+                        .text(reply.getText())
+                        .build())
+                .collect(Collectors.toList());
+
+        // BoardDto 객체 생성
+        BoardDto boardDto = BoardDto.builder()
+                .boardDtos(boardDtos)
+                .replyDtos(replyDtos)
+                .build();
+
+        return boardDto;
     }
 
 }

@@ -1,6 +1,6 @@
 package com.imsi.car.domain.board.dto;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 import com.imsi.car.domain.board.model.Board;
 import com.imsi.car.domain.user.dto.UserDto;
@@ -25,13 +25,15 @@ public class BoardDto {
     private Long bno;
     private String title;
     private String content;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifyDate;
     private int viewCount;
     private int likes;
-    // private List<Reply> replies;
     private int replyCount;
     private UserDto writerDto;
+    private String createdDate;
+    private String modifyDate;
+    private List<BoardDto> boardDtos;
+    private List<ReplyDto> replyDtos;
+    // private List<Reply> replies;
 
     public BoardDto(Board board) {
         this.bno = board.getBno();
@@ -41,8 +43,8 @@ public class BoardDto {
         this.viewCount = board.getViewCount();
         this.likes = board.getLikes();
         this.replyCount = board.getReplyCount();
-        this.createdDate = board.getCreatedDate();
-        this.modifyDate = board.getModifyDate();
+        this.createdDate = board.getFormattedCreatedDate();
+        this.modifyDate = board.getFormattedModifyDate();
     }
 
     public Board toEntity() {
@@ -55,7 +57,7 @@ public class BoardDto {
                 .likes(likes)
                 .replyCount(replyCount)
                 .build();
-        log.info("로그 :" + writerDto.toEntity());
+        log.info("BoardToEntity로그 :" + writerDto.toEntity());
         return board;
     }
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.imsi.car.domain.board.dto.BoardDto;
 import com.imsi.car.domain.board.model.Board;
-import com.imsi.car.domain.board.model.Review;
+import com.imsi.car.domain.user.model.User;
 
 public interface BoardService {
 
@@ -25,13 +25,7 @@ public interface BoardService {
     // board 수정
     public void modifyBoard(Long bno, BoardDto boardDto);
 
-    // review 작성
-    public void writeReview(Review review);
-
-    // review 삭제
-    public void deleteReview(Review review);
-
-    // review 수정
-    public void modifyReview(Review reivew);
+    // public List<BoardDto> listMyPage(int page);
+    public BoardDto listMyPage(String username, int page);
 
 }
