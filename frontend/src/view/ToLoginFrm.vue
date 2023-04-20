@@ -59,7 +59,7 @@
       <!-- 로그인 a => button으로 교환 -->
       <div class="media-options">
         <a
-          href="#"
+          href="http://localhost:9000/oauth2/authorization/facebook"
           class="field facebook">
           <span class="facebook-icon"></span>
           <span>Facebook 로그인</span>
@@ -68,7 +68,7 @@
 
       <div class="media-options">
         <a
-          href="#"
+          href="http://localhost:9000/oauth2/authorization/google"
           class="field google">
           <span class="google-icon"></span>
           <span>Google 로그인</span>
@@ -77,7 +77,7 @@
 
       <div class="media-options">
         <a
-          href="#"
+          href="http://localhost:9000/oauth2/authorization/naver"
           class="field naver">
           <span class="naver-icon"></span>
           <span>NAVER 로그인</span>

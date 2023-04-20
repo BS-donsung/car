@@ -20,6 +20,7 @@ import com.imsi.car.config.auth.PrincipalDetailsService;
 import com.imsi.car.config.auth.PrincipalOauth2UserService;
 import com.imsi.car.config.filter.JwtAuthenticationFilter;
 import com.imsi.car.config.filter.JwtAuthorizationFilter;
+import com.imsi.car.config.filter.OAuth2SuccessHandler;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +33,7 @@ public class SecurityConfig {
 
     };
     private static final String[] AUTH_USER_LIST = {
-        "/user/hihi"
+            "/user/hihi"
     };
     private static final String[] AUTH_ADMIN_LIST = {
 
@@ -40,7 +41,7 @@ public class SecurityConfig {
 
     private final PrincipalOauth2UserService principalOAuth2UserService;
     private final PrincipalDetailsService principalDetailsService;
-    private final JwtProperties jwtProperties;
+    private final OAuth2SuccessHandler successHandler;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -56,7 +57,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtProperties jwtProperties) throws Exception {
         var userAuth = AuthorityAuthorizationManager
                 .<RequestAuthorizationContext>hasRole("USER");
         var adminAuth = AuthorityAuthorizationManager
@@ -66,7 +67,7 @@ public class SecurityConfig {
                 .authenticationManager(authenticationManager(http))
                 .addFilterBefore(new JwtAuthorizationFilter(jwtProperties),
                         UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JwtAuthenticationFilter(jwtProperties,authenticationManager(http)),
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProperties, authenticationManager(http)),
                         UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -77,7 +78,15 @@ public class SecurityConfig {
                         // .anyRequest().denyAll()
                         .anyRequest().permitAll())
                 .formLogin().disable()
-                .oauth2Login().disable()
+                .oauth2Login(authorize -> authorize
+                        // .loginPage("/")
+                        .successHandler(successHandler)
+                        .userInfoEndpoint().userService(principalOAuth2UserService)
+                        .and()
+                        
+                )
+                .logout(form -> form
+                        .deleteCookies(jwtProperties.HEADER_AUTH))
                 .build();
     }
 
