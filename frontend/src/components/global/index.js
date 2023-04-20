@@ -1,5 +1,7 @@
-
 // 하기전에 바꿔야함
+
+// 내 ip
+// export const URL = 'http://192.168.0.122:8080'
 
 // 성욱씨 ip
 // export const URL = 'http://localhost:9000'

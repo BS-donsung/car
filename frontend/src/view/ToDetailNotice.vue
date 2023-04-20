@@ -69,7 +69,7 @@ const fetchDetail = async () => {
       .then((res) => {
         console.log('데', res.data)
         form.value = res.data
-        console.log('성공?')
+        console.log('상세보기 페이지 성공')
       })
   } catch (error) {
     alert('정보를 불러올수없습니다.')
@@ -86,7 +86,7 @@ const back = () => {
 
 const editpage = bno => {
   router.push({
-    name: 'noticeEdit',
+    name: 'editnotice',
     params: {
       bno
     }
@@ -121,5 +121,6 @@ onMounted(() => {
   display: flex;
   margin-top: 80px;
   flex-direction: column;
+  background: #F0F1F8;
 }
 </style>

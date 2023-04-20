@@ -6,6 +6,7 @@ import Register from '@/view/ToRegisterFrm.vue'
 import Community from '@/view/CommunityFrm.vue'
 import CreateNotice from '@/view/ToCreateNotice.vue'
 import DetailNotice from '@/view/ToDetailNotice.vue'
+import EditNotice from '@/view/ToEditNotice.vue'
 import Inquiry from '@/view/InquiryFrm.vue'
 
 
@@ -18,6 +19,7 @@ const routes = [
   {path: '/community', component: Community, name: 'community'},
   {path: '/cratenotice', component: CreateNotice},
   {path: '/community/:bno', component: DetailNotice, name: 'detailnotice' , props:true},
+  {path: '/editnotice/:bno/Edit', component: EditNotice, name: 'editnotice'},
   {path: '/inquiry', component: Inquiry},
 ]
 

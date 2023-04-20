@@ -14,11 +14,9 @@ body {
   flex-direction: column;
 }
 
-
 .content {
   flex: 1;
 }
-
 
 .page-link {
   color: #333;
@@ -62,13 +60,13 @@ body {
 
 .container.notice_container {
   height: 100%;
-  padding-bottom: 80px;
-  background: white;
+  background: #FFF;
   max-width: 1060px;
   margin: 0 auto;
-  padding-top: 80px;
-  flex: 1;
   margin-top: 130px;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  flex: 1;
 }
 
 .ListContainer .box {
@@ -216,7 +214,7 @@ textarea {
   height: 40px;
   line-height: 38px;
   color: #333;
-  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 textarea:focus {
@@ -224,19 +222,19 @@ textarea:focus {
   box-shadow: 0 0 10px -5px #bebebe;
 }
 
-input:focus {
+/* input:focus {
   outline: none;
 }
 
 textarea:focus {
   outline: none;
-}
+} */
 
-.contents textarea {
+/* .contents textarea {
   height: 250px;
   line-height: 1.5;
   padding: 12px 7px 12px 10px;
-}
+} */
 
 .wright_wrap {
   padding-bottom: 80px;
@@ -363,5 +361,5 @@ textarea:focus {
 }
 
 .container {
-  font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
