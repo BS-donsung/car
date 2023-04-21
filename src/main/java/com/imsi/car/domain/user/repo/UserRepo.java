@@ -19,6 +19,7 @@ public interface UserRepo extends JpaRepository<User,Long>{
 
     public List<User> findByNicknameContaining(String keyword); //닉네임으로 검색
     // public Optional<User> findByEmailContaining(String email); // email로 검색
-    public Optional<User> findByProviderAndProviderId(String provider, String providerId);
+
+    public User findByProviderAndProviderId(String provider, String providerId);
 
 }

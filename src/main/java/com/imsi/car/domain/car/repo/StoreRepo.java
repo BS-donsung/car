@@ -6,10 +6,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.imsi.car.domain.car.model.Store;
+import com.imsi.car.domain.user.model.User;
 
 public interface StoreRepo extends JpaRepository<Store, Integer> {
 
     @Query(value = "select s from Store s where s.spk like :spk")
-    List<Store> findBySotreID(String spk);
+    Store findBySotreID(String spk);
+
+    @Query(value = "select s from Store s where s.user like :user")
+    List<Store> findByUsername(User user);
 
 }
