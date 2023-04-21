@@ -42,6 +42,8 @@ public class CarController {
             list = carService.listCarByBrand(carDto);
         }else if(carDto.getSegment() != null){ // segment는 줬다
             list = carService.listCarBySegment(carDto);
+        }else{ // 다 가져와봐라
+            list = carService.listCar();
         }
         for (CarDto dto : list) {
             log.info("car : {}",dto);

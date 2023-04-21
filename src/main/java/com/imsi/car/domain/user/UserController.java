@@ -41,6 +41,10 @@ public class UserController {
     public UserDto getUser(HttpServletRequest req) {
         String username = (String)req.getAttribute("username");
         log.info("/getUser : {}",username);
-        return userService.findUserByUsername(username);
+        UserDto result = null;
+        if(username != null){
+            result = userService.findUserByUsername(username);
+        }
+        return result;
     }
 }

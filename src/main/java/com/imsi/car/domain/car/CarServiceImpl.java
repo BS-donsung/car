@@ -49,9 +49,6 @@ public class CarServiceImpl implements CarService {
     public List<Brand> listBrand() {
         log.info("here");
         List<Brand> list = brandRepo.findAll();
-        for (Brand brand : list) {
-            log.info("brand : {}", brand);
-        }
         return list;
     }
 
@@ -65,12 +62,15 @@ public class CarServiceImpl implements CarService {
         return list;
     }
 
+    public List<CarDto> listCar(){
+        List<Car> list = carRepo.findAll();
+
+        return carUtils.CarListToDtos(list);
+    }
+
     public List<CarDto> listCarByBrand(CarDto carDto) {
         List<Car> list = carRepo.findAllByBrand(new Brand(carDto.getBrand()));
-
-        for (Car car : list) {
-            log.info("car : {} ",car);
-        }
+ 
         return carUtils.CarListToDtos(list);
     }
 

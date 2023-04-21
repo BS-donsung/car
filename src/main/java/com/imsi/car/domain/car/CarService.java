@@ -15,6 +15,8 @@ public interface CarService {
 
     public List<Segment> listSegment();
 
+    public List<CarDto> listCar();
+
     public List<CarDto> listCarByBrand(CarDto carDto);
 
     public List<CarDto> listCarBySegment(CarDto carDto);

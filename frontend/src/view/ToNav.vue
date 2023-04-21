@@ -7,6 +7,9 @@
     </router-link>
 
     <nav class="navbar">
+      <router-link to="/cars">
+        차량목록
+      </router-link>
       <router-link to="/comparison">
         모델비교
       </router-link>
@@ -16,10 +19,14 @@
       <router-link to="/inquiry">
         문의하기
       </router-link>
-      <span>{{ username }}</span>
+      <router-link
+        v-if="username != ''"
+        to="/mypage">
+        내 정보
+      </router-link>
       <button
         v-if="username != ''"
-        class="btnLogin-popup"
+        class="btnLogin-popup logout"
         @click="logoutBtn">
         로그아웃
       </button>
@@ -38,33 +45,32 @@
 import router from '@/router'
 import Cookies from 'js-cookie'
 import { onMounted, ref } from 'vue'
-// import { URL } from '@/components/global'
+import { URL } from '@/components/global'
 
 const username = ref('')
-const token = Cookies.get('Authorization')
+// const token = Cookies.get('Authorization')
 
-function gettoken() {
-  console.log(token)
-}
 
 const openLogin = () => {
   router.push({ path: '/loginfrm' })
 }
 
 const getUsername = () => {
-  // const requestOptions = {
-  //   credentials: 'include'
-  // }
-  // fetch(URL + '/getuser', requestOptions)
-  //   .then(res => res.text())
-  //   .then(text => {
-  //     username.value = text
-  //     alert(`${username.value}님 환영합니다.`)
-  //   })
-  //   .catch(console.log('username을 받아오는데 실패하였습니다.'))
+  const requestOptions = {
+    credentials: 'include'
+  }
+  fetch(URL + '/user/getuser', requestOptions)
+    .then(res => res.json())
+    .then(body => {
+      username.value = body.username===undefined?'':body.username
+      console.log(`${username.value}님 환영합니다.`)
+    })
+    .catch(username.value='')
 }
 
 const logoutBtn = () =>{
+  Cookies.remove('Authorization')
+  Cookies.remove('JSESSIONID')
   if (username.value!='') {
     username.value =''
   }
@@ -73,7 +79,7 @@ const logoutBtn = () =>{
 
 
 onMounted(() => {
-  gettoken(), getUsername()
+  getUsername()
 
 })
 </script>
@@ -142,5 +148,9 @@ span {
   bottom: -4px;
   left: 0;
   opacity: 0.85;
+}
+
+.logout {
+  margin-left: 20px;
 }
 </style>

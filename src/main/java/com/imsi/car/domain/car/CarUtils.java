@@ -7,9 +7,11 @@ import org.springframework.stereotype.Component;
 
 import com.imsi.car.domain.car.dto.CarDto;
 import com.imsi.car.domain.car.dto.OptionDto;
+import com.imsi.car.domain.car.dto.ReviewDto;
 import com.imsi.car.domain.car.dto.StoreDto;
 import com.imsi.car.domain.car.model.Car;
 import com.imsi.car.domain.car.model.CarOption;
+import com.imsi.car.domain.car.model.Review;
 import com.imsi.car.domain.car.model.Store;
 import com.imsi.car.domain.car.model.StoreOption;
 
@@ -56,6 +58,14 @@ public class CarUtils {
             storeDtos.add(new StoreDto(store));
         }
         return storeDtos;
+    }
+
+    public List<ReviewDto> reviewListToReviewDtos(List<Review> reviews){
+        List<ReviewDto> reviewDtos = new ArrayList<>();
+        for(Review review : reviews){
+            reviewDtos.add(new ReviewDto(review));
+        }
+        return reviewDtos;
     }
 
 

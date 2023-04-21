@@ -26,6 +26,7 @@ public class CarDto {
     private int cost;
 
     private List<OptionDto> options;
+    private List<ReviewDto> reviews;
 
     public CarDto(Car car){
         this.cid = car.getCid();
@@ -38,6 +39,7 @@ public class CarDto {
         this.imgurl = car.getImgurl();
         this.cost = car.getCost();
         this.options = null;
+        this.reviews = null;
     }
 
     public Car toEntity(){

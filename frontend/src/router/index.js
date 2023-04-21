@@ -11,6 +11,10 @@ import MyPageAlerts from '@/view/MyPageAlertsFrm.vue'
 import MyPageStores from '@/view/MyPageStoresFrm.vue'
 import MyPageStore from '@/view/MyPageStoreFrm.vue'
 
+
+import Cars from '@/view/CarListFrm.vue'
+import Car from '@/view/CarFrm.vue'
+
 import Community from '@/view/CommunityFrm.vue'
 import CreateNotice from '@/view/ToCreateNotice.vue'
 import Inquiry from '@/view/InquiryFrm.vue'
@@ -30,6 +34,8 @@ const routes = [
   {path: '/mypage/alerts', component: MyPageAlerts},
   {path: '/mypage/stores', component: MyPageStores},
   {path: '/mypage/store', component: MyPageStore},
+  {path: '/cars', component: Cars},
+  {path: '/car', component: Car},
 
   {path: '/community', component: Community},
   {path: '/cratenotice', component: CreateNotice},

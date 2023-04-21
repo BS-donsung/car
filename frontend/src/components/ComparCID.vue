@@ -124,10 +124,10 @@ const getInfo = async () => {
 <style scoped>
 .cidcontain {
   margin-top: 50%;
-  height: 100vh;
+  /* height: 100vh; */
   border: 4px double black;
   display: grid;
-  grid-template-rows: auto;
+  /* grid-template-rows: auto; */
 }
 
 .spectitle,

@@ -57,4 +57,8 @@ public class Car {
     @JoinColumn(name = "car")
     private List<CarOption> carOptions;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cid")
+    private List<Review> reviews;
+
 }
