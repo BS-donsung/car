@@ -21,7 +21,7 @@
             {{ brand.brand }}
           </option>
         </select>
-        
+
         <!-- 차급 -->
         <select
           v-model="s_text"
@@ -40,7 +40,7 @@
             :value="segment.segment"
             v-text="segment.segment"></option>
         </select>
-  
+
         <!-- 차종 -->
         <select
           v-model="v_text"
@@ -59,7 +59,7 @@
             :value="car.cid"
             v-text="car.name"></option>
         </select>
-  
+
         <button
           class="addBtn"
           type="button"
@@ -160,7 +160,7 @@ const handover = () => {
 
 </script>
 
-<style>
+<style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 
 * {
@@ -169,12 +169,14 @@ const handover = () => {
   box-sizing: border-box;
   font-family: "Popins", sans-serif;
 }
+
 .back-img {
   background-image: url('@/components/img/car.jpg');
   min-height: 100vh;
   background-size: cover;
   background-position: center;
 }
+
 .searchFrm {
   width: 950px;
   height: 300px;
@@ -233,4 +235,5 @@ const handover = () => {
 .addBtn:hover {
   background-color: white;
   color: black;
-}</style>
+}
+</style>

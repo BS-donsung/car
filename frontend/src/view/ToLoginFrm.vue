@@ -14,6 +14,7 @@
         <form action="#">
           <div class="field input-field">
             <input
+              v-model="login_data.username"
               type="id"
               class="input"
               placeholder="ID (아이디 또는 이메일)" />
@@ -21,6 +22,7 @@
 
           <div class="field input-field">
             <input
+              v-model="login_data.password"
               type="password"
               class="password"
               placeholder="비밀번호" />
@@ -93,6 +95,7 @@ import { reactive } from 'vue'
 import { URL } from '@/components/global'
 
 
+
 const registerfrm = () => {
   alert('회원가입 하시겠습니까?')
   router.push({ path: '/registerfrm' })
@@ -120,6 +123,7 @@ const loginBtn = async () => {
     const res = await fetch(URL + '/login', requestOptions)
     console.log(res.headers)
     console.log(res.headers['Authorization'])
+    router.push({ path: '/' })
   } catch (error) {
     console.log('로그인에 실패했습니다', error)
   }
