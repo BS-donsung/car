@@ -44,6 +44,11 @@
               삭제
             </button>
           </div>
+
+          <!-- 댓글공간 -->
+          <Reply
+            :bno="bno"
+            :replies="form.replies" />
         </div>
       </div>
     </div>
@@ -56,6 +61,7 @@ import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import { URL } from '@/components/global'
+import Reply from '@/components/Reply.vue'
 
 
 const form = ref([])
@@ -63,6 +69,7 @@ const route = useRoute()
 const router = useRouter()
 const bno = route.params.bno
 
+// 페이지 상세보기
 const fetchDetail = async () => {
   try {
     await axios.get(URL + `/board/view/${bno}`)
@@ -76,7 +83,6 @@ const fetchDetail = async () => {
     console.log(error)
   }
 }
-
 
 const back = () => {
   router.push({
@@ -93,6 +99,7 @@ const editpage = bno => {
   })
 }
 
+// 게시글 삭제
 const deletepost = async () => {
   try {
     if (confirm('삭제하시겠습니까?')) {
@@ -108,6 +115,7 @@ const deletepost = async () => {
     console.log(error)
   }
 }
+
 
 onMounted(() => {
   fetchDetail()
