@@ -68,3 +68,25 @@ values
 insert into user(username, createDate, email, exp, nickname, password, role, sid)
 values
 ('banana','2022-10-10','banana@banana',0,'banana','banana','ROLE_USER',5442);
+
+
+## frontend install pack
+```bash
+# vue awesome
+npm i --save-dev @fortawesome/vue-fontawesome
+
+# awesome icon
+npm i --save-dev @fortawesome/free-solid-svg-icons
+npm i --save-dev @fortawesome/free-brands-svg-icons
+```
+
+```js
+# awesome icon main.js 설정
+// awsome icon import
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(fas, fab)
+```
