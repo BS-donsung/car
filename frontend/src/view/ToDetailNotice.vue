@@ -75,8 +75,12 @@ const fetchDetail = async () => {
   try {
     await axios.get(URL + `/board/view/${bno}`)
       .then((res) => {
-        console.log('데', res.data)
+        console.log('받아오는 데이터', res.data)
         form.value = res.data
+        form.value.replies.forEach(reply => {
+          reply['ismodify'] = true
+        })
+
         console.log('상세보기 페이지 성공')
       })
   } catch (error) {
@@ -128,6 +132,7 @@ onMounted(() => {
 
 #wrap {
   display: flex;
+  /* margin-top: 80px; */
   flex-direction: column;
   background: #F0F1F8;
 }

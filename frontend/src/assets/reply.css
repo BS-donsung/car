@@ -84,7 +84,7 @@ button {
 
 .reply-content .innerText {
   width: 100%;
-  height: 100px;
+  height: 110px;
   border: 1px solid #bebebe;
   border-radius: 6px;
   margin-bottom: 10px;
@@ -123,4 +123,15 @@ button {
 }
 .hearticons {
   color: red;
+}
+
+/* 수정/삭제 버튼 */
+.inneredit {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 10px;
+  font-size: 14px;
+}
+.replyedit {
+  margin-right: 10px;
 }

@@ -6,12 +6,12 @@
         @click="good">
         <font-awesome-icon
           :icon="['far', 'heart']"
-          :class="{hearticons:isRed}" />
+          :class="{ hearticons: isRed }" />
       </button> 좋아요
       <div class="icons">
         <font-awesome-icon
-          :icon="['far', 'comment-dots']" 
-          class="replyicons" /> 
+          :icon="['far', 'comment-dots']"
+          class="replyicons" />
       </div>
       댓글 {{ replycount }}
     </div>
@@ -50,26 +50,56 @@
         v-for="reply in replies"
         :key="reply"
         class="innerText">
-        <div class="inneruser">
-          {{ reply?.user?.nickname }}({{ reply?.user?.username }})
-        </div>
-        <div class="innercontent">
-          {{ reply?.text }}
-        </div>
-        <div class="innerCreate">
-          <div class="createDate">
-            {{ reply?.formattedCreatedDate }}
+        <div
+          v-if="ismodify"
+          class="modifyif">
+          <div class="inneruser">
+            {{ reply?.user?.nickname }}({{ reply?.user?.username }})
           </div>
-          <div class="reBtn">
+          <div
+            v-if="ismodify"
+            class="innercontent">
+            {{ reply?.text }}
+          </div>
+          <div
+            v-if="!ismodify"
+            class="modifycontent">
+            <textarea
+              ref="textArea"
+              v-model="reply.text"
+              @input="checkRows"></textarea>
+          </div>
+          <div class="innerCreate">
+            <div class="createDate">
+              {{ reply?.formattedCreatedDate }}
+            </div>
+            <div class="reBtn">
+              <button
+                class="rewrite"
+                @click="writeReply">
+                답글쓰기
+              </button>
+            </div>
+          </div>
+          <div
+            v-if="reply?.user.username === username"
+            class="inneredit">
             <button
-              class="rewrite"
-              @click="writeReply">
-              답글쓰기
+              class="replyedit"
+              @click="modifyreply(da)">
+              수정
+            </button>
+            <button
+              class="replyedit"
+              @click="removereply(reply.rno)">
+              삭제
             </button>
           </div>
         </div>
       </div>
     </div>
+
+    {{ props.replies }}
   </div>
 </template>
 
@@ -84,6 +114,8 @@ const text = ref('')
 const textArea = ref()
 const contArea = ref()
 const reply_form = ref()
+const username = ref('username1')
+
 const props = defineProps({
   bno: Number,
   replies: Array,
@@ -116,15 +148,31 @@ const addreply = () => {
   })
   window.location.reload(true)
 }
+console.log('댓글저장성공')
 
+// 댓글삭제
+const removereply = async (rno) => {
+  if (confirm('삭제하시겠습니까?')) {
+    await axios.delete(URL + `/reply/delete/${rno}`)
+      .then(() => {
+        console.log('해당게시글이 삭제되었습니다.')
+        window.location.reload(true)
+      })
+      .catch(() => {
+        console.log('해당 댓글을 삭제할 수 없습니다.')
+      })
+  }
+}
 
 function getbno() {
   return props.bno
 }
 
+
 onMounted(() => {
   getbno()
 })
+
 
 function checkRows() {
   const element = document.querySelector('textarea')
@@ -163,6 +211,10 @@ function checkRows() {
 const isRed = ref(false)
 function good() {
   isRed.value = !isRed.value
+}
+
+const modifyreply = da => {
+  da.ismodify = !da.ismodify
 }
 </script>
 
