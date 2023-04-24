@@ -15,12 +15,15 @@ import com.imsi.car.domain.board.dto.ReviewDto;
 import com.imsi.car.domain.board.model.Review;
 import com.imsi.car.domain.board.repo.ReplyRepo;
 import com.imsi.car.domain.board.repo.ReviewRepo;
+import com.imsi.car.domain.car.model.Car;
 import com.imsi.car.domain.user.dto.UserDto;
 import com.imsi.car.domain.user.model.User;
 import com.imsi.car.domain.user.repo.UserRepo;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
@@ -47,14 +50,14 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewDtoList;
     }
 
-    // 게시글 쓰기 요청을 수락하는 서비스
+    // 리뷰 쓰기 요청을 수락하는 서비스
     @Override
     public void writeReview(ReviewDto reviewDto) {
         Review review = reviewDto.toEntity();
         reviewRepo.save(review);
     }
 
-    // 게시글 수정
+    // 리뷰 수정
     @Override
     public void modifyReview(Long rvno, ReviewDto reviewDto) {
         Review review = reviewRepo.getById(rvno);
@@ -65,20 +68,20 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepo.save(review);
     }
 
-    // 게시글 삭제
+    // 리뷰 삭제
     public void deleteReview(Long rvno) {
         Review review = reviewRepo.getById(rvno);
         if (review != null) {
             reviewRepo.delete(reviewRepo.getById(rvno));
-            // log.info("게시글(rvno={})이 삭제되었습니다.", rvno);
+            // log.info("리뷰(rvno={})이 삭제되었습니다.", rvno);
         } else {
-            // log.info("해당 rvno({})의 게시글이 존재하지 않습니다.", rvno);
+            // log.info("해당 rvno({})의 리뷰이 존재하지 않습니다.", rvno);
         }
     }
 
-    // 게시글 조회
+    // 리뷰 조회
     @Override
-    public ReviewDto ReviewView(Long rvno) {
+    public ReviewDto reviewView(Long rvno) {
         Review review = reviewRepo.getById(rvno);
         if (review != null) {
             review.addViewCount(); // addViewCount() 메소드를 호출하여 viewCount 필드를 증가시킴
@@ -88,9 +91,16 @@ public class ReviewServiceImpl implements ReviewService {
         return null;
     }
 
+    // 에러 메시지 파훼 메소드(실제로는 사용하고 있어 문제가 없으나 컴파일러에서 인식이 되지 않는다고 함)
+    @Override
+    public List<Car> findByCarNameContainingAndCarIsNotNull(String keyword, Pageable pageable) {
+        log.info("확인 로그", keyword, pageable);
+        return reviewRepo.findByCarNameContainingAndCarIsNotNull(keyword, pageable);
+    }
+
     @Override
     public List<ReviewDto> searchReview(String keyword, int flag, int page) {
-        Pageable pageable = PageRequest.of(page - 1, 100, Sort.by("bno").descending());
+        Pageable pageable = PageRequest.of(page - 1, 100, Sort.by("rvno").descending());
         List<Review> reviewList = new ArrayList<>();
         switch (flag) {
             case 1: // 제목 검색
@@ -109,6 +119,14 @@ public class ReviewServiceImpl implements ReviewService {
             case 4: // 댓글 검색
                 reviewList = reviewRepo.findByRepliesTextContaining(keyword, pageable);
                 break;
+            case 5: // 차량명 검색
+                List<Car> carList = reviewRepo.findByCarNameContainingAndCarIsNotNull(keyword, pageable);
+                for (Car car : carList) {
+                    List<Review> carReviews = car.getReviews();
+                    reviewList.addAll(carReviews);
+                }
+                break;
+
             default:
                 break;
         }

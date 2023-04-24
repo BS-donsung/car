@@ -70,14 +70,14 @@ public class User {
 		this.nickname = nickname;
 	}
 
-	public List<Board> getBoards() {
-		return boards;
-	}
+	// public List<Board> getBoards() {
+	// return boards;
+	// }
 
-	public List<Reply> getReplies() {
-		return boards.stream()
-				.flatMap(board -> board.getReplies().stream())
-				.collect(Collectors.toList());
-	}
+	// public List<Reply> getReplies() {
+	// return boards.stream()
+	// .flatMap(board -> board.getReplies().stream())
+	// .collect(Collectors.toList());
+	// }
 
 }
