@@ -48,7 +48,8 @@
           <!-- 댓글공간 -->
           <Reply
             :bno="bno"
-            :replies="form.replies" />
+            :replies="form.replies"
+            :replycount="form.replyCount" />
         </div>
       </div>
     </div>
@@ -127,7 +128,6 @@ onMounted(() => {
 
 #wrap {
   display: flex;
-  margin-top: 80px;
   flex-direction: column;
   background: #F0F1F8;
 }

@@ -1,5 +1,22 @@
 <template>
   <div class="wrap">
+    <div class="countreply">
+      <button
+        class="icons"
+        @click="good">
+        <font-awesome-icon
+          :icon="['far', 'heart']"
+          :class="{hearticons:isRed}" />
+      </button> 좋아요
+      <div class="icons">
+        <font-awesome-icon
+          :icon="['far', 'comment-dots']" 
+          class="replyicons" /> 
+      </div>
+      댓글 {{ replycount }}
+    </div>
+    <hr style="color: #bebebe; width: 100%;" />
+    <br />
     <div class="reply-title">
       <h4>
         댓글
@@ -25,6 +42,34 @@
         </button>
       </div>
     </div>
+    <br />
+    <hr style="color: #bebebe; width: 100%;" />
+
+    <div class="reply-content">
+      <div
+        v-for="reply in replies"
+        :key="reply"
+        class="innerText">
+        <div class="inneruser">
+          {{ reply?.user?.nickname }}({{ reply?.user?.username }})
+        </div>
+        <div class="innercontent">
+          {{ reply?.text }}
+        </div>
+        <div class="innerCreate">
+          <div class="createDate">
+            {{ reply?.formattedCreatedDate }}
+          </div>
+          <div class="reBtn">
+            <button
+              class="rewrite"
+              @click="writeReply">
+              답글쓰기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -41,7 +86,8 @@ const contArea = ref()
 const reply_form = ref()
 const props = defineProps({
   bno: Number,
-  replies: Array
+  replies: Array,
+  replycount: Number
 })
 
 // 댓글 저장
@@ -70,6 +116,15 @@ const addreply = () => {
   })
   window.location.reload(true)
 }
+
+
+function getbno() {
+  return props.bno
+}
+
+onMounted(() => {
+  getbno()
+})
 
 function checkRows() {
   const element = document.querySelector('textarea')
@@ -105,84 +160,12 @@ function checkRows() {
   contArea.value.style.height = (12 + contArea.value.scrollHeight) + 'px'
 }
 
-function getbno() {
-  return props.bno
+const isRed = ref(false)
+function good() {
+  isRed.value = !isRed.value
 }
-
-onMounted(() => {
-  getbno()
-})
 </script>
 
 <style scoped>
-.wrap {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  /* transform: translateX(10%); */
-  margin-top: 20px;
-}
-
-.reply-title {
-  width: 100%;
-  height: 30px;
-  text-align: left;
-  margin-left: 10px;
-  font-size: 16px;
-}
-
-.reply-container {
-  position: relative;
-  width: 100%;
-  height: 150px;
-  border: 1px solid #dbdbdb;
-  border-radius: 6px;
-}
-
-.reply-container .nick-text,
-.reply-container .reply-text {
-  margin-top: 20px;
-  display: flex;
-  text-align: left;
-  width: 100%;
-}
-
-.nick-text {
-  font-size: 14px;
-  font-weight: 600;
-  margin-left: 20px;
-}
-
-textarea {
-  resize: none;
-  width: 100%;
-  height: 45px;
-  border: 1px solid #dbdbdb;
-  padding: 0px 10px 0 10px;
-  font-size: 13px;
-  line-height: 38px;
-  font-family: 'Poppins', sans-serif;
-  overflow: hidden;
-  border: none;
-}
-
-textarea:focus {
-  border: 1px solid #dbdbdb;
-  box-shadow: 0 0 10px -5px #bebebe;
-}
-
-.addBtn {
-  width: 100%;
-  height: 30px;
-  margin-top: 20px;
-  padding-right: 20px;
-}
-
-button {
-  float: right;
-  border: none;
-  background: none;
-  color: #bebebe;
-  font-size: 13px;
-}
+@import '@/assets/reply.css';
 </style>
