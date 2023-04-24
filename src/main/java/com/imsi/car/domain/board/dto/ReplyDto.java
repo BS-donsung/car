@@ -17,7 +17,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j2;
 
-@Log4j2
 @ToString
 @Getter
 @Setter
@@ -37,7 +36,6 @@ public class ReplyDto {
 
         private BoardDto boardDto;
         private UserDto userDto;
-        private ReviewDto reviewDto;
 
         public ReplyDto(Reply reply) {
                 this.rno = reply.getRno();
@@ -52,7 +50,6 @@ public class ReplyDto {
                                 : LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                 this.userDto = reply.getUser() != null ? new UserDto(reply.getUser()) : null;
                 this.boardDto = new BoardDto(reply.getBoard());
-                this.reviewDto = reply.getReview() != null ? new ReviewDto(reply.getReview()) : null;
         }
 
         public Reply toEntity() {

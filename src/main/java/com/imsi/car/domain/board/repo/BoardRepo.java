@@ -32,10 +32,6 @@ public interface BoardRepo extends JpaRepository<Board, Long> {
     @Query(value = "select b from Board b where b.writer.nickname = :nickname", nativeQuery = false)
     List<Board> getBoardListByNickname(@Param("nickname") String nickname);
 
-    //위에서 검색한 정보를 바탕으로writer로 검색
-    List<Board> findByWriterUsername(String username, Pageable pageable);
-
-
     // 위에서 검색한 정보를 바탕으로writer로 검색
     List<Board> findByWriterUsername(String username, Pageable pageable);
 
