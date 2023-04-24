@@ -1,6 +1,8 @@
 package com.imsi.car.domain.board.dto;
 
 import com.imsi.car.domain.board.model.Review;
+import com.imsi.car.domain.car.dto.CarDTO;
+import com.imsi.car.domain.car.model.Car;
 import com.imsi.car.domain.user.dto.UserDto;
 
 import lombok.AllArgsConstructor;
@@ -21,6 +23,7 @@ import lombok.extern.log4j.Log4j2;
 public class ReviewDto {
 
     private Long rvno;
+    private Car car;
     private String title;
     private String content;
     private int viewCount;
@@ -33,6 +36,7 @@ public class ReviewDto {
 
     public ReviewDto(Review review) {
         this.rvno = review.getRvno();
+        this.car = review.getCar();
         this.writerDto = new UserDto(review.getWriter());
         this.title = review.getTitle();
         this.content = review.getContent();
@@ -46,6 +50,7 @@ public class ReviewDto {
     public Review toEntity() {
         Review review = Review.builder()
                 .rvno(rvno)
+                .car(car)
                 .writer(writerDto.toEntity())
                 .title(title)
                 .content(content)

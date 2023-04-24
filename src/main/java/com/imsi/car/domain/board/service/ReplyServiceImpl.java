@@ -25,20 +25,25 @@ public class ReplyServiceImpl implements ReplyService {
     private final ReviewRepo reviewRepo;
 
     // 댓글 쓰기
-
     @Override
-    public void writeReply(ReplyDto replyDto) {
-        replyDto.setUserDto(new UserDto(replyDto.getUser()));
+    public void writeReply(ReplyDto replyDto) { // writeReply가 호출되었을 때
+        replyDto.builder()
+                .username(replyDto.getUsername())
+                .bno(replyDto.getBno())
+                .rvno(replyDto.getRvno())
+                .build();
         Reply reply = replyDto.toEntity();
         replyRepo.save(reply);
         if (reply.getBoard() != null) {
             Board board = boardRepo.getById(reply.getBoard().getBno());
             board.addReplyCount();
             boardRepo.save(board);
+            log.info("보드리플 카운트 업 로그");
         } else if (reply.getReview() != null) {
             Review review = reviewRepo.getById(reply.getReview().getRvno());
             review.addReplyCount();
             reviewRepo.save(review);
+            log.info("리뷰리플 카운트 업 로그");
         }
     }
 
@@ -55,11 +60,18 @@ public class ReplyServiceImpl implements ReplyService {
     // 댓글 삭제
     public void deleteReply(Long rno) {
         Reply reply = replyRepo.getById(rno);
-        if (reply != null) {
+        if (reply.getBoard() != null) {
             Board board = boardRepo.getById(reply.getBoard().getBno());
             board.subtractReplyCount();
             boardRepo.save(board);
             replyRepo.delete(reply);
+            log.info("보드리플 카운트 다운 로그");
+            log.info("댓삭:댓글(rno={})이 삭제되었습니다.", rno);
+        } else if (reply.getReview() != null) {
+            Review review = reviewRepo.getById(reply.getReview().getRvno());
+            review.subtractReplyCount();
+            reviewRepo.save(review);
+            log.info("리뷰리플 카운트 다운 로그");
             log.info("댓삭:댓글(rno={})이 삭제되었습니다.", rno);
         } else {
             log.info("댓삭:댓글 rno({})을 쓴 게시글이 존재하지 않습니다.", rno);

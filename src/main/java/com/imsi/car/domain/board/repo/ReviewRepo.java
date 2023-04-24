@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.imsi.car.domain.board.model.Review;
+import com.imsi.car.domain.car.model.Car;
 
 public interface ReviewRepo extends JpaRepository<Review, Long> {
 
@@ -34,6 +35,9 @@ public interface ReviewRepo extends JpaRepository<Review, Long> {
     // 위에서 검색한 정보를 바탕으로writer로 검색
     List<Review> findByWriterUsername(String username, Pageable pageable);
 
+    // 차량명으로 검색
+    List<Car> findByCarNameContainingAndCarIsNotNull(String keyword, Pageable pageable);
+
     // 이메일 검색(미사용)
     @Query(value = "select r from Review r where r.writer.email = :email", nativeQuery = false)
     List<Review> getReviewListByEmail(@Param("email") String email);
@@ -47,5 +51,7 @@ public interface ReviewRepo extends JpaRepository<Review, Long> {
     @Modifying
     @Query("UPDATE Review r SET r.title = :title, r.content = :content WHERE r.rvno = :rvno")
     void updateReview(@Param("rvno") Long rvno, @Param("title") String title, @Param("content") String content);
+
+    // List<Car> findByCarNameContaining(String keyword, Pageable pageable);
 
 }

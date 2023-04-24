@@ -19,4 +19,5 @@ public interface ReplyRepo extends JpaRepository<Reply, Long> {
     void modifyReply(@Param("rno") Long rno, @Param("text") String text);
 
     Page<Reply> findByUserUsername(String username, Pageable pageable);
+
 }

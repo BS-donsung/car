@@ -3,6 +3,7 @@ package com.imsi.car.domain.board.dto;
 import java.util.List;
 
 import com.imsi.car.domain.board.model.Board;
+import com.imsi.car.domain.board.model.Reply;
 import com.imsi.car.domain.user.dto.UserDto;
 
 import lombok.AllArgsConstructor;
@@ -31,9 +32,9 @@ public class BoardDto {
     private UserDto writerDto;
     private String createdDate;
     private String modifyDate;
+    private List<Reply> replies;
     private List<BoardDto> boardDtos;
     private List<ReplyDto> replyDtos;
-    // private List<Reply> replies;
 
     public BoardDto(Board board) {
         this.bno = board.getBno();
@@ -43,8 +44,10 @@ public class BoardDto {
         this.viewCount = board.getViewCount();
         this.likes = board.getLikes();
         this.replyCount = board.getReplyCount();
+        this.replies = board.getReplies();
         this.createdDate = board.getFormattedCreatedDate();
         this.modifyDate = board.getFormattedModifyDate();
+
     }
 
     public Board toEntity() {

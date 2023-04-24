@@ -10,5 +10,4 @@ public class CarApplication {
 		SpringApplication.run(CarApplication.class, args);
 		System.out.println("http://localhost:9000/board");
 	}
-
 }

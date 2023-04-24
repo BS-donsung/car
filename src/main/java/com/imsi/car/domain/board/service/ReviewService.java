@@ -2,11 +2,14 @@ package com.imsi.car.domain.board.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.imsi.car.domain.board.dto.ReviewDto;
+import com.imsi.car.domain.car.model.Car;
 
 public interface ReviewService {
 
-    public ReviewDto ReviewView(Long rvno);
+    public ReviewDto reviewView(Long rvno);
 
     // page번째 게시물들 가져오기
     public List<ReviewDto> listReviewPage(int page);
@@ -22,5 +25,7 @@ public interface ReviewService {
 
     // 리뷰 수정
     public void modifyReview(Long rvno, ReviewDto reviewDto);
+
+    List<Car> findByCarNameContainingAndCarIsNotNull(String keyword, Pageable pageable);
 
 }

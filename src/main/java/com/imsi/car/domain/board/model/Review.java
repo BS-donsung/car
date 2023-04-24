@@ -3,6 +3,7 @@ package com.imsi.car.domain.board.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.imsi.car.domain.car.model.Car;
 import com.imsi.car.domain.user.model.User;
 
 import jakarta.persistence.CascadeType;
@@ -27,39 +28,45 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@ToString(exclude = { "writer", "replies" })
+@ToString(exclude = { "writer", "replies", "car" })
 @Builder(toBuilder = true)
 @Table(name = "review")
 public class Review extends BaseTimeEntity {
 
-    // 게시글의 pk
+    // 리뷰의 pk
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rvno;
 
-    // 게시글의 작성자(유저의 pk를 fk로 사용)
+    // 리뷰할 차량
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "car")
+    // @JsonIgnoreProperties("reviews") // 무한참조 방지코드
+    private Car car;
+
+    // 리뷰의 작성자(유저의 pk를 fk로 사용)
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "writer", updatable = false)
     // @JsonIgnoreProperties("reviews") // 무한참조 방지코드
     private User writer;
 
-    // 게시글의 제목
+    // 리뷰의 제목
     @Column(length = 100, nullable = false)
     private String title;
 
-    // 게시글의 내용
+    // 리뷰의 내용
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    // 게시글의 조회수
+    // 리뷰의 조회수
     @Column(length = 100, nullable = false)
     private int viewCount;
 
-    // 게시글의 추천수
+    // 리뷰의 추천수
     @Column(length = 100, nullable = false)
     private int likes;
 
-    // 게시글의 리플수
+    // 리뷰의 리플수
     @Builder.Default
     private int replyCount = 0;
 

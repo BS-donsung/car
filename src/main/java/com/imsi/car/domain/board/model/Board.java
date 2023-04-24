@@ -3,6 +3,7 @@ package com.imsi.car.domain.board.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.imsi.car.domain.board.dto.ReplyDto;
 import com.imsi.car.domain.user.model.User;
 
 import jakarta.persistence.CascadeType;
@@ -63,10 +64,6 @@ public class Board extends BaseTimeEntity {
     @Builder.Default
     private int replyCount = 0;
 
-    // 보드 - 리플 관계 //리포지토리의 find 어쩌고가 참조하는 것으로 인한 무한참조 이슈
-    // @JsonManagedReference(value = "board-replies") // replies 필드를 직렬화할 때 참조하는 객체를
-    // 정의(무한참조 방지)
-    // YARC에서 415에러 및 무한참조 발생, 사용하지 말것
     @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<Reply> replies = new ArrayList<>();
 

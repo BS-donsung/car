@@ -41,6 +41,8 @@ public class BoardServiceImpl implements BoardService {
                     .title(board.getTitle())
                     .content(board.getContent())
                     .writerDto(new UserDto(board.getWriter()))
+                    .replyCount(board.getReplyCount())
+                    .viewCount(board.getViewCount())
                     .createdDate(board.getFormattedCreatedDate())
                     .modifyDate(board.getFormattedModifyDate())
                     .build();
@@ -81,7 +83,7 @@ public class BoardServiceImpl implements BoardService {
     // 게시글 조회
     @Override
     public BoardDto BoardView(Long bno) {
-        Board board = boardRepo.getById(bno);
+        Board board = boardRepo.getById(bno); // bno 필드를 이용하여 해당 게시글을 조회
         if (board != null) {
             board.addViewCount(); // addViewCount() 메소드를 호출하여 viewCount 필드를 증가시킴
             boardRepo.save(board); // 변경된 board 객체를 저장

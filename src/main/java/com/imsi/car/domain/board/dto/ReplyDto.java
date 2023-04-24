@@ -13,62 +13,57 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @ToString
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReplyDto {
-    private Long rno;
-    private String text;
-    private User user;
-    private Board board;
-    private Review review;
-    private String createdDate;
-    private String modifyDate;
-    private BoardDto boardDto;
-    private UserDto userDto;
-    private ReviewDto reviewDto;
+        // pk모음
+        private Long rno;
+        private Long bno;
+        private Long rvno;
+        private String username;
 
-    public ReplyDto(Reply reply) {
-        this.rno = reply.getRno();
-        this.text = reply.getText();
-        this.user = reply.getUser();
-        this.board = reply.getBoard();
-        this.review = reply.getReview();
-        this.createdDate = reply.getFormattedCreatedDate();
-        this.createdDate = reply.getCreatedDate() != null ? reply.getFormattedCreatedDate()
-                : LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        this.modifyDate = reply.getModifyDate() != null ? reply.getFormattedModifyDate()
-                : LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        this.userDto = new UserDto(reply.getUser());
-        this.boardDto = new BoardDto(reply.getBoard());
-    }
+        private String text;
+        private String createdDate;
+        private String modifyDate;
 
-    // 추가
-    public void setUserDto(UserDto userDto) {
-        this.userDto = userDto;
-    }
+        private BoardDto boardDto;
+        private UserDto userDto;
+        private ReviewDto reviewDto;
 
-    public void setBoardDto(BoardDto boardDto) {
-        this.boardDto = boardDto;
-    }
+        public ReplyDto(Reply reply) {
+                this.rno = reply.getRno();
+                this.text = reply.getText();
+                this.bno = reply.getBoard().getBno();
+                this.rvno = reply.getReview().getRvno();
 
-    public void setReviewDto(ReviewDto reviewDto) {
-        this.reviewDto = reviewDto;
-    }
+                this.username = reply.getUser().getUsername();
+                this.createdDate = reply.getCreatedDate() != null ? reply.getFormattedCreatedDate()
+                                : LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                this.modifyDate = reply.getModifyDate() != null ? reply.getFormattedModifyDate()
+                                : LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                this.userDto = reply.getUser() != null ? new UserDto(reply.getUser()) : null;
+                this.boardDto = new BoardDto(reply.getBoard());
+                this.reviewDto = reply.getReview() != null ? new ReviewDto(reply.getReview()) : null;
+        }
 
-    public Reply toEntity() {
-        Reply reply = Reply.builder()
-                .rno(rno)
-                .text(text)
-                .user(userDto != null ? userDto.toEntity() : null)
-                .board(boardDto != null ? boardDto.toEntity() : (board != null ? board : null))
-                .review(reviewDto != null ? reviewDto.toEntity() : (review != null ? review : null))
-                .build();
-        return reply;
-    }
+        public Reply toEntity() {
+                Reply reply = Reply.builder()
+                                .rno(rno)
+                                .text(text)
+                                .user(username != null ? User.builder().username(username).build() : null)
+                                .board(bno != null ? Board.builder().bno(bno).build() : null)
+                                .review(rvno != null ? Review.builder().rvno(rvno).build() : null)
+                                .build();
 
+                return reply;
+        }
 }

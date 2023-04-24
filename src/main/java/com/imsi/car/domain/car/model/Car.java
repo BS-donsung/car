@@ -2,6 +2,8 @@ package com.imsi.car.domain.car.model;
 
 import java.util.List;
 
+import com.imsi.car.domain.board.model.Review;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -13,9 +15,8 @@ import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -43,5 +44,8 @@ public class Car {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "car")
     private List<CarOption> carOptions;
+
+    @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
+    private List<Review> reviews;
 
 }
