@@ -19,6 +19,8 @@ import Community from '@/view/CommunityFrm.vue'
 import CreateNotice from '@/view/ToCreateNotice.vue'
 import Inquiry from '@/view/InquiryFrm.vue'
 
+import Test from '@/view/TestFrm.vue'
+
 
 
 
@@ -40,6 +42,8 @@ const routes = [
   {path: '/community', component: Community},
   {path: '/cratenotice', component: CreateNotice},
   {path: '/inquiry', component: Inquiry},
+
+  {path: '/test', component: Test}
 
 ]
 

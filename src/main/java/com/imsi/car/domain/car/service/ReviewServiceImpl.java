@@ -10,6 +10,7 @@ import com.imsi.car.domain.car.model.Review;
 import com.imsi.car.domain.car.repo.ReviewRepo;
 import com.imsi.car.domain.user.model.User;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -22,8 +23,8 @@ public class ReviewServiceImpl implements ReviewService{
     private final CarUtils carUtils;
 
     @Override
-    public List<ReviewDto> allReviewDtos() {
-        List<Review> reviews = reviewRepo.findAll();
+    public List<ReviewDto> reviewDtosByCid(int cid) {
+        List<Review> reviews = reviewRepo.findAllByCid(cid);
         List<ReviewDto> reviewDtos = carUtils.reviewListToReviewDtos(reviews);
 
         return reviewDtos;
@@ -31,6 +32,7 @@ public class ReviewServiceImpl implements ReviewService{
 
     
     @Override
+    @Transactional
     public String saveReview(ReviewDto reviewDto, String username) {
         Review review = reviewDto.toEntity();
         review.setUser(User.builder().username(username).build());
@@ -40,6 +42,7 @@ public class ReviewServiceImpl implements ReviewService{
     }
     
     @Override
+    @Transactional
     public String deleteReview(ReviewDto reviewDto, String username) {
         // TODO Auto-generated method stub
         return null;

@@ -46,52 +46,46 @@ import router from '@/router'
 import Cookies from 'js-cookie'
 import { onMounted, ref } from 'vue'
 import { URL } from '@/components/global'
+import axios from 'axios'
 
 const username = ref('')
 // const token = Cookies.get('Authorization')
-
 
 const openLogin = () => {
   router.push({ path: '/loginfrm' })
 }
 
 const getUsername = () => {
-  const requestOptions = {
-    credentials: 'include'
+  const credentials = {
+    withCredentials: 'include',
   }
-  fetch(URL + '/user/getuser', requestOptions)
-    .then(res => res.json())
-    .then(body => {
-      username.value = body.username===undefined?'':body.username
-      console.log(`${username.value}님 환영합니다.`)
-    })
-    .catch(username.value='')
+  axios.get(`${URL}/user/getuser`,credentials)
+  .then(res => res.data)
+  .then(body => username.value = body.username === undefined? '':body.username)
+  .catch(username.value='')
 }
 
-const logoutBtn = () =>{
+const logoutBtn = () => {
   Cookies.remove('Authorization')
   Cookies.remove('JSESSIONID')
-  if (username.value!='') {
-    username.value =''
+  if (username.value != '') {
+    username.value = ''
   }
 }
-
-
 
 onMounted(() => {
   getUsername()
-
 })
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Popins', sans-serif;
+  font-family: "Popins", sans-serif;
 }
 
 span {
@@ -140,7 +134,7 @@ span {
 }
 
 .navbar .btnLogin-popup::before {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 2px;

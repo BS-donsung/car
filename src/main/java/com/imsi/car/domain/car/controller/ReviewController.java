@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imsi.car.domain.car.dto.ReviewDto;
@@ -25,9 +26,9 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping("/all")
-    public List<ReviewDto> all(){
+    public List<ReviewDto> all(@RequestParam int cid){
         log.info("/all : ");
-        List<ReviewDto> result = reviewService.allReviewDtos();
+    List<ReviewDto> result = reviewService.reviewDtosByCid(cid);
 
         return result;
     }
@@ -36,6 +37,7 @@ public class ReviewController {
     public void save(@RequestBody ReviewDto reviewDto, HttpServletRequest req){
         String username = (String)req.getAttribute("username");
         reviewService.saveReview(reviewDto, username);
+        
     }
 
     @DeleteMapping("/delete")
