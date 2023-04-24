@@ -16,19 +16,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReviewDto {
     private int rid;
-    private String username;
+    private String nickname;
     private int cid;
+    private String content;
 
     public ReviewDto(Review review){
         this.rid = review.getRid();
-        this.username = review.getUser().getUsername();
+        this.nickname = review.getUser().getNickname();
         this.cid = review.getCar().getCid();
+        this.content = review.getContent();
     }
     
     public Review toEntity(){
         Review review = Review.builder()
-        .user(User.builder().username(this.username).build())
+        .rid(this.rid)
+        .user(User.builder().nickname(this.nickname).build())
         .car(Car.builder().cid(this.cid).build())
+        .content(this.content)
         .build();
         return review;
     }

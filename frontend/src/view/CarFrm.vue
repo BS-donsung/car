@@ -27,10 +27,15 @@ import { onMounted, ref } from 'vue'
 
 const route = useRoute()
 
-const reviews = ref(['banana','banana'])
+const reviews = ref([])
 
 const getReviews = () =>{
-  console.log('대충 fetch 같은걸로 리뷰 가져오기')
+  const requestOptions = {
+    credentials: 'include'
+  }
+  fetch(`${URL}/getuser`, requestOptions)
+  .then(res => res.text())
+  .then( => )
 }
 const  postReviews = () =>{
   console.log('대충 fetch 같은걸로 리뷰 쓰기')

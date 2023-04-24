@@ -32,5 +32,7 @@ public class Review {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="cid")
     private Car car;
+
+    private String content;
     
 }

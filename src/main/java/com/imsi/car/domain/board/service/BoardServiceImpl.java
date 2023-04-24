@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import com.imsi.car.domain.board.dto.BoardDto;
 import com.imsi.car.domain.board.model.Board;
-import com.imsi.car.domain.board.model.Review;
 import com.imsi.car.domain.board.repo.BoardRepo;
 import com.imsi.car.domain.user.dto.UserDto;
 import com.imsi.car.domain.user.model.User;
@@ -55,11 +54,6 @@ public class BoardServiceImpl implements BoardService {
         boardRepo.save(board);
     }
 
-    @Override
-    public void writeReview(Review review) {
-        // TODO Auto-generated method stub
-
-    }
 
     // 게시글 수정
     @Override
@@ -83,11 +77,7 @@ public class BoardServiceImpl implements BoardService {
     // }
 
 
-    @Override
-    public void modifyReview(Review reivew) {
-        // TODO Auto-generated method stub
 
-    }
 
     // 게시글 삭제
     public void deleteBoard(Long id) {
@@ -112,11 +102,8 @@ public class BoardServiceImpl implements BoardService {
     
     
 
-    @Override
-    public void deleteReview(Review review) {
-        // TODO Auto-generated method stub
 
-    }
+
 
     // 게시글 조회
     @Override

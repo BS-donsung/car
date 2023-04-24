@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imsi.car.domain.car.CarService;
 import com.imsi.car.domain.car.dto.CarDto;
 import com.imsi.car.domain.car.dto.StoreDto;
+import com.imsi.car.domain.car.service.CarService;
+import com.imsi.car.domain.car.service.StoreService;
 
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
@@ -51,23 +52,7 @@ public class CarController {
         return list;
     }
 
-    @PostMapping("/store")
-    public void storeCar(@RequestBody StoreDto storeDto){
-        // http://localhost:9000/car/store
-        /*
-        {
-            "carDto" : {
-                "cid" : 1
-            },
-            "user" : "banana",
-            "options" : [
-                { "opk" : 1, "opt" : 1 }
-            ]
-        }
-         */
-        log.info("/stroe : {}",storeDto);
-        carService.storeUserOption(storeDto);
-    }
+    
     @GetMapping("/search/car")
     public CarDto searchCar(@RequestParam String cid){
         // http://localhost:9000/car/search/car?cid=1
