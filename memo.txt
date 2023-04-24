@@ -1,31 +1,51 @@
 회원정보 넣기 쿼리
 INSERT INTO user (nickname, createdDate, email, exp,  password, provider, providerId, role, username)
 VALUES
-('유저1','2023-04-09 00:00:00', 'user1@example.com', 100,  'password1', NULL, NULL, 'USER', 'user1'),
-('유저2','2023-04-09 00:01:00', 'user2@example.com', 200,  'password2', NULL, NULL, 'USER', 'user2'),
-('유저3','2023-04-09 00:02:00', 'user3@example.com', 300,  'password3', NULL, NULL, 'USER', 'user3');
+('유저1','2023-04-09 00:00:00', 'user1@example.com', 100,  'password1', NULL, NULL, 'USER', 'username1'),
+('유저2','2023-04-09 00:01:00', 'user2@example.com', 200,  'password2', NULL, NULL, 'USER', 'username2'),
+('유저3','2023-04-09 00:02:00', 'user3@example.com', 300,  'password3', NULL, NULL, 'USER', 'username3');
 
 -- 게시판 댓글 넣기 쿼리
-INSERT INTO car.reply (createdDate, modifyDate, text, board_id, user) VALUES 
-('2023-04-09 12:00:00', '2023-04-09 12:00:00', '유저1이 쓴 첫 번째 게시글의 첫 번째 댓글입니다.', 1, 1),
-('2023-04-09 12:01:00', '2023-04-09 12:01:00', '유저2가 쓴 두 번째 게시글의 첫 번째 댓글입니다.', 2, 2),
-('2023-04-09 12:02:00', '2023-04-09 12:02:00', '유저3이 쓴 두 번째 게시글의 두 번째 댓글입니다.', 2, 3),
-('2023-04-09 12:03:00', '2023-04-09 12:03:00', '유저1이 쓴 두 번째 게시글의 세 번째 댓글입니다.', 2, 1);
+INSERT INTO car.reply (createdDate, modifyDate, text, bno, user) VALUES 
+('2023-04-09 12:00:00', '2023-04-09 12:00:00', '유저1이 쓴 첫 번째 게시글의 첫 번째 댓글입니다.', 1, 'username1'),
+('2023-04-09 12:01:00', '2023-04-09 12:01:00', '유저2가 쓴 두 번째 게시글의 첫 번째 댓글입니다.', 2, 'username2'),
+('2023-04-09 12:02:00', '2023-04-09 12:02:00', '유저3이 쓴 두 번째 게시글의 두 번째 댓글입니다.', 2, 'username3'),
+('2023-04-09 12:03:00', '2023-04-09 12:03:00', '유저1이 쓴 두 번째 게시글의 세 번째 댓글입니다.', 2, 'username1');
 
 -- 리뷰 댓글 넣기 쿼리
-INSERT INTO car.reply (createdDate, modifyDate, text, review_id, user) VALUES 
-('2023-04-09 12:00:00', '2023-04-09 12:00:00', '유저1이 쓴 첫번째 리뷰의 첫 번째 댓글입니다.', 1, 1),
-('2023-04-09 12:01:00', '2023-04-09 12:01:00', '유저2가 쓴 두번째 리뷰의 첫 번째 댓글입니다.', 2, 2),
-('2023-04-09 12:02:00', '2023-04-09 12:02:00', '유저3이 쓴 두번째 리뷰의 두 번째 댓글입니다.', 2, 3),
-('2023-04-09 12:03:00', '2023-04-09 12:03:00', '유저1이 쓴 두번째 리뷰의 세 번째 댓글입니다.', 2, 1);
+INSERT INTO car.reply (createdDate, modifyDate, text, rvno, user) VALUES 
+('2023-04-09 12:00:00', '2023-04-09 12:00:00', '유저1이 쓴 첫번째 리뷰의 첫 번째 댓글입니다.', 1, 'username1'),
+('2023-04-09 12:01:00', '2023-04-09 12:01:00', '유저2가 쓴 두번째 리뷰의 첫 번째 댓글입니다.', 2, 'username2'),
+('2023-04-09 12:02:00', '2023-04-09 12:02:00', '유저3이 쓴 두번째 리뷰의 두 번째 댓글입니다.', 2, 'username3'),
+('2023-04-09 12:03:00', '2023-04-09 12:03:00', '유저1이 쓴 두번째 리뷰의 세 번째 댓글입니다.', 2, 'username1');
 
-http://localhost:8180/board/post
-yarc에서 글 쓰기
-포스트로 변경
+http://localhost:9000/board/post
+http://localhost:9000/reply/post
+yarc에서 Post로 글/댓글 쓰기
+
 {
-    "title": "검색용 게시글",
-    "content": "가나다라마바사",
-    "writer": {"id": 1}
+    "title": "new 게시글",
+    "content": "new 내용",
+    "writerDto": {
+        "username": "username1"
+    }
+}
+
+{
+  "text": "첫번째 댓글",
+    "username": "username1",
+    "bno": 3
+}
+
+{
+  "text": "첫번째 리뷰 댓글",
+  "user": {
+    "username": "username1",
+    "nickname": "닉네임1"
+  },
+  "review": {
+    "rvno": 1
+  }
 }
 
 수정용 게시글
@@ -35,7 +55,28 @@ yarc에서 글 쓰기
     "content": "수정했읍니다"
 }
 
+수정용 댓글
 
-//검색결과를 10개단위 페이징 처리 할 것(완료)
-//createdDate 표기할것(완료)
-//리플 갯수 알 수 있게 할 것
+{
+  "text": "댓글을 수정했습니다"
+}
+
+
+
+리플 갯수 알 수 있게 할 것(시행중)
+User의 pk를 username으로 변경(완료)
+Review 완성하기
+집에가서 다중 게시판 공부한 후 수정할것
+
+
+
+
+
+
+//리뷰는 자동차+ 댓글이다.
+Car 데이터 쿼리문
+INSERT INTO car (name, capacity, fuel_efficiency,cost)
+VALUES ('소나타',2000, 12.5,  25000000);
+
+
+//게시글 목록에서 리플라이 카운트가 올라가지 않는 현상

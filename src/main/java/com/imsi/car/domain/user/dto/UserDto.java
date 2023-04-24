@@ -3,8 +3,6 @@ package com.imsi.car.domain.user.dto;
 import com.imsi.car.domain.user.model.User;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,16 +12,19 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class UserDto {
+
     private String username;
     private String nickname;
     private String email;
     private int exp;
     private String provider;
     private int sid;
+
 
     public User toEntity() {
         User user = User.builder()
@@ -33,6 +34,7 @@ public class UserDto {
         return user;
     }
 
+
     public UserDto(User user){
         this.username = user.getUsername();
         this.nickname = user.getNickname();
@@ -41,5 +43,6 @@ public class UserDto {
         this.provider = user.getProvider();
         this.sid = user.getSid();
     }
+
 
 }
