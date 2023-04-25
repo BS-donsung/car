@@ -3,6 +3,7 @@
     <div class="image-box">
       <button
         v-if="!isimg"
+        class="addcarBtn"
         @click="goHome">
         추가하기
       </button>
@@ -11,6 +12,7 @@
         class="imginner"
         :src="'/img' + InfoData.specifications.imgurl" />
     </div>
+
     <div class="spec">
       <hr />
       <div class="spectitle">
@@ -31,6 +33,7 @@
         <p>{{ InfoData.specifications.fuel_efficiency }}</p>
       </div>
     </div>
+
     <div class="spec">
       <hr />
       <div class="spectitle">
@@ -53,15 +56,40 @@
         <p>{{ ' 후륜서스 ' }}</p>
       </div>
     </div>
+
     <div class="opt">
       <hr />
       <div class="opttitle">
         옵션
       </div>
-      <div class="optinner">
-        옵션 넣는곳이요
+      <div
+        v-for="caropt in InfoData.specifications.options"
+        :key="caropt"
+        class="optinner">
+        <p>
+          <label>
+            <input
+              v-model="caropt.userchk"
+              :disabled="!caropt.chk"
+              type="checkbox"
+              @change="clickbox(caropt)" />
+            {{ caropt.oname }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ isNaN(Number(caropt.cost)) ? '' :
+              Number(caropt.cost).toLocaleString() }}
+          </label>
+        </p>
       </div>
     </div>
+  </div>
+  <div class="totalcost">
+    <div class="totalbox">
+      {{ isNaN(Number(total)) ? '' : Number(total).toLocaleString() }}
+    </div>
+  </div>
+  <div class="postBtn">
+    <button 
+      @click="clickstore">
+      저장
+    </button>
   </div>
 </template>
 
@@ -102,6 +130,7 @@ const goHome = () => {
 const InfoData = reactive({ // brands에 넣으면 된다 (for문)
   specifications: []
 })
+const total = ref('') // 기본 차값 금액
 
 const getInfo = async () => {
   console.log('id >>', props.cid)
@@ -114,11 +143,50 @@ const getInfo = async () => {
     const res = await axios.get(URL + `/car/search/car?cid=${props.cid}`)
     InfoData.specifications = res.data
     console.log('specifications data : ', res.data)
+    InfoData.specifications.options.forEach(caropt => {
+      caropt['userchk'] = false
+    })
+    total.value = InfoData.specifications.cost
   } catch (error) {
     console.log('제원 주세요', error)
   }
-
 }
+
+// 체크박스
+const clickbox = (caropt) => {
+  if (caropt.userchk) {
+    total.value += caropt.cost
+  } else {
+    total.value -= caropt.cost
+  }
+}
+
+
+const clickstore = () => {
+  // console.log(InfoData.specifications.options)
+  let data = {
+    carDto: {
+      cid: props.cid
+    },
+    options: []
+  }
+  for (const option of InfoData.specifications.options) {
+    // console.log('>>',)
+    let imsi_opt = {
+      opk: option.opk,
+      chk: option.userchk
+    }
+    data.options.push(imsi_opt)
+  }
+  console.log('데이터 post',data)
+
+  axios.post(URL, data)
+    .then((res) => {
+      console.log(res.data)
+    })
+    .catch('데이터 저장 실패')
+}
+
 </script>
 
 <style scoped>
@@ -164,5 +232,47 @@ p {
 .costcolor {
   color: blue;
   font-weight: bold;
+}
+
+.totalbox {
+  width: 100%;
+  height: 60px;
+  border: 1px solid black;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: blue;
+  font-weight: 600;
+  font-size: 22px;
+}
+
+.addcarBtn {
+  width: 200px;
+  height: 30px;
+  border: 1px solid black;
+  box-shadow: 1px 3px 3px 1px rgb(0, 0, 0, 0.5);
+  margin-top: 10px;
+  border-radius: 6px;
+  color: black;
+}
+.postBtn {
+  display: flex;
+  justify-content: center;
+}
+.postBtn button {
+  width: 100%;
+  height: 50px;
+  color: black;
+  margin-top: 10px;
+  border: 1px solid black;
+  border-radius: 6px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+button:hover {
+  background: black;
+  color: white;
 }
 </style>

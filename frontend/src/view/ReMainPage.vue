@@ -11,6 +11,4 @@ import SerFrm from '@/view/SearchFrm.vue'
 
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

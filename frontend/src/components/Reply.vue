@@ -39,7 +39,7 @@
           @keydown.enter.shift.exact.prevent="reply_data.text += '\n'"
           @input="inputHandler"></textarea>
       </div>
-      <div class="addBtn">
+      <div class="addreplyBtn">
         <button @click="addreply">
           댓글달기
         </button>
@@ -237,10 +237,11 @@ function good() {
   isRed.value = !isRed.value
 }
 
+// 수정전
 const modifyreply = reply => {
   reply.ismodify = !reply.ismodify
 }
-
+// 수정후
 const remodifyreply = reply => {
   reply.ismodify = !reply.ismodify
 }
