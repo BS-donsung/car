@@ -21,6 +21,7 @@ import com.imsi.car.domain.user.dto.UserDto;
 import com.imsi.car.domain.user.model.User;
 import com.imsi.car.domain.user.repo.UserRepo;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -52,6 +53,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     // 게시글 쓰기 요청을 수락하는 서비스
+    @Transactional
     @Override
     public void writeBoard(BoardDto boardDto) {
         Board board = boardDto.toEntity();

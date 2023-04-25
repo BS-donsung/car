@@ -60,7 +60,7 @@ public class BoardDto {
                 .likes(likes)
                 .replyCount(replyCount)
                 .build();
-        log.info("BoardToEntity로그 :" + writerDto.toEntity());
+        // log.info("BoardToEntity로그 :" + writerDto.toEntity());
         return board;
     }
 }

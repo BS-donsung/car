@@ -30,22 +30,37 @@ public class ReplyServiceImpl implements ReplyService {
         replyDto.builder()
                 .username(replyDto.getUsername())
                 .bno(replyDto.getBno())
-                .rvno(replyDto.getRvno())
+                .parent(replyDto.getParent())
+                // .rvno(replyDto.getRvno())
                 .build();
         Reply reply = replyDto.toEntity();
+        // 부모 댓글이 있는 경우
+        if (reply.getParent() != null) {
+            // 부모 댓글 조회
+            Reply parent = replyRepo.findById(reply.getParent().getRno())
+                    .orElseThrow(() -> new IllegalArgumentException("원본 댓글이 존재하지 않습니다"));
+            // 부모 댓글의 child 리스트에 새로운 대댓글 추가
+            parent.getChild().add(reply);
+            // 대댓글 저장
+            replyRepo.save(reply);
+        } else {
+            // 부모 댓글이 없는 경우, 새로운 댓글 등록
+            replyRepo.save(reply);
+        }
         replyRepo.save(reply);
         if (reply.getBoard() != null) {
             Board board = boardRepo.getById(reply.getBoard().getBno());
             board.addReplyCount();
             boardRepo.save(board);
             log.info("보드리플 카운트 업 로그");
-        } else if (reply.getReview() != null) {
-            Review review = reviewRepo.getById(reply.getReview().getRvno());
-            review.addReplyCount();
-            reviewRepo.save(review);
-            log.info("리뷰리플 카운트 업 로그");
         }
     }
+    // else if (reply.getReview() != null) {
+    // Review review = reviewRepo.getById(reply.getReview().getRvno());
+    // review.addReplyCount();
+    // reviewRepo.save(review);
+    // log.info("리뷰리플 카운트 업 로그");
+    // }
 
     // 댓글 수정
     @Override
