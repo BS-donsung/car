@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.imsi.car.domain.board.dto.BoardDto;
 import com.imsi.car.domain.board.service.BoardService;
+import com.imsi.car.domain.user.dto.UserDto;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -44,12 +46,39 @@ public class BoardController {
     }
 
     // 글쓰기 요청을 보내는 컨트롤러 (YARC 이용)
+    // 서블릿 사용할것
+    // @GetMapping("/mystores")
+    // public List<StoreDto> findMyStores(HttpServletRequest req){
+    // log.info("/mystores : {}", req.getAttribute("username"));
+    // return carService.listOptionByUsername("gi");
+    // }
+
+    // @GetMapping("/mystore")
+    // public StoreDto findMyStore(HttpServletRequest req, @RequestParam String
+    // cid){
+    // log.info("/mystore : {} , {}",req.getAttribute("username"), cid);
+    // StoreDto storeDto = carService.optionInfo(cid);
+    // return storeDto;
+    // }
+
     @PostMapping("/post")
-    public ResponseEntity<BoardDto> createBoard(@RequestBody BoardDto boardDto) {
-        log.info("글쓰기 요청 로그: {}", boardDto);
+    public ResponseEntity<BoardDto> createBoard(@RequestBody BoardDto boardDto, HttpServletRequest req) {
+        String username = (String) req.getAttribute("username");// 유저네임 초기화
+        // writerDto는 타입이 UserDto, username은 타입이 String, 타입을 맞출 방법을 생각해보자
+        UserDto userDto = UserDto.builder().username(username).build();
+        boardDto.setWriterDto(userDto);
+        // boardDto.userDto.writerDto(username);
         bs.writeBoard(boardDto);
+        log.info("글쓰기 요청 로그: {}", boardDto, req.getAttribute("username"));
         return ResponseEntity.ok(boardDto);
     }
+
+    // @PostMapping("/post")
+    // public ResponseEntity<BoardDto> createBoard(@RequestBody BoardDto boardDto) {
+    // log.info("글쓰기 요청 로그: {}", boardDto);
+    // bs.writeBoard(boardDto);
+    // return ResponseEntity.ok(boardDto);
+    // }
 
     // 글 삭제 요청을 보내는 컨트롤러(YARC 이용)
     @DeleteMapping("/delete/{bno}")
@@ -66,7 +95,7 @@ public class BoardController {
         return ResponseEntity.ok().build();
     }
 
-    // 검색한 게시글 목록 출력(flag값 1=제목,2=내용,3=글쓴이,4=댓글내용으로 검색,5쓰니의 댓글 검색)
+    // 검색한 게시글 목록 출력(flag값 1=제목,2=내용,3=글쓴이(닉네임),4=댓글내용으로 검색,5쓰니의 댓글 검색)
     @GetMapping("/search/{flag}/{keyword}")
     public List<BoardDto> searchBoard(@PathVariable String keyword, @PathVariable int flag,
             @RequestParam(defaultValue = "1") Integer page) {
