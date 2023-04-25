@@ -1,12 +1,15 @@
 package com.imsi.car.domain.user;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.imsi.car.domain.user.dto.UserDto;
 import com.imsi.car.domain.user.model.User;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -34,5 +37,10 @@ public class UserController {
         if(userService.isDupUser(user)) flag = false;
         return flag;
     }
-
+    @GetMapping("/getuser")
+    public UserDto getUser(HttpServletRequest req) {
+        String username = (String)req.getAttribute("username");
+        log.info("/getUser : {}",username);
+        return userService.findUserByUsername(username);
+    }
 }

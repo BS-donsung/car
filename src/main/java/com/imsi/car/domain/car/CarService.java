@@ -2,10 +2,9 @@ package com.imsi.car.domain.car;
 
 import java.util.List;
 
-import com.imsi.car.domain.car.dto.CarDTO;
-import com.imsi.car.domain.car.dto.StoreDTO;
+import com.imsi.car.domain.car.dto.CarDto;
+import com.imsi.car.domain.car.dto.StoreDto;
 import com.imsi.car.domain.car.model.Brand;
-import com.imsi.car.domain.car.model.Car;
 import com.imsi.car.domain.car.model.Segment;
 
 public interface CarService {
@@ -16,16 +15,20 @@ public interface CarService {
 
     public List<Segment> listSegment();
 
-    public List<CarDTO> listCarByBrand(CarDTO carDTO);
+    public List<CarDto> listCarByBrand(CarDto carDto);
 
-    public List<CarDTO> listCarBySegment(CarDTO carDTO);
+    public List<CarDto> listCarBySegment(CarDto carDto);
 
-    public List<CarDTO> listCarByBrandAndSegment(CarDTO carDTO);
+    public List<CarDto> listCarByBrandAndSegment(CarDto carDto);
 
-    public void storeUserOption(StoreDTO storeDTO);
+    public void storeUserOption(StoreDto storeDto);
 
-    public CarDTO carInfo(String cid);
+    public CarDto carInfo(String cid);
 
-    public StoreDTO optionInfo(String cid);
+    public StoreDto optionInfo(String cid);
+
+    public List<StoreDto> listOptionByUsername(String username);
+
+    
 
 }

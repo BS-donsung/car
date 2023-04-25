@@ -1,15 +1,19 @@
 package com.imsi.car.domain.user.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.imsi.car.domain.board.model.Board;
+import com.imsi.car.domain.board.model.Reply;
+import com.imsi.car.domain.board.model.Review;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -25,24 +29,25 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonIgnoreProperties({"boards"}) // boards 속성은 JSON으로 변환하지 않음(무한참조 방지 코드)
+@EntityListeners(AuditingEntityListener.class) // createdDate를 위해?
+@JsonIgnoreProperties({ "boards", "reviews", "replies" }) // boards 속성은 JSON으로 변환하지 않음(무한참조 방지 코드)
 @Getter
 @Setter
-@ToString(exclude = {"boards"})
-@EntityListeners(AuditingEntityListener.class) // createdDate를 위해?
+@ToString(exclude = { "boards",  "replies" })
 public class User {
     @Id // primary key
     @Column(nullable=false)
+
+
 	private String username;
-    @Column(nullable=false)
+	@Column(nullable = false)
 	private String password;
 	private String email;
-	private String role; //ROLE_USER, ROLE_ADMIN
+	private String role; // ROLE_USER, ROLE_ADMIN
 	private String nickname;
 	@ColumnDefault("0")
 	private int exp;
@@ -64,8 +69,10 @@ public class User {
 	@Column(unique = true)
 	private int sid;
 	@OneToMany(mappedBy = "writer", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Board> boards = new ArrayList<>();
-	
+	private List<Board> boards = new ArrayList<>();
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
+	private List<Reply> replies = new ArrayList<>();
 
 
 }
