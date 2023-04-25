@@ -13,6 +13,8 @@ import MyPageStore from '@/view/MyPageStoreFrm.vue'
 
 import Community from '@/view/CommunityFrm.vue'
 import CreateNotice from '@/view/ToCreateNotice.vue'
+import DetailNotice from '@/view/ToDetailNotice.vue'
+import EditNotice from '@/view/ToEditNotice.vue'
 import Inquiry from '@/view/InquiryFrm.vue'
 
 
@@ -23,6 +25,7 @@ const routes = [
   {path: '/comparison', component: Comparison},
   {path: '/loginfrm', component: Login},
   {path: '/registerfrm', component: Register},
+  {path: '/community', component: Community, name: 'community'},
 
   {path: '/mypage', component: MyPage},
   {path: '/mypage/boards', component: MyPageBoards},
@@ -31,8 +34,9 @@ const routes = [
   {path: '/mypage/stores', component: MyPageStores},
   {path: '/mypage/store', component: MyPageStore},
 
-  {path: '/community', component: Community},
   {path: '/cratenotice', component: CreateNotice},
+  {path: '/community/:bno', component: DetailNotice, name: 'detailnotice' , props:true},
+  {path: '/editnotice/:bno/Edit', component: EditNotice, name: 'editnotice'},
   {path: '/inquiry', component: Inquiry},
 
 ]

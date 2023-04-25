@@ -25,7 +25,7 @@
               <!-- <textarea v-model="form.description"></textarea> -->
               <QuillEditor
                 v-model:content="notice_data.content"
-                content-type="text"
+                content-type="html"
                 :options="form.editorOption"
                 style="height:400px;"
                 theme="snow" />
@@ -84,11 +84,11 @@ const form = ref({
 
 const notice_data = reactive({
   title: '',
-  writerDto: {
-    username:'username1',
-    nickname:'유저1',
-  },
-  content: '',
+    writerDto: {
+      username:'username1',
+      nickname:'유저1',
+    },
+    content: '',
 })
 
 const completeBtn = async () => {
