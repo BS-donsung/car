@@ -1,5 +1,7 @@
 package com.imsi.car.domain.board.repo;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +12,9 @@ import org.springframework.data.jpa.repository.Query;
 import com.imsi.car.domain.board.model.Reply;
 
 public interface ReplyRepo extends JpaRepository<Reply, Long> {
+
+    List<Reply> getByParent(Long parent);
+
     // 댓글 삭제
     void delete(Reply reply);
 
