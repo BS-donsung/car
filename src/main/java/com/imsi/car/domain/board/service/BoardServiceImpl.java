@@ -84,7 +84,7 @@ public class BoardServiceImpl implements BoardService {
 
     // 게시글 조회
     @Override
-    public BoardDto BoardView(Long bno) {
+    public BoardDto boardView(Long bno) {
         Board board = boardRepo.getById(bno); // bno 필드를 이용하여 해당 게시글을 조회
         if (board != null) {
             board.addViewCount(); // addViewCount() 메소드를 호출하여 viewCount 필드를 증가시킴

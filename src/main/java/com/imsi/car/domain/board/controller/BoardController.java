@@ -40,9 +40,9 @@ public class BoardController {
 
     /* 게시글 상세 보기 */
     @GetMapping("/view/{bno}")
-    public BoardDto BoardView(@PathVariable Long bno) {
+    public BoardDto boardView(@PathVariable Long bno) {
         log.info("게시글 상세보기 로그: {}", bno);
-        return bs.BoardView(bno);
+        return bs.boardView(bno);
     }
 
     // 글쓰기 요청을 보내는 컨트롤러 (YARC 이용)
