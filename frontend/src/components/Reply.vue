@@ -34,7 +34,10 @@
           ref="textArea"
           v-model="reply_data.text"
           placeholder="댓글을 남겨보세요"
-          @input="checkRows"></textarea>
+          maxlength="100"
+          @keydown.enter.exact.prevent="postReviews"
+          @keydown.enter.shift.exact.prevent="reply_data.text += '\n'"
+          @input="inputHandler"></textarea>
       </div>
       <div class="addBtn">
         <button @click="addreply">
@@ -48,48 +51,89 @@
     <div class="reply-content">
       <div
         v-for="reply in replies"
+        ref="innerTextArea"
         :key="reply"
         class="innerText">
         <div
-          v-if="ismodify"
-          class="modifyif">
-          <div class="inneruser">
+          v-if="reply.ismodify"
+          class="inneruser">
+          {{ reply?.user?.nickname }}({{ reply?.user?.username }})
+        </div>
+        <div
+          v-if="reply.ismodify"
+          class="innercontent">
+          {{ reply?.text }}
+        </div>
+        <div class="innerCreate">
+          <div
+            v-if="reply.ismodify"
+            class="createDate">
+            {{ reply?.formattedCreatedDate }}
+          </div>
+          <div class="reBtn">
+            <button
+              v-if="reply.ismodify"
+              class="rewrite"
+              @click="writeReply">
+              답글쓰기
+            </button>
+          </div>
+        </div>
+        <div
+          v-if="reply?.user.username === username"
+          class="inneredit">
+          <button
+            v-if="reply.ismodify"
+            class="replyedit"
+            @click="modifyreply(reply)">
+            수정
+          </button>
+          <button
+            v-if="reply.ismodify"
+            class="replyedit"
+            @click="removereply(reply.rno)">
+            삭제
+          </button>
+        </div>
+
+
+        <!-- 수정 event -->
+        <div class="remodifyFrm">
+          <div
+            v-if="!reply.ismodify"
+            class="inneruser">
             {{ reply?.user?.nickname }}({{ reply?.user?.username }})
           </div>
+
           <div
-            v-if="ismodify"
-            class="innercontent">
-            {{ reply?.text }}
-          </div>
-          <div
-            v-if="!ismodify"
+            v-if="!reply.ismodify"
             class="modifycontent">
             <textarea
               ref="textArea"
               v-model="reply.text"
-              @input="checkRows"></textarea>
+              maxlength="100"
+              @keydown.enter.exact.prevent="postReviews"
+              @keydown.enter.shift.exact.prevent="reply.text += '\n'"
+              @input="inputHandler"></textarea>
           </div>
+
           <div class="innerCreate">
-            <div class="createDate">
+            <div
+              v-if="!reply.ismodify"
+              class="createDate">
               {{ reply?.formattedCreatedDate }}
             </div>
-            <div class="reBtn">
-              <button
-                class="rewrite"
-                @click="writeReply">
-                답글쓰기
-              </button>
-            </div>
           </div>
-          <div
-            v-if="reply?.user.username === username"
-            class="inneredit">
+
+          <div class="inneredit">
             <button
+              v-if="!reply.ismodify"
               class="replyedit"
-              @click="modifyreply(da)">
-              수정
+              @click="remodifyreply(reply)">
+              수정완료
             </button>
             <button
+              v-if="!reply.ismodify"
               class="replyedit"
               @click="removereply(reply.rno)">
               삭제
@@ -99,7 +143,7 @@
       </div>
     </div>
 
-    {{ props.replies }}
+    <!-- {{ props.replies }} -->
   </div>
 </template>
 
@@ -110,9 +154,10 @@ import { URL } from '@/components/global'
 import router from '@/router'
 import axios from 'axios'
 
-const text = ref('')
+
 const textArea = ref()
 const contArea = ref()
+const innerTextArea = ref()
 const reply_form = ref()
 const username = ref('username1')
 
@@ -141,6 +186,7 @@ const addreply = () => {
     .then((res) => {
       console.log(res.data)
       reply_form.value = res.data
+      console.log('확인', reply_form.value)
     })
     .catch('댓글저장 실패')
   router.push({
@@ -174,36 +220,14 @@ onMounted(() => {
 })
 
 
-function checkRows() {
-  const element = document.querySelector('textarea')
-  const maxWidth = 450
-  // const lineHeight = parseInt(getComputedStyle(element).lineHeight, 10)
-  const maxLines = 3
-  const maxChars = Math.floor(maxWidth / (getComputedStyle(element).fontSize.slice(0, -2) * 0.6))
-  let newText = ''
-  let lines = 0
-  text.value.split('\n').forEach(line => {
-    if (line.length > maxChars) {
-      let startIndex = 0
-      while (startIndex < line.length) {
-        newText += line.substring(startIndex, startIndex + maxChars) + '\n'
-        startIndex += maxChars
-        lines++
-        if (lines === maxLines) {
-          break
-        }
-      }
-    } else {
-      newText += line + '\n'
-      lines++
-    }
-    if (lines === maxLines) {
-      return
-    }
-  })
-  text.value = newText.slice(0, -1)
-  textArea.value.style.height = '1px'
-  textArea.value.style.height = (12 + textArea.value.scrollHeight) + 'px'
+const inputHandler = (e) => {
+  const target = e.currentTarget
+  const max = e.currentTarget.getAttribute('maxlength')
+  if (target.value.length > max) {
+    target.value = target.value.slice(0, max)
+  }
+  target.style.height = '1px'
+  target.style.height = (12 + target.scrollHeight) + 'px'
   contArea.value.style.height = '1px'
   contArea.value.style.height = (12 + contArea.value.scrollHeight) + 'px'
 }
@@ -213,8 +237,12 @@ function good() {
   isRed.value = !isRed.value
 }
 
-const modifyreply = da => {
-  da.ismodify = !da.ismodify
+const modifyreply = reply => {
+  reply.ismodify = !reply.ismodify
+}
+
+const remodifyreply = reply => {
+  reply.ismodify = !reply.ismodify
 }
 </script>
 

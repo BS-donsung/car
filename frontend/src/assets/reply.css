@@ -22,7 +22,8 @@
 }
 
 .reply-container .nick-text,
-.reply-container .reply-text {
+.reply-container .reply-text,
+.reply-container .modifycontent {
   margin-top: 20px;
   display: flex;
   text-align: left;
@@ -35,7 +36,8 @@
   margin-left: 20px;
 }
 
-.reply-text textarea {
+.reply-text textarea,
+.modifycontent textarea {
   resize: none;
   width: 100%;
   height: 40px;
@@ -84,20 +86,25 @@ button {
 
 .reply-content .innerText {
   width: 100%;
-  height: 110px;
+  height: 100%;
   border: 1px solid #bebebe;
   border-radius: 6px;
   margin-bottom: 10px;
-  padding-left: 10px;
+  padding: 10px; 
 }
+
 .inneruser {
   margin-bottom: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
 }
+
 .innerText .createDate {
   color: #bebebe;
+  font-family: 'Noto Sans KR', sans-serif;
 }
-.innercontent {
-  font-family: 'Poppins','sans-serif' 
+
+.innerText .innercontent {
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .innerCreate {
@@ -114,13 +121,16 @@ button {
   text-align: left;
   margin-left: 5px;
 }
+
 .replyicons {
   margin-left: 10px;
 }
+
 .icons {
   font-size: 16px;
   margin-right: 5px;
 }
+
 .hearticons {
   color: red;
 }
@@ -132,6 +142,7 @@ button {
   margin-right: 10px;
   font-size: 14px;
 }
+
 .replyedit {
   margin-right: 10px;
 }
