@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imsi.car.domain.car.CarService;
-import com.imsi.car.domain.car.dto.CarDTO;
-import com.imsi.car.domain.car.dto.StoreDTO;
+import com.imsi.car.domain.car.dto.CarDto;
+import com.imsi.car.domain.car.dto.StoreDto;
+import com.imsi.car.domain.car.service.CarService;
+import com.imsi.car.domain.car.service.StoreService;
 
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
@@ -26,53 +27,39 @@ public class CarController {
     private final CarService carService;
     
     @GetMapping("/search")
-    public List<CarDTO> searchCars(@RequestParam @Nullable String segment, @RequestParam @Nullable String brand){
+    public List<CarDto> searchCars(@RequestParam @Nullable String segment, @RequestParam @Nullable String brand){
         // http://localhost:9000/car/search?segment=소형차
         // http://localhost:9000/car/search?brand=현대
         // http://localhost:9000/car/search?segment=소형차&brand=현대
         log.info("/search : {} {}",segment, brand);
-        List<CarDTO> list = null;
-        CarDTO carDTO = CarDTO.builder()
+        List<CarDto> list = null;
+        CarDto carDto = CarDto.builder()
         .segment(segment)
         .brand(brand)
         .build();
-        if(carDTO.getBrand() != null && carDTO.getSegment() != null){ // 둘 다 값을 줬다
-            list = carService.listCarByBrandAndSegment(carDTO);
-        }else if(carDTO.getBrand() != null){ // brand는 줬다
-            list = carService.listCarByBrand(carDTO);
-        }else if(carDTO.getSegment() != null){ // segment는 줬다
-            list = carService.listCarBySegment(carDTO);
+        if(carDto.getBrand() != null && carDto.getSegment() != null){ // 둘 다 값을 줬다
+            list = carService.listCarByBrandAndSegment(carDto);
+        }else if(carDto.getBrand() != null){ // brand는 줬다
+            list = carService.listCarByBrand(carDto);
+        }else if(carDto.getSegment() != null){ // segment는 줬다
+            list = carService.listCarBySegment(carDto);
+        }else{ // 다 가져와봐라
+            list = carService.listCar();
         }
-        for (CarDTO dto : list) {
+        for (CarDto dto : list) {
             log.info("car : {}",dto);
         }
         return list;
     }
 
-    @PostMapping("/store")
-    public void storeCar(@RequestBody StoreDTO storeDTO){
-        // http://localhost:9000/car/store
-        /*
-        {
-            "carDTO" : {
-                "cid" : 1
-            },
-            "user" : "banana",
-            "options" : [
-                { "opk" : 1, "opt" : 1 }
-            ]
-        }
-         */
-        log.info("/stroe : {}",storeDTO);
-        carService.storeUserOption(storeDTO);
-    }
+    
     @GetMapping("/search/car")
-    public CarDTO searchCar(@RequestParam String cid){
+    public CarDto searchCar(@RequestParam String cid){
         // http://localhost:9000/car/search/car?cid=1
         log.info("/search/car : {} ",cid);
-        CarDTO carDTO = carService.carInfo(cid);
+        CarDto carDto = carService.carInfo(cid);
 
-        return carDTO;
+        return carDto;
     }
     
 

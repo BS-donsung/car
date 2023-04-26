@@ -57,7 +57,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
             Authentication authResult) throws IOException, ServletException {
-        // TODO Auto-generated method stub
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
 
         String token = jwtProperties.generateToken(principalDetails.getUsername());

@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imsi.car.domain.car.CarService;
 import com.imsi.car.domain.car.model.Brand;
+import com.imsi.car.domain.car.service.BrandService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -18,17 +18,17 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class BrandController {
     
-    private final CarService carService;
+    private final BrandService brandService;
 
     
     @GetMapping("/all")
     public List<Brand> listBrand(){
         log.info("/all");
-        return carService.listBrand();
+        return brandService.listBrand();
     }
     @GetMapping("/")
     public List<Brand> searchBrand(String keyword){
         log.info("/ : {}",keyword);
-        return carService.listBrand(keyword);
+        return brandService.listBrand(keyword);
     }
 }

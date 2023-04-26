@@ -1,84 +1,83 @@
 <template>
-  <Nav />
-  <div class="searchFrm">
-    <div class="srcinner">
-      <!-- 브랜드 -->
-      <select
-        v-model="b_text"
-        class="custom b"
-        @change="getCar">
-        <option
-          class="b"
-          disable
-          value="">
-          브랜드를 선택해주세요
-        </option>
-        <option
-          v-for="brand in getData.brands"
-          :key="brand"
-          class="b"
-          :value="brand.brand">
-          <!-- v-text="brand.brand"> -->
-          {{ brand.brand }}
-        </option>
-      </select>
-      <!-- 차급 -->
-      <select
-        v-model="s_text"
-        class="custom s"
-        @change="getCar">
-        <option
-          class="s"
-          disable
-          value="">
-          차급을 선택해주세요
-        </option>
-        <option
-          v-for="segment in getData.segment"
-          :key="segment"
-          class="s"
-          :value="segment.segment"
-          v-text="segment.segment"></option>
-      </select>
+  <div class="back-img">
+    <div class="searchFrm">
+      <div class="srcinner">
+        <!-- 브랜드 -->
+        <select
+          v-model="b_text"
+          class="custom b"
+          @change="getCar">
+          <option
+            class="b"
+            disable
+            value="">
+            브랜드를 선택해주세요
+          </option>
+          <option
+            v-for="brand in getData.brands"
+            :key="brand"
+            class="b"
+            :value="brand.brand">
+            {{ brand.brand }}
+          </option>
+        </select>
 
-      <!-- 차종 -->
-      <select
-        v-model="v_text"
-        class="custom v"
-        @change="getCid">
-        <option
-          class="v"
-          disable
-          value="">
-          차종을 선택해주세요
-        </option>
-        <option
-          v-for="car in getData.car"
-          :key="car"
-          class="v"
-          :value="car.cid"
-          v-text="car.name"></option>
-      </select>
+        <!-- 차급 -->
+        <select
+          v-model="s_text"
+          class="custom s"
+          @change="getCar">
+          <option
+            class="s"
+            disable
+            value="">
+            차급을 선택해주세요
+          </option>
+          <option
+            v-for="segment in getData.segment"
+            :key="segment"
+            class="s"
+            :value="segment.segment"
+            v-text="segment.segment"></option>
+        </select>
 
-      <button
-        class="addBtn"
-        type="button"
-        @click="handover">
-        추가
-        <font-awesome-icon :icon="['fas', 'plus']" />
-      </button>
+        <!-- 차종 -->
+        <select
+          v-model="v_text"
+          class="custom v"
+          @change="getCid">
+          <option
+            class="v"
+            disable
+            value="">
+            차종을 선택해주세요
+          </option>
+          <option
+            v-for="car in getData.car"
+            :key="car"
+            class="v"
+            :value="car.cid"
+            v-text="car.name"></option>
+        </select>
+
+        <button
+          class="addBtn"
+          type="button"
+          @click="handover">
+          추가
+          <font-awesome-icon :icon="['fas', 'plus']" />
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-
 import { ref, reactive, onMounted } from 'vue'
 import { URL } from '@/components/global'
 import axios from 'axios'
 import router from '@/router'
 import { useCompStore } from '@/store/index'
-import Nav from '@/view/ToNav.vue'
 
 // 검색 페이지 스크립
 const b_text = ref('')
@@ -159,20 +158,25 @@ const handover = () => {
   router.push({ path: '/comparison' })
 }
 
-
 </script>
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Popins", sans-serif;
 }
-#body {
-  background: url("@/components/img/car.jpg") no-repeat;
+
+.back-img {
+  background-image: url('@/components/img/car.jpg');
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
 }
+
 .searchFrm {
   width: 950px;
   height: 300px;

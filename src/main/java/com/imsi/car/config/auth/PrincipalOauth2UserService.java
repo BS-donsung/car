@@ -2,6 +2,7 @@ package com.imsi.car.config.auth;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,8 +28,8 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequiredArgsConstructor
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
-    private PasswordEncoder passwordEncoder;
-    private UserRepo userRepo;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepo userRepo;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -56,18 +57,16 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                 log.info("지원하지 않는 OAuth 입니다");
                 break;
         }
-        Optional<User> userOptional = userRepo.findByProviderAndProviderId(oAuth2UserInfo.getProvider(),
-                oAuth2UserInfo.getProviderId());
+        User user = userRepo.findByProviderAndProviderId(oAuth2UserInfo.getProvider(), oAuth2UserInfo.getProviderId());
 
-        User user;
-        if (userOptional.isPresent()) {
-            user = userOptional.get();
-            // user가 존재하면 update 해주기
+        if (user != null) {
             user.setEmail(oAuth2UserInfo.getEmail());
             userRepo.save(user);
         } else {
             UUID uuid = Generators.timeBasedEpochGenerator().generate();
             // user의 패스워드가 null이기 때문에 OAuth 유저는 일반적인 로그인을 할 수 없음.
+            long seed = System.currentTimeMillis();
+            Random rand = new Random(seed);
             user = User.builder()
                     .username(oAuth2UserInfo.getProvider() + "_" + oAuth2UserInfo.getProviderId())
                     .email(oAuth2UserInfo.getEmail())
@@ -76,7 +75,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .provider(oAuth2UserInfo.getProvider())
                     .providerId(oAuth2UserInfo.getProviderId())
                     .exp(0)
-                    .nickname("user"+uuid.toString())
+                    .nickname("user" + uuid.toString())
+                    .sid(rand.nextInt(10000000))
                     .build();
             userRepo.save(user);
         }

@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Open+Sans:ital,wght@0,300;0,600;1,300;1,600&family=Poor+Story&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.body {
+  width: 100%;
+  min-height: 100vh;
+  background: #F0F1F8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+width: 80%;
+  background: #fff;
+  border-radius: 6px;
+  padding: 20px 60px 40px 40px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.container .content {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: space-between;
+}
+
+/* 왼쪽 텍스트에 대한 css */
+.container .content .left-side {
+  position: relative;
+  width: 25%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+}
+.content .left-side::before {
+  content: '';
+  position: absolute;
+  height: 70%;
+  width: 2px;
+  right: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #afafb6;
+}
+.content .left-side .details {
+  margin: 14px;
+  text-align: center;
+}
+.content .left-side .details .icon {
+  font-size: 30px;
+  color: #3e2093;
+  background: white;
+  margin-bottom: 10px;
+}
+.content .left-side .details .topic {
+  font-size: 18px;
+  font-weight: 500;
+}
+.content .left-side .details .text-one,
+.content .left-side .details .text-two {
+  font-size: 14px;
+  color: #cacaca;
+}
+
+/* 오른쪽 텍스트에 대한 css */
+.container .content .right-side {
+  width: 75%;
+  margin-left: 90px;
+}
+.content .right-side .topic-text {
+  font-size: 23px;
+  font-weight: 600;
+  color: #3e2093;
+}
+.right-side .input-box {
+  height: 50px;
+  width: 100%;
+  margin: 12px 0;
+}
+.right-side .input-box input,
+.right-side .input-box textarea {
+  height: 100%;
+  width: 100%;
+  border: none;
+  border-radius: 6px;
+  background: #F0F1F8;
+  padding: 0 15px;
+}
+.right-side .input-box textarea {
+  resize: none;
+}
+.right-side .message-box {
+  min-height: 110px;
+  margin-top: 6px;
+}
+.right-side .button {
+  display: inline-block;
+  margin-top: 12px;
+}
+.right-side .button input[type="button"] {
+  color: #fff;
+  font-size: 18px;
+  outline: none;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: #3e2093;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.right-side .button input[type="button"]:hover {
+  background: #5029bc;
+}

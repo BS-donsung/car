@@ -7,61 +7,90 @@
     </router-link>
 
     <nav class="navbar">
-      <router-link to="/comparison">
-        비교
+      <router-link to="/cars">
+        차량목록
       </router-link>
-      <a href="#">Service</a>
-      <a href="#">Content</a>
+      <router-link to="/comparison">
+        모델비교
+      </router-link>
+      <router-link to="/community">
+        커뮤니티
+      </router-link>
+      <router-link to="/inquiry">
+        문의하기
+      </router-link>
+      <router-link
+        v-if="username != ''"
+        to="/mypage">
+        내 정보
+      </router-link>
       <button
+        v-if="username != ''"
+        class="btnLogin-popup logout"
+        @click="logoutBtn">
+        로그아웃
+      </button>
+
+      <button
+        v-else
         class="btnLogin-popup"
         @click="openLogin">
         로그인
       </button>
     </nav>
   </header>
-  <div id="user"></div>
-  <Teleport to="#user">
-    <login-comp
-      v-if="isLogin"
-      @close-login="closeLogin"
-      @open-join="openJoin" />
-    <join-comp
-      v-if="isJoin"
-      @close-join="closeJoin"
-      @open-login="openLogin" />
-  </Teleport>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import LoginComp from '@/components/LoginComp.vue'
-import JoinComp from '@/components/JoinComp.vue'
+import router from '@/router'
+import Cookies from 'js-cookie'
+import { onMounted, ref } from 'vue'
+import { URL } from '@/components/global'
+import axios from 'axios'
 
-const isLogin = ref(false)
-const isJoin = ref(false)
+const username = ref('')
+// const token = Cookies.get('Authorization')
+
 const openLogin = () => {
-  console.log('open!!')
-  isLogin.value = true
+  router.push({ path: '/loginfrm' })
 }
-const openJoin = () => {
-  isJoin.value = true
+
+const getUsername = () => {
+  const credentials = {
+    withCredentials: 'include',
+  }
+  axios.get(`${URL}/user/getuser`,credentials)
+  .then(res => res.data)
+  .then(body => username.value = body.username === undefined? '':body.username)
+  .catch(username.value='')
 }
-const closeLogin = () => {
-  isLogin.value = false
+
+const logoutBtn = () => {
+  Cookies.remove('Authorization')
+  Cookies.remove('JSESSIONID')
+  if (username.value != '') {
+    username.value = ''
+  }
 }
-const closeJoin = () => {
-  isJoin.value = false
-}
+
+onMounted(() => {
+  getUsername()
+})
 </script>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Popins', sans-serif;
+  font-family: "Popins", sans-serif;
+}
+
+span {
+  color: white;
+  margin-right: 30px;
 }
 
 .header {
@@ -75,6 +104,7 @@ const closeJoin = () => {
   justify-content: space-between;
   align-items: center;
   background-color: black;
+  z-index: 1;
 }
 
 .logo {
@@ -90,5 +120,31 @@ const closeJoin = () => {
   text-decoration: none;
   font-weight: 500;
   margin-right: 40px;
+}
+
+.navbar .btnLogin-popup {
+  position: relative;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.navbar .btnLogin-popup::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  bottom: -4px;
+  left: 0;
+  opacity: 0.85;
+}
+
+.logout {
+  margin-left: 20px;
 }
 </style>

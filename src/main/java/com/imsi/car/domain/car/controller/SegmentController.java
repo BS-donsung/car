@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imsi.car.domain.car.CarService;
 import com.imsi.car.domain.car.model.Segment;
+import com.imsi.car.domain.car.service.SegmentService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -18,13 +18,13 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class SegmentController {
     
-    private final CarService carService;
+    private final SegmentService segmentService;
 
     
     @GetMapping("/all")
     public List<Segment> listBrand(){
         // http://localhost:9000/segment/all
         log.info("/all");
-        return carService.listSegment();
+        return segmentService.listSegment();
     }
 }

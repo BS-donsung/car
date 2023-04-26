@@ -22,11 +22,11 @@ public class CarCustomRepoImpl implements CarCustomRepo{
         log.info("brand : {}",brand.getBrand());
         final String SQL  = "SELECT c from Car c " +
         "WHERE c.brand = :brand";
-        List<Car> result = em.createQuery(SQL, Car.class)
+        List<Car> cars = em.createQuery(SQL, Car.class)
         .setParameter("brand", brand)
         .getResultList();
         // em.clear();
-        return result;
+        return cars;
     }
 
     @Transactional
@@ -34,11 +34,11 @@ public class CarCustomRepoImpl implements CarCustomRepo{
         final String SQL  = "SELECT c from Car c "+
         "WHERE c.segment = (SELECT sid FROM Segment WHERE segment LIKE :segment)";
         // "WHERE c.segment = :segment";
-        List<Car> result = em.createQuery(SQL, Car.class)
+        List<Car> cars = em.createQuery(SQL, Car.class)
         .setParameter("segment", segment.getSegment())
         .getResultList();
         // em.clear();
-        return result;
+        return cars;
     }
 
 
@@ -49,12 +49,12 @@ public class CarCustomRepoImpl implements CarCustomRepo{
         final String SQL  = "SELECT c from Car c " +
         "WHERE c.brand = :brand " + 
         "AND c.segment = (SELECT sid FROM Segment WHERE segment LIKE :segment)";
-        List<Car> result = em.createQuery(SQL, Car.class)
+        List<Car> cars = em.createQuery(SQL, Car.class)
         .setParameter("brand", brand)
         .setParameter("segment", segment.getSegment())
         .getResultList();
         // em.clear();
-        return result;
+        return cars;
     }
     
 }
