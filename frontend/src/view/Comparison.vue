@@ -27,6 +27,7 @@ const store = useCompStore()
 
 <style scoped>
 .contain {
+  background: #F0F1F8;
   display: inline;
   display: grid;
   grid-template-rows: auto;

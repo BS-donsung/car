@@ -8,7 +8,6 @@ public class CarApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CarApplication.class, args);
-		System.out.println("http://localhost:8180/board");
 	}
 
 }

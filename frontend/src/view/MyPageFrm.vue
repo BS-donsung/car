@@ -1,40 +1,42 @@
 <template>
   <Nav />
   <PNav />
-  <div class="myBody">
-    <span>{{ user.username }}님 반갑습니다</span>
-    <span>
-      닉네임 : <input
-        v-model="user.nickname"
-        type="text" />
-      <button
-        class="changeNick"
-        @click="changeNick">수정하기</button>
-    </span>
-    <span> 이메일 : <input
-      v-model="user.email"
-      type="email"
-      disabled /> </span>
-    <span>
-      exp :
-      <progress
-        class="todo-progress"
-        :value="user.exp"
-        min="0"
-        max="100"></progress>
-      {{ user.level }}Lv
-    </span>
-    <span>
-      <i
-        class="google-icon icon"
-        :class="isCloak[0]"></i>
-      <i
-        class="naver-icon icon"
-        :class="isCloak[1]"></i>
-      <i
-        class="facebook-icon icon"
-        :class="isCloak[2]"></i>
-    </span>
+  <div class="contain">
+    <div class="myBody">
+      <span>{{ user.username }}님 반갑습니다</span>
+      <span>
+        닉네임 : <input
+          v-model="user.nickname"
+          type="text" />
+        <button
+          class="changeNick"
+          @click="changeNick">수정하기</button>
+      </span>
+      <span> 이메일 : <input
+        v-model="user.email"
+        type="email"
+        disabled /> </span>
+      <span>
+        exp :
+        <progress
+          class="todo-progress"
+          :value="user.exp"
+          min="0"
+          max="100"></progress>
+        {{ user.level }}Lv
+      </span>
+      <span>
+        <i
+          class="google-icon icon"
+          :class="isCloak[0]"></i>
+        <i
+          class="naver-icon icon"
+          :class="isCloak[1]"></i>
+        <i
+          class="facebook-icon icon"
+          :class="isCloak[2]"></i>
+      </span>
+    </div>
   </div>
 </template>
 
@@ -72,9 +74,20 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.contain{
+  background: #F0F1F8;
+  height: 100vh;
+  padding-top: 50px;
+}
 .myBody {
+  margin: 0 auto;
   display: grid;
   align-content: center;
+  width: 70%;
+  background: #fff;
+  border-radius: 6px;
+  padding: 20px 60px 40px 40px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .myBody span {

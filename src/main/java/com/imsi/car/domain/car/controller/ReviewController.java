@@ -22,28 +22,27 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequiredArgsConstructor
 public class ReviewController {
-    
+
     private final ReviewService reviewService;
 
     @GetMapping("/all")
-    public List<ReviewDto> all(@RequestParam int cid){
+    public List<ReviewDto> all(@RequestParam int cid) {
         log.info("/all : ");
-    List<ReviewDto> result = reviewService.reviewDtosByCid(cid);
-
+        List<ReviewDto> result = reviewService.reviewDtosByCid(cid);
         return result;
     }
 
     @PostMapping("/save")
-    public void save(@RequestBody ReviewDto reviewDto, HttpServletRequest req){
-        String username = (String)req.getAttribute("username");
+    public void save(@RequestBody ReviewDto reviewDto, HttpServletRequest req) {
+        String username = (String) req.getAttribute("username");
         reviewService.saveReview(reviewDto, username);
-        
     }
 
     @DeleteMapping("/delete")
-    public void delete(@RequestBody ReviewDto reviewDto, HttpServletRequest req){
-        String username = (String)req.getAttribute("username");
+    public void delete(@RequestBody ReviewDto reviewDto, HttpServletRequest req) {
+        String username = (String) req.getAttribute("username");
         reviewService.deleteReview(reviewDto, username);
-
     }
+
+    // @PostMapping()
 }

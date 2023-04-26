@@ -126,10 +126,11 @@ const getInfo = async () => {
 
 <style scoped>
 .cidcontain {
-  /* background-color: white; */
   margin-top: 50%;
   /* height: 100vh; */
-  border: 4px double black;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
   display: grid;
   /* grid-template-rows: auto; */
 }

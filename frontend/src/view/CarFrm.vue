@@ -1,36 +1,41 @@
 <template>
   <Nav />
-  <div class="car-body">
-    <CompCID :cid="route.query.cid" />
-    <div id="review-contain">
-      <div class="reviews-write-box">
-        <textarea
-          v-model="content"
-          maxlength="100"
-          @keydown.enter.exact.prevent="postReviews"
-          @keydown.enter.shift.exact.prevent="content += '\n'"
-          @input="inputHandler"></textarea>
-        <button @click="postReviews">
-          글쓰기
-        </button>
-      </div>
-      <div class="reviews-box">
-        <div
-          v-for="review in reviews"
-          :key="review"
-          class="review">
-          <div>
-            <span class="nickname">
-              {{ review.nickname }}
-            </span>
-            |
-            <font-awesome-icon
-              :icon="['far', 'thumbs-up']"
-              class="icon" />
-          <!-- TODO : 여기에서 추천 개수, 추천별 정렬, 추천기능 추가할것 -->
-          <!-- TODO : infinite scroll을 통해 10개씩 긁어올것 -->
+  <div class="contain">
+    <div class="car-body">
+      <CompCID :cid="route.query.cid" />
+      <div id="review-contain">
+        <div class="reviews-write-box">
+          <textarea
+            v-model="content"
+            maxlength="100"
+            @keydown.enter.exact.prevent="postReviews"
+            @keydown.enter.shift.exact.prevent="content += '\n'"
+            @input="inputHandler"></textarea>
+          <button @click="postReviews">
+            글쓰기
+          </button>
+        </div>
+        <div class="reviews-box">
+          <div
+            v-for="review in reviews"
+            :key="review"
+            class="review">
+            <div>
+              <span class="nickname">
+                {{ review.nickname }}
+              </span>
+              |
+              <font-awesome-icon
+                :icon="['far', 'thumbs-up']"
+                class="icon" />
+              <font-awesome-icon
+                :icon="['far', 'thumbs-down']"
+                class="icon" />
+            <!-- TODO : 여기에서 추천 개수, 추천별 정렬, 추천기능 추가할것 -->
+            <!-- TODO : infinite scroll을 통해 10개씩 긁어올것 -->
+            </div>
+            <p>{{ review.content }}</p>
           </div>
-          <p>{{ review.content }}</p>
         </div>
       </div>
     </div>
@@ -91,6 +96,9 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.contain{
+  background: #F0F1F8;
+}
 .cidcontain {
   width: 70vh;
   margin: 0;
@@ -105,9 +113,13 @@ onMounted(() => {
 }
 #review-contain{
   width: 70vh;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .reviews-box {
+  padding: 15px;
   margin-top: 3em;
   display: grid;
   font-size: 12px;
@@ -128,7 +140,7 @@ onMounted(() => {
 .reviews-write-box {
   font-size: 15px;
   padding: 15px;
-  background-color: #f7f7f9;
+  background-color: #fafafa;
   border-radius: 4px;
   text-align: left;
 }
@@ -139,7 +151,7 @@ onMounted(() => {
   resize: none;
   outline: none;
   overflow: hidden;
-  background-color: #f7f7f9;
+  background-color: #fafafa;
   border: none;
   -webkit-box-shadow: none;
 }
