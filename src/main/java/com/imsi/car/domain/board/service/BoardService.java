@@ -3,6 +3,8 @@ package com.imsi.car.domain.board.service;
 import java.util.List;
 
 import com.imsi.car.domain.board.dto.BoardDto;
+import com.imsi.car.domain.board.model.Board;
+
 
 public interface BoardService {
 
@@ -25,5 +27,6 @@ public interface BoardService {
 
     // public List<BoardDto> listMyPage(int page);
     public BoardDto listMyPage(String username, int page);
+
 
 }

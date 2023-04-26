@@ -20,6 +20,7 @@ public class OptionDto {
 
     private int opk;
     private String oname;
+    private int cost;
     private String oimg;
     private String oexpl;
     private boolean chk;
@@ -40,6 +41,7 @@ public class OptionDto {
         this.oimg = storeOption.getOption().getOimg();
         this.oexpl = storeOption.getOption().getOexpl();
         this.chk = storeOption.isOpt();
+        
     }
     
     public OptionDto(CarOption carOption){
@@ -47,6 +49,7 @@ public class OptionDto {
         this.oname = carOption.getOption().getOname();
         this.oimg = carOption.getOption().getOimg();
         this.oexpl = carOption.getOption().getOexpl();
+        this.cost = carOption.getCost();
         this.chk = carOption.isOpt();
     }
 

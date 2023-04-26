@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.imsi.car.domain.board.dto.BoardDto;
 import com.imsi.car.domain.board.dto.ReplyDto;
 import com.imsi.car.domain.board.model.Board;
+
 import com.imsi.car.domain.board.model.Reply;
 import com.imsi.car.domain.board.repo.BoardRepo;
 import com.imsi.car.domain.board.repo.ReplyRepo;
@@ -59,7 +60,6 @@ public class BoardServiceImpl implements BoardService {
         Board board = boardDto.toEntity();
         boardRepo.save(board);
     }
-
     // 게시글 수정
     @Override
     public void modifyBoard(Long bno, BoardDto boardDto) {
@@ -70,6 +70,18 @@ public class BoardServiceImpl implements BoardService {
                 .build();
         boardRepo.save(board);
     }
+    // @Override
+    // public void modifyBoard(Long id, BoardDto boardDto) {
+    //     Board board = boardRepo.findById(id)
+    //             .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+    //     board = board.toBuilder()
+    //             .title(boardDto.getTitle())
+    //             .content(boardDto.getContent())
+    //             .build();
+    //     boardRepo.save(board);
+    // }
+
+
 
     // 게시글 삭제
     public void deleteBoard(Long bno) {
@@ -81,6 +93,19 @@ public class BoardServiceImpl implements BoardService {
             // log.info("해당 bno({})의 게시글이 존재하지 않습니다.", bno);
         }
     }
+
+    // public void deleteBoard(Long id) {
+    //     Optional<Board> board = boardRepo.findById(id);
+    //     if (board.isPresent()) {
+    //         boardRepo.delete(board.get());
+    //         log.info("게시글(id={})이 삭제되었습니다.", id);
+    //     } else {
+    //         log.info("해당 ID({})의 게시글이 존재하지 않습니다.", id);
+    //     }
+    // }
+    
+    
+    
 
     // 게시글 조회
     @Override
