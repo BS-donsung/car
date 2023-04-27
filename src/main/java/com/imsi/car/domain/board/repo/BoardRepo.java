@@ -13,6 +13,8 @@ import com.imsi.car.domain.board.model.Board;
 
 public interface BoardRepo extends JpaRepository<Board, Long> {
 
+    Board findByBno(int bno);
+
     // 게시글 삭제
     void delete(Board board);
 
@@ -29,14 +31,15 @@ public interface BoardRepo extends JpaRepository<Board, Long> {
     List<Board> findByRepliesTextContaining(String keyword, Pageable pageable);
 
     // 닉네임 검색(글쓴이 정보 검색)
-    @Query(value = "select b from Board b where b.writer.nickname = :nickname", nativeQuery = false)
+    @Query(value = "select b from Board b where b.user.nickname = :nickname", nativeQuery = false)
     List<Board> getBoardListByNickname(@Param("nickname") String nickname);
 
-    // 위에서 검색한 정보를 바탕으로writer로 검색
-    List<Board> findByWriterUsername(String username, Pageable pageable);
+    // 위에서 검색한 정보를 바탕으로username로 검색
+    @Query(value = "select b from Board b where b.user.username = :username", nativeQuery = false)
+    List<Board> findByUsername(String username, Pageable pageable);
 
     // 이메일 검색(미사용)
-    @Query(value = "select b from Board b where b.writer.email = :email", nativeQuery = false)
+    @Query(value = "select b from Board b where b.user.email = :email", nativeQuery = false)
     List<Board> getBoardListByEmail(@Param("email") String email);
 
     // 최근 게시글 10개 보기

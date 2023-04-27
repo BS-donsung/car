@@ -13,7 +13,7 @@
                 {{ form.title }}
               </p>
               <div class="notice_sub_title">
-                <p>작성자 : {{ form?.writerDto?.username }} </p>
+                <p>작성자 : {{ form?.username }} </p>
               </div>
               <div class="notice_sub_title">
                 <p>등록일 : {{ form.createdDate }}</p>

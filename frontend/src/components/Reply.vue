@@ -27,7 +27,7 @@
       ref="contArea"
       class="reply-container">
       <div class="nick-text">
-        {{ 'username1' }}
+        {{ store.username }}
       </div>
       <div class="reply-text">
         <textarea
@@ -150,16 +150,19 @@
 <script setup>
 import { onMounted, ref, reactive } from 'vue'
 import { defineProps } from 'vue'
-import { URL } from '@/components/global'
+import { URL, credentials } from '@/components/global'
 import router from '@/router'
 import axios from 'axios'
+import { useCompStore } from '@/store/index'
 
+const store = useCompStore()
 
 const textArea = ref()
 const contArea = ref()
 const innerTextArea = ref()
 const reply_form = ref()
-const username = ref('username1')
+
+
 
 const props = defineProps({
   bno: Number,
@@ -169,20 +172,17 @@ const props = defineProps({
 
 // 댓글 저장
 const reply_data = reactive({
-  username: 'username1',
   text: '',
   bno: props.bno
 })
 
 const addreply = () => {
   let data = {
-    username: reply_data.username,
     text: reply_data.text,
     bno: props.bno
   }
-  console.log(data)
-
-  axios.post(URL + '/reply/post', data)
+  console.log(credentials)
+  axios.post(`${URL}/reply/post`, data, credentials)
     .then((res) => {
       console.log(res.data)
       reply_form.value = res.data
@@ -192,7 +192,7 @@ const addreply = () => {
   router.push({
     name: 'detailnotice'
   })
-  window.location.reload(true)
+  // window.location.reload(true)
 }
 console.log('댓글저장성공')
 

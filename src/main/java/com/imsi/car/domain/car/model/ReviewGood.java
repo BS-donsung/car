@@ -29,6 +29,6 @@ public class ReviewGood {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="rid")
     private Review car;
-    private boolean like;
+    private boolean thumb;
 
 }

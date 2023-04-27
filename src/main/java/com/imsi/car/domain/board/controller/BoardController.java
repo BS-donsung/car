@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imsi.car.domain.board.dto.BoardDto;
+import com.imsi.car.domain.board.model.Board;
 import com.imsi.car.domain.board.service.BoardService;
 import com.imsi.car.domain.user.dto.UserDto;
 
@@ -27,71 +28,49 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor // final 필드를 가지고 생성자를 생성해주는 역할.
 public class BoardController {
 
-    private final BoardService bs;
+    private final BoardService boardService;
 
     /* 게시글 목록 출력 */
     @GetMapping("")
     // http://localhost:9000/board?page=2와 같은 식으로 찍어준다.
     public List<BoardDto> getBoardlist(@RequestParam(defaultValue = "1") Integer page) {
         log.info("페이징 로그 : {}", page);
-        List<BoardDto> boardDtoList = bs.listBoardPage(page);
+        List<BoardDto> boardDtoList = boardService.listBoardPage(page);
         return boardDtoList;
     }
 
     /* 게시글 상세 보기 */
     @GetMapping("/view/{bno}")
-    public BoardDto boardView(@PathVariable Long bno) {
-        log.info("게시글 상세보기 로그: {}", bno);
-        return bs.boardView(bno);
+    public BoardDto boardView(@PathVariable int bno) {
+        log.info("/board/view{} : ", bno);
+        return boardService.boardView(bno);
     }
 
-    // 글쓰기 요청을 보내는 컨트롤러 (YARC 이용)
-    // 서블릿 사용할것
-    // @GetMapping("/mystores")
-    // public List<StoreDto> findMyStores(HttpServletRequest req){
-    // log.info("/mystores : {}", req.getAttribute("username"));
-    // return carService.listOptionByUsername("gi");
-    // }
 
-    // @GetMapping("/mystore")
-    // public StoreDto findMyStore(HttpServletRequest req, @RequestParam String
-    // cid){
-    // log.info("/mystore : {} , {}",req.getAttribute("username"), cid);
-    // StoreDto storeDto = carService.optionInfo(cid);
-    // return storeDto;
-    // }
 
     @PostMapping("/post")
     public ResponseEntity<BoardDto> createBoard(@RequestBody BoardDto boardDto, HttpServletRequest req) {
-        String username = (String) req.getAttribute("username");// 유저네임 초기화
-        // writerDto는 타입이 UserDto, username은 타입이 String, 타입을 맞출 방법을 생각해보자
-        UserDto userDto = UserDto.builder().username(username).build();
-        boardDto.setWriterDto(userDto);
-        // boardDto.userDto.writerDto(username);
-        bs.writeBoard(boardDto);
-        log.info("글쓰기 요청 로그: {}", boardDto, req.getAttribute("username"));
+        String username = (String) req.getAttribute("username");
+        boardDto.setUsername(username);
+        log.info("/board/post: {}", boardDto);
+
+        boardService.writeBoard(boardDto);
         return ResponseEntity.ok(boardDto);
     }
 
-    // @PostMapping("/post")
-    // public ResponseEntity<BoardDto> createBoard(@RequestBody BoardDto boardDto) {
-    // log.info("글쓰기 요청 로그: {}", boardDto);
-    // bs.writeBoard(boardDto);
-    // return ResponseEntity.ok(boardDto);
-    // }
 
     // 글 삭제 요청을 보내는 컨트롤러(YARC 이용)
     @DeleteMapping("/delete/{bno}")
-    public void deleteBoard(@PathVariable Long bno) {
+    public void deleteBoard(@PathVariable int bno) {
         log.info("글삭제 요청 로그", bno);
-        bs.deleteBoard(bno);
+        boardService.deleteBoard(bno);
     }
 
     // 글 수정 요청을 보내는 컨트롤러(YARC 이용)
     @PutMapping("/modify/{bno}")
-    public ResponseEntity<Void> modifyBoard(@PathVariable Long bno, @RequestBody BoardDto boardDto) {
+    public ResponseEntity<Void> modifyBoard(@PathVariable int bno, @RequestBody BoardDto boardDto) {
         log.info("글수정 요청 로그: {}", bno, boardDto);
-        bs.modifyBoard(bno, boardDto);
+        boardService.modifyBoard(bno, boardDto);
         return ResponseEntity.ok().build();
     }
 
@@ -100,14 +79,14 @@ public class BoardController {
     public List<BoardDto> searchBoard(@PathVariable String keyword, @PathVariable int flag,
             @RequestParam(defaultValue = "1") Integer page) {
         log.info("검색 로그(제목,내용,쓰니,댓글,쓰니(댓글)): {}", flag, keyword);
-        return bs.searchBoard(keyword, flag, page);
+        return boardService.searchBoard(keyword, flag, page);
     }
 
     // 마이 페이지(내가 쓴 최근 게시글 10개, 최근 댓글 10개를 보여줄 수 있다(페이징 처리))
     @GetMapping("/mypage/{username}")
     public BoardDto getListMyPage(@PathVariable String username, @RequestParam(defaultValue = "1") Integer page) {
         log.info("마이페이지 로그 : {}", username, page);
-        BoardDto boardDtoList = bs.listMyPage(username, page);
+        BoardDto boardDtoList = boardService.listMyPage(username, page);
         return boardDtoList;
     }
 

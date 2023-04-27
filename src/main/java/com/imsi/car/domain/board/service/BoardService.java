@@ -8,7 +8,7 @@ import com.imsi.car.domain.board.model.Board;
 
 public interface BoardService {
 
-    public BoardDto boardView(Long bno);
+    public BoardDto boardView(int bno);
 
     // page번째 게시물들 가져오기
     public List<BoardDto> listBoardPage(int page);
@@ -20,10 +20,10 @@ public interface BoardService {
     public void writeBoard(BoardDto boardDto);
 
     // board 삭제
-    public void deleteBoard(Long bno);
+    public void deleteBoard(int bno);
 
     // board 수정
-    public void modifyBoard(Long bno, BoardDto boardDto);
+    public void modifyBoard(int bno, BoardDto boardDto);
 
     // public List<BoardDto> listMyPage(int page);
     public BoardDto listMyPage(String username, int page);

@@ -40,7 +40,6 @@ public class UserDto {
         this.email = user.getEmail();
         this.exp = user.getExp();
         this.provider = user.getProvider();
-        this.sid = user.getSid();
     }
 
 
