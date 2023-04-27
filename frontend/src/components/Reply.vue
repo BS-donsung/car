@@ -39,7 +39,7 @@
           @keydown.enter.shift.exact.prevent="reply_data.text += '\n'"
           @input="inputHandler"></textarea>
       </div>
-      <div class="addBtn">
+      <div class="addreplyBtn">
         <button @click="addreply">
           댓글달기
         </button>
@@ -135,8 +135,8 @@
             <button
               v-if="!reply.ismodify"
               class="replyedit"
-              @click="removereply(reply.rno)">
-              삭제
+              @click="cancelBtn(reply)">
+              취소
             </button>
           </div>
         </div>
@@ -237,11 +237,27 @@ function good() {
   isRed.value = !isRed.value
 }
 
+// 수정전
 const modifyreply = reply => {
   reply.ismodify = !reply.ismodify
 }
-
+// 수정후
 const remodifyreply = reply => {
+  reply.ismodify = !reply.ismodify
+  let data = {
+    text: reply.text
+  }
+  axios.put(URL + `/reply/modify/${reply.rno}`, data)
+  .then((res) => {
+    console.log('수정된 데이터',res.data)
+    alert('댓글수정이 완료되었습니다.')
+  })
+  .catch(error => {
+    console.log('댓글수정 실패하였습니다.', error)
+  })
+}
+// 취소
+const cancelBtn = reply => {
   reply.ismodify = !reply.ismodify
 }
 </script>

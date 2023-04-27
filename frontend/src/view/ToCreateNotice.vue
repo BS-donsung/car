@@ -76,11 +76,13 @@ const form = ref({
         [{ list: 'ordered' }, { list: 'bullet' }],
         //  [{script:'sub'},{script:'super'}],
         [{ indent: '-1' }, { indent: '+1' }],
-        [{ color: [] }, { background: [] }]
+        [{ color: [] }, { background: [] }],
+        ['image'],
       ]
     },
   }, //내용
 })
+
 
 const notice_data = reactive({
   title: '',
