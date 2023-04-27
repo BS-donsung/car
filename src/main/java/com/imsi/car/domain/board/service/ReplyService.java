@@ -6,9 +6,9 @@ public interface ReplyService {
 
     // public ReplyDto ReplyCount(Long rno);
 
-    public void writeReply(ReplyDto replyDto);
-
     // public void writeReviewReply(ReplyDto replyDto);
+
+    public void writeReply(ReplyDto replyDto);
 
     public void deleteReply(Long rno);
 

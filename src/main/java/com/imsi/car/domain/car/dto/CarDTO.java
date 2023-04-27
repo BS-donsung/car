@@ -3,6 +3,7 @@ package com.imsi.car.domain.car.dto;
 
 import java.util.List;
 
+import com.imsi.car.domain.car.CarUtils;
 import com.imsi.car.domain.car.model.Car;
 
 import lombok.AllArgsConstructor;
@@ -26,8 +27,10 @@ public class CarDto {
     private int cost;
 
     private List<OptionDto> options;
+    private List<ReviewDto> reviews;
 
     public CarDto(Car car){
+        CarUtils carUtils = new CarUtils();
         this.cid = car.getCid();
         this.name = car.getName();
         this.brand = car.getBrand().getBrand();
@@ -37,7 +40,8 @@ public class CarDto {
         this.segment = car.getSegment().getSegment();
         this.imgurl = car.getImgurl();
         this.cost = car.getCost();
-        this.options = null;
+        this.options = carUtils.carOptionListToDtos(car.getCarOptions());
+        this.reviews = carUtils.reviewListToReviewDtos(car.getReviews());
     }
 
     public Car toEntity(){

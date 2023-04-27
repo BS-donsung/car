@@ -58,7 +58,9 @@ public class Car {
     @JoinColumn(name = "car")
     private List<CarOption> carOptions;
 
-    @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cid")
     private List<Review> reviews;
 
 }

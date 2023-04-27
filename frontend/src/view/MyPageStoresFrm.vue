@@ -1,18 +1,20 @@
 <template>
   <Nav />
   <PNav />
-  <nav id="store-boxes">
-    <div
-      v-for="store in data.stores"
-      :key="store"
-      class="store-box">
-      <router-link :to="'/mypage/store?cid='+store.carDto.cid">
-        <button class="store-inner">
-          {{ store.carDto.name }}
-        </button>
-      </router-link>
-    </div>
-  </nav>
+  <div class="contain">
+    <nav class="store-boxes">
+      <div
+        v-for="store in data.stores"
+        :key="store"
+        class="store-box">
+        <router-link :to="'/mypage/store?cid='+store.carDto.cid">
+          <button class="store-inner">
+            {{ store.carDto.name }}
+          </button>
+        </router-link>
+      </div>
+    </nav>
+  </div>
 </template>
 
 <script setup>
@@ -40,14 +42,24 @@ onMounted(() => {
 </script>
 
 <style scoped>
-#store-boxes {
+.contain{
+  background: #F0F1F8;
+  height: 100vh;
+  padding-top: 50px;
+}
+.store-boxes {
+  margin: 0 auto;
   /* background-color: aqua; */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
+  gap: 20px;
   padding: 20px;
+  width: 70%;
+  background: #fff;
+  border-radius: 6px;
+  /* padding: 20px 60px 40px 40px; */
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .store-box {

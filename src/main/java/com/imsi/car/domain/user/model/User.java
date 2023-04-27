@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.imsi.car.domain.board.model.Board;
 import com.imsi.car.domain.board.model.Reply;
@@ -37,29 +38,31 @@ import lombok.ToString;
 @JsonIgnoreProperties({ "boards", "reviews", "replies" }) // boards 속성은 JSON으로 변환하지 않음(무한참조 방지 코드)
 @Getter
 @Setter
-@ToString(exclude = { "boards",  "replies" })
+@ToString(exclude = { "boards", "replies" })
 public class User {
-    @Id // primary key
-    @Column(nullable=false)
-
-
+	@Id // primary key
+	@Column(nullable = false)
 	private String username;
+
+	private String nickname;
+
+	@JsonIgnore
 	@Column(nullable = false)
 	private String password;
+	@JsonIgnore
 	private String email;
+	@JsonIgnore
 	private String role; // ROLE_USER, ROLE_ADMIN
-	private String nickname;
 	@ColumnDefault("0")
 	private int exp;
-	@CreationTimestamp
-	private Timestamp createDate;
-
+	// @CreationTimestamp
+	// private Timestamp createdDate;
 
 	// mail, email 수신 여부 설정
-	@Column(columnDefinition="tinyint(1) default 1")
-    private boolean allowEmail;
-    @Column(columnDefinition="tinyint(1) default 1")
-    private boolean allowSms;
+	@Column(columnDefinition = "tinyint(1) default 1")
+	private boolean allowEmail;
+	@Column(columnDefinition = "tinyint(1) default 1")
+	private boolean allowSms;
 
 	@CreatedDate
 	private Date createdDate;
@@ -73,6 +76,5 @@ public class User {
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<Reply> replies = new ArrayList<>();
-
 
 }

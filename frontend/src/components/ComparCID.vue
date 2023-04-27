@@ -21,12 +21,16 @@
       <div class="specinner">
         <!-- 가격 -->
         <p class="costcolor">
-          {{ isNaN(Number(InfoData.specifications.cost)) ? '' : Number(InfoData.specifications.cost).toLocaleString() }}
+          {{
+            isNaN(Number(InfoData.specifications.cost))
+              ? ""
+              : Number(InfoData.specifications.cost).toLocaleString()
+          }}
         </p>
         <!-- 차종 -->
         <p>{{ InfoData.specifications.name }}</p>
         <!-- 출시일 -->
-        <p>{{ '2023.04.14' }}</p>
+        <p>{{ "2023.04.14" }}</p>
         <!-- 연료 -->
         <p>{{ InfoData.specifications.engine }}</p>
         <!-- 연비 -->
@@ -41,19 +45,19 @@
       </div>
       <div class="specinner">
         <!-- 전장/전폭 -->
-        <p>{{ ' 전장 / 전폭 ' }}</p>
+        <p>{{ " 전장 / 전폭 " }}</p>
         <!-- 전고/축거 -->
-        <p>{{ ' 전고 / 축거 ' }}</p>
+        <p>{{ " 전고 / 축거 " }}</p>
         <!-- 윤거전/후 -->
-        <p>{{ ' 윤거전 / 윤거후 ' }}</p>
+        <p>{{ " 윤거전 / 윤거후 " }}</p>
         <!-- 배기량 -->
         <p>{{ InfoData.specifications.capacity }}</p>
         <!-- 구동박식 -->
-        <p>{{ ' 구동박식 ' }}</p>
+        <p>{{ " 구동박식 " }}</p>
         <!-- 전륜서프펜션 -->
-        <p>{{ ' 전륜서스 ' }}</p>
+        <p>{{ " 전륜서스 " }}</p>
         <!-- 후륜서프펜션 -->
-        <p>{{ ' 후륜서스 ' }}</p>
+        <p>{{ " 후륜서스 " }}</p>
       </div>
     </div>
 
@@ -104,12 +108,11 @@ import { useCompStore } from '@/store/index'
 const store = useCompStore()
 
 const props = defineProps({
-  cid: Number
+  cid: Number,
 })
 
 // true ==> 이미지가 보이게 하고, false ==> button이 보이게한다.
 const isimg = ref(false)
-
 
 onMounted(() => {
   getInfo(), getcid()
@@ -127,13 +130,15 @@ const goHome = () => {
   router.push({ path: '/' })
 }
 
-const InfoData = reactive({ // brands에 넣으면 된다 (for문)
-  specifications: []
+const InfoData = reactive({
+  // brands에 넣으면 된다 (for문)
+  specifications: {
+    imgurl: '/imsi.jpg',
+  },
 })
 const total = ref('') // 기본 차값 금액
 
 const getInfo = async () => {
-  console.log('id >>', props.cid)
   if (props.cid == '' || props.cid == undefined) {
     return
   } else {
@@ -142,6 +147,7 @@ const getInfo = async () => {
   try {
     const res = await axios.get(URL + `/car/search/car?cid=${props.cid}`)
     InfoData.specifications = res.data
+
     console.log('specifications data : ', res.data)
     InfoData.specifications.options.forEach(caropt => {
       caropt['userchk'] = false
@@ -192,10 +198,12 @@ const clickstore = () => {
 <style scoped>
 .cidcontain {
   margin-top: 50%;
-  height: 100vh;
-  border: 4px double black;
+  /* height: 100vh; */
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
   display: grid;
-  grid-template-rows: auto;
+  /* grid-template-rows: auto; */
 }
 
 .spectitle,

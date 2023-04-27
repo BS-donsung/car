@@ -93,6 +93,7 @@
 import router from '@/router'
 import { reactive } from 'vue'
 import { URL } from '@/components/global'
+import Cookies from 'js-cookie'
 
 
 
@@ -108,7 +109,6 @@ const login_data = reactive({
 })
 
 const loginBtn = async () => {
-  alert('로그인되었습니다.')
   console.log(login_data)
   const requestOptions = {
     method: 'POST',
@@ -120,12 +120,15 @@ const loginBtn = async () => {
     credentials: 'include'
   }
   try {
-    const res = await fetch(URL + '/login', requestOptions)
-    console.log(res.headers)
-    console.log(res.headers['Authorization'])
-    router.push({ path: '/' })
+    await fetch(URL + '/login', requestOptions)
+    const token = Cookies.get('Authorization')
+    if(token === undefined){
+      throw new Error('no token!!')
+    }else{
+      router.push({ path: '/' })
+    }
   } catch (error) {
-    console.log('로그인에 실패했습니다', error)
+    alert('로그인에 실패했습니다', error)
   }
 }
 </script>

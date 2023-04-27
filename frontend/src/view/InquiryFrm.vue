@@ -103,7 +103,6 @@ const postemail = reactive({
 })
 
 const send = () => {
-  console.log(postemail)
   let data = {
     name: postemail.name,
     email: postemail.email,

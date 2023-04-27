@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.imsi.car.domain.board.dto.BoardDto;
 import com.imsi.car.domain.board.model.Board;
-import com.imsi.car.domain.user.model.User;
+
 
 public interface BoardService {
 
-    public BoardDto BoardView(Long bno);
+    public BoardDto boardView(Long bno);
 
     // page번째 게시물들 가져오기
     public List<BoardDto> listBoardPage(int page);
@@ -27,5 +27,6 @@ public interface BoardService {
 
     // public List<BoardDto> listMyPage(int page);
     public BoardDto listMyPage(String username, int page);
+
 
 }

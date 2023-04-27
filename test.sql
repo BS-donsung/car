@@ -44,7 +44,7 @@ insert into car(capacity, cost, fuel_efficiency, imgurl, name, brand, engine, se
 (1650, 27000000, 16.6, "/avantteHD.jpg", "아반떼HD", "현대", "LPG", 3, 1420, 4710, 1825, 1579, 1590, 2720, '맥퍼슨 스트럿 서스펜션', '듀얼링크 서스펜션'),
 (1650, 27000000, 16.6, "/allNewK3.jpg", "올뉴k3", "기아", "휘발유", 3, 1440, 4640, 1800, 1563, 1572, 2700, '맥퍼슨 스트럿 서스펜션', '맥퍼슨 스트럿 서스펜션');
 
-insert into user(username, createDate, email, exp, nickname, password, role, sid)
+insert into user(username, createdDate, email, exp, nickname, password, role, sid)
 values
 ('banana','2022-10-10','banana@banana',0,'banana','banana','ROLE_USER',5442);
 

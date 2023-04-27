@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.imsi.car.domain.board.dto.BoardDto;
 import com.imsi.car.domain.board.dto.ReplyDto;
 import com.imsi.car.domain.board.model.Board;
+
 import com.imsi.car.domain.board.model.Reply;
 import com.imsi.car.domain.board.repo.BoardRepo;
 import com.imsi.car.domain.board.repo.ReplyRepo;
@@ -21,6 +22,7 @@ import com.imsi.car.domain.user.dto.UserDto;
 import com.imsi.car.domain.user.model.User;
 import com.imsi.car.domain.user.repo.UserRepo;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -52,12 +54,12 @@ public class BoardServiceImpl implements BoardService {
     }
 
     // 게시글 쓰기 요청을 수락하는 서비스
+    @Transactional
     @Override
     public void writeBoard(BoardDto boardDto) {
         Board board = boardDto.toEntity();
         boardRepo.save(board);
     }
-
     // 게시글 수정
     @Override
     public void modifyBoard(Long bno, BoardDto boardDto) {
@@ -68,6 +70,18 @@ public class BoardServiceImpl implements BoardService {
                 .build();
         boardRepo.save(board);
     }
+    // @Override
+    // public void modifyBoard(Long id, BoardDto boardDto) {
+    //     Board board = boardRepo.findById(id)
+    //             .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+    //     board = board.toBuilder()
+    //             .title(boardDto.getTitle())
+    //             .content(boardDto.getContent())
+    //             .build();
+    //     boardRepo.save(board);
+    // }
+
+
 
     // 게시글 삭제
     public void deleteBoard(Long bno) {
@@ -80,9 +94,22 @@ public class BoardServiceImpl implements BoardService {
         }
     }
 
+    // public void deleteBoard(Long id) {
+    //     Optional<Board> board = boardRepo.findById(id);
+    //     if (board.isPresent()) {
+    //         boardRepo.delete(board.get());
+    //         log.info("게시글(id={})이 삭제되었습니다.", id);
+    //     } else {
+    //         log.info("해당 ID({})의 게시글이 존재하지 않습니다.", id);
+    //     }
+    // }
+    
+    
+    
+
     // 게시글 조회
     @Override
-    public BoardDto BoardView(Long bno) {
+    public BoardDto boardView(Long bno) {
         Board board = boardRepo.getById(bno); // bno 필드를 이용하여 해당 게시글을 조회
         if (board != null) {
             board.addViewCount(); // addViewCount() 메소드를 호출하여 viewCount 필드를 증가시킴
