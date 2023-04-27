@@ -2,6 +2,7 @@ package com.imsi.car.domain.board.dto;
 
 import java.util.List;
 
+import com.imsi.car.domain.board.BoardUtils;
 import com.imsi.car.domain.board.model.Board;
 import com.imsi.car.domain.user.dto.UserDto;
 import com.imsi.car.domain.user.model.User;
@@ -21,6 +22,7 @@ import lombok.extern.log4j.Log4j2;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardDto {
+    
 
     private int bno;
     private String title;
@@ -28,12 +30,14 @@ public class BoardDto {
     private int viewCount;
     private int likes;
     private int replyCount;
+    
     private String username;
     private String createdDate;
     private String modifyDate;
     private List<ReplyDto> replyDtos;
 
     public BoardDto(Board board) {
+        BoardUtils BoardUtils = new BoardUtils();
         this.bno = board.getBno();
         this.username = board.getUser().getUsername();
         this.title = board.getTitle();
@@ -43,7 +47,7 @@ public class BoardDto {
         this.replyCount = board.getReplyCount();
         this.createdDate = board.getFormattedCreatedDate();
         this.modifyDate = board.getFormattedModifyDate();
-        // this.replyDtos = board.getReplies();
+        this.replyDtos = BoardUtils.replyListToDtos(board.getReplies());
 
     }
 

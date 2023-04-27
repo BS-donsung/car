@@ -19,7 +19,7 @@ const getUsername = () => {
   .then(body => {
     store.setUsername(body.username === undefined? '':body.username)
     })
-  .catch(store.username='')
+  .catch(store.setUsername(''))
 
 }
 

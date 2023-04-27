@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.imsi.car.domain.board.BoardUtils;
 import com.imsi.car.domain.board.dto.BoardDto;
 import com.imsi.car.domain.board.model.Board;
 
@@ -27,17 +28,13 @@ public class BoardServiceImpl implements BoardService {
     private final BoardRepo boardRepo;
     private final UserRepo userRepo;
     private final ReplyRepo replyRepo;
+    private final BoardUtils boardUtils;
 
     @Override
     public List<BoardDto> listBoardPage(int page) {
         Pageable pageable = PageRequest.of(page - 1, 100, Sort.by("bno").descending());
         Page<Board> result = boardRepo.findAll(pageable);
-        List<BoardDto> boardDtoList = new ArrayList<>();
-        for (Board board : result) {
-            BoardDto boardDto = new BoardDto(board);
-            boardDtoList.add(boardDto);
-        }
-        return boardDtoList;
+        return boardUtils.boardListToDtos(result);
     }
 
     // 게시글 쓰기 요청을 수락하는 서비스

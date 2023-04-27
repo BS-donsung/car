@@ -28,27 +28,27 @@ public class ReplyDto {
     private int bno;
     // private Long rvno;
     private String username;
+    private String nickname;
 
     private String text;
     private String createdDate;
     private String modifyDate;
 
-    private Reply parent;
-    private BoardDto boardDto;
+    private ReplyDto parent;
 
     public ReplyDto(Reply reply) {
         this.rno = reply.getRno();
         this.text = reply.getText();
         this.bno = reply.getBoard().getBno();
-        this.parent = reply.getParent();
+        // this.parent = reply.getParent();
         // this.rvno = reply.getReview().getRvno();
-
+        
+        this.nickname = reply.getUser().getNickname();
         this.username = reply.getUser().getUsername();
         this.createdDate = reply.getCreatedDate() != null ? reply.getFormattedCreatedDate()
                 : LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.modifyDate = reply.getModifyDate() != null ? reply.getFormattedModifyDate()
                 : LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        this.boardDto = new BoardDto(reply.getBoard());
     }
 
     public Reply toEntity() {
@@ -56,8 +56,8 @@ public class ReplyDto {
                 .rno(rno)
                 .board(Board.builder().bno(bno).build())
                 .text(text)
-                .parent(parent)
-                .user(User.builder().username(username).build())
+                // .parent(parent)
+                .user(User.builder().username(username).nickname(nickname).build())
                 .build();
 
         return reply;

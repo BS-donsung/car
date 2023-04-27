@@ -27,7 +27,6 @@
       ref="contArea"
       class="reply-container">
       <div class="nick-text">
-        {{ store.username }}
       </div>
       <div class="reply-text">
         <textarea
@@ -50,14 +49,14 @@
 
     <div class="reply-content">
       <div
-        v-for="reply in replies"
+        v-for="reply in replyDtos"
         ref="innerTextArea"
         :key="reply"
         class="innerText">
         <div
           v-if="reply.ismodify"
           class="inneruser">
-          {{ reply?.user?.nickname }}({{ reply?.user?.username }})
+          {{ reply?.nickname }}({{ reply?.username }})
         </div>
         <div
           v-if="reply.ismodify"
@@ -80,7 +79,7 @@
           </div>
         </div>
         <div
-          v-if="reply?.user.username === username"
+          v-if="reply?.username === store.username"
           class="inneredit">
           <button
             v-if="reply.ismodify"
@@ -102,7 +101,7 @@
           <div
             v-if="!reply.ismodify"
             class="inneruser">
-            {{ reply?.user?.nickname }}({{ reply?.user?.username }})
+            {{ reply?.nickname }}({{ reply?.username }})
           </div>
 
           <div
@@ -166,7 +165,7 @@ const reply_form = ref()
 
 const props = defineProps({
   bno: Number,
-  replies: Array,
+  replyDtos: Array,
   replycount: Number
 })
 
@@ -194,7 +193,6 @@ const addreply = () => {
   })
   // window.location.reload(true)
 }
-console.log('댓글저장성공')
 
 // 댓글삭제
 const removereply = async (rno) => {

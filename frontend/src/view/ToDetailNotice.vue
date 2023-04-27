@@ -48,7 +48,7 @@
           <!-- 댓글공간 -->
           <Reply
             :bno="bno"
-            :replies="form.replies"
+            :replyDtos="form.replyDtos"
             :replycount="form.replyCount" />
         </div>
       </div>
@@ -77,14 +77,13 @@ const fetchDetail = async () => {
       .then((res) => {
         console.log('받아오는 데이터', res.data)
         form.value = res.data
-        form.value.replies.forEach(reply => {
+        form.value.replyDtos.forEach(reply => {
           reply['ismodify'] = true
         })
 
         console.log('상세보기 페이지 성공')
       })
   } catch (error) {
-    alert('정보를 불러올수없습니다.')
     console.log(error)
   }
 }
