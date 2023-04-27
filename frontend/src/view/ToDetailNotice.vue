@@ -130,10 +130,4 @@ onMounted(() => {
 <style scoped>
 @import "@/assets/notice.css";
 
-#wrap {
-  display: flex;
-  /* margin-top: 80px; */
-  flex-direction: column;
-  background: #F0F1F8;
-}
 </style>

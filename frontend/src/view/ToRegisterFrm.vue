@@ -141,7 +141,7 @@ const registerBtn = async () => {
   }
 }
 
-if (register_data == '') {
+if (register_data.value == '') {
   alert('경고')
 }
 </script>

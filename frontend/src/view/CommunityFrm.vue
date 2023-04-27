@@ -125,7 +125,7 @@ const NoticeDetail = bno => {
 </script>
 
 <style scoped>
-@import "@/assets/reset.css";
+/* @import "@/assets/reset.css"; */
 @import "@/assets/notice.css";
 
 #wrap {

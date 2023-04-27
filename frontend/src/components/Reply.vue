@@ -135,8 +135,8 @@
             <button
               v-if="!reply.ismodify"
               class="replyedit"
-              @click="removereply(reply.rno)">
-              삭제
+              @click="cancelBtn(reply)">
+              취소
             </button>
           </div>
         </div>
@@ -243,6 +243,21 @@ const modifyreply = reply => {
 }
 // 수정후
 const remodifyreply = reply => {
+  reply.ismodify = !reply.ismodify
+  let data = {
+    text: reply.text
+  }
+  axios.put(URL + `/reply/modify/${reply.rno}`, data)
+  .then((res) => {
+    console.log('수정된 데이터',res.data)
+    alert('댓글수정이 완료되었습니다.')
+  })
+  .catch(error => {
+    console.log('댓글수정 실패하였습니다.', error)
+  })
+}
+// 취소
+const cancelBtn = reply => {
   reply.ismodify = !reply.ismodify
 }
 </script>
