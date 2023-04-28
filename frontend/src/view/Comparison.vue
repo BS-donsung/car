@@ -1,5 +1,4 @@
 <template>
-  <Nav />
   <div class="contain">
     <div class="containgrid">
       <div>
@@ -17,7 +16,6 @@
 <script setup>
 import CompCID from '@/components/ComparCID.vue'
 import { useCompStore } from '@/store/index'
-import Nav from '@/view/ToNav.vue'
 
 
 const store = useCompStore()

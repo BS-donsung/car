@@ -8,8 +8,8 @@ public interface ReplyService {
 
     public void writeReply(ReplyDto replyDto);
 
-    public void deleteReply(Long rno);
+    public void deleteReply(int rno);
 
-    public void modifyReply(Long rno, ReplyDto ReplyDto);
+    public void modifyReply(ReplyDto ReplyDto);
 
 }

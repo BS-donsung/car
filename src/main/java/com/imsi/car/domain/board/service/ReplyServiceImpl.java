@@ -29,13 +29,14 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public void modifyReply(Long rno, ReplyDto replyDto) {
-
+    public void modifyReply(ReplyDto replyDto) {
+        Reply reply = replyDto.toEntity();
+        replyRepo.save(reply);
     }
 
-    // 댓글 삭제
-    public void deleteReply(Long rno) {
-
+    @Override
+    public void deleteReply(int rno) {
+        replyRepo.deleteById((long)rno);
     }
 
 }

@@ -1,5 +1,4 @@
 <template>
-  <Nav />
   <div class="contain">
     <div class="brand-box">
       <div
@@ -36,7 +35,6 @@
 </template>
 
 <script setup>
-import Nav from '@/view/ToNav.vue'
 import { onMounted, reactive } from 'vue'
 import { URL } from '@/components/global'
 import axios from 'axios'

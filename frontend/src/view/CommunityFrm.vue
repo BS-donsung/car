@@ -1,5 +1,4 @@
 <template>
-  <Nav />
   <div id="wrap">
     <div class="container notice_container">
       <div class="wright_wrap">
@@ -10,7 +9,7 @@
           <button
             type="button"
             class="writing_btn btn_po"
-            @click="NoticeWrite()">
+            @click="toWrite()">
             글쓰기
           </button>
           <table class="box">
@@ -34,7 +33,7 @@
                 v-for="forms in posts"
                 :key="forms.bno"
                 style="cursor: pointer;"
-                @click="NoticeDetail(forms.bno)">
+                @click="toDetail(forms.bno)">
                 <p
                   class="notice_date"
                   style="text-align: center;">
@@ -45,7 +44,7 @@
                   {{ forms.title }}
                 </td>
                 <td class="text_center">
-                  {{ forms.username }}
+                  {{ forms.nickname }}
                 </td>
                 <td class="text_center">
                   {{ forms.createdDate }}
@@ -64,7 +63,6 @@
 </template>
 
 <script setup>
-import Nav from '@/view/ToNav.vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 import { ref, computed } from 'vue'
@@ -107,20 +105,19 @@ const fetchPosts = async (params) => {
 fetchPosts()
 
 const router = useRouter()
-const NoticeWrite = () => {
+const toWrite = () => {
   router.push({
-    path: '/cratenotice',
+    path: '/community/create',
   })
 }
 
-const NoticeDetail = bno => {
+const toDetail = bno => {
   router.push({
-    name: 'detailnotice',
-    params: {
-      bno
+    path: '/community/detail',
+    query: {
+      'bno': bno
     }
   })
-  
 }
 </script>
 
@@ -129,7 +126,7 @@ const NoticeDetail = bno => {
 
 #wrap {
   display: flex;
-  height: 100%;
+  height: 100vh;
   flex-direction: column;
   background: #F0F1F8;
 }

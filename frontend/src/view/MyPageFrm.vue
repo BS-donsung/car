@@ -1,5 +1,4 @@
 <template>
-  <Nav />
   <PNav />
   <div class="contain">
     <div class="myBody">
@@ -43,12 +42,11 @@
 </template>
 
 <script setup>
-import Nav from '@/view/ToNav.vue'
 import PNav from '@/components/PrivateNav.vue'
 import { ref, onMounted } from 'vue'
 import { URL, credentials } from '@/components/global'
-import axios from 'axios'
 import { useCompStore } from '@/store/index'
+import axios from 'axios'
 const store = useCompStore()
 
 const user = ref('')
@@ -90,6 +88,11 @@ onMounted(() => {
   border-radius: 6px;
   padding: 20px 60px 40px 40px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.myBody span input {
+  border: none;
+  background-color: #f0f1f8;
 }
 
 .myBody span {

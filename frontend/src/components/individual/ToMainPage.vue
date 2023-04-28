@@ -78,7 +78,7 @@ import { URL } from '@/components/global'
 import axios from 'axios'
 import router from '@/router'
 import { useCompStore } from '@/store/index'
-import Nav from '@/view/ToNav.vue'
+import Nav from '@/components/NewNav.vue'
 
 // 검색 페이지 스크립
 const b_text = ref('')

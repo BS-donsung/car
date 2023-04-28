@@ -1,5 +1,4 @@
 <template>
-  <Nav />
   <PNav />
   <nav
     v-for="reply in replies"
@@ -11,7 +10,6 @@
 </template>
   
   <script setup>
-  import Nav from '@/view/ToNav.vue'
   import PNav from '@/components/PrivateNav.vue'
   import {reactive, onMounted} from 'vue'
   // 대충 board comp 가져다가 붙여버리기

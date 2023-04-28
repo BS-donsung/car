@@ -26,7 +26,7 @@ public interface BoardService {
     public void modifyBoard(int bno, BoardDto boardDto);
 
     // public List<BoardDto> listMyPage(int page);
-    public BoardDto listMyPage(String username, int page);
+    public List<BoardDto> listMyPage(String username, int page);
 
 
 }

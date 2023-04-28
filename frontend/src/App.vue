@@ -1,4 +1,15 @@
 <template>
+  <router-view name="user" />
+  <div
+    v-if="route.path=='/'"
+    class="logo">
+    <router-link to="/">
+      <img
+        src="@/components/img/logo2.png"
+        alt="" />
+    </router-link>
+  </div>
+  <router-view name="header" />
   <router-view v-if="isRender" />
 </template>
 
@@ -7,7 +18,9 @@ import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { useCompStore } from '@/store/index'
 import { URL,credentials } from '@/components/global'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const store = useCompStore()
 const isRender = ref(false)
 

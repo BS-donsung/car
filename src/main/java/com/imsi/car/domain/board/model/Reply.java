@@ -18,6 +18,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -25,7 +26,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-@Getter
+@Data
 @Entity
 @ToString(exclude = { "board", "user" })
 public class Reply extends BaseTimeEntity {
@@ -35,7 +36,7 @@ public class Reply extends BaseTimeEntity {
 
     private String text;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent")
     private Reply parent;
 
@@ -43,11 +44,11 @@ public class Reply extends BaseTimeEntity {
     private List<Reply> child = new ArrayList<>();
 
     // 유저, 보드를 직렬화에서 제외한 것을 취소함
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "board")
     private Board board;
 

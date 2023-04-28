@@ -1,5 +1,4 @@
 <template>
-  <Nav />
   <div id="wrap">
     <div class="container notice_container">
       <div class="notice_write">
@@ -57,7 +56,6 @@
 </template>
 
 <script setup>
-import Nav from '@/view/ToNav.vue'
 import router from '@/router'
 import { reactive, ref } from 'vue'
 import { URL } from '@/components/global'

@@ -1,5 +1,4 @@
 <template>
-  <Nav />
   <div class="contain">
     <div class="car-body">
       <CompCID :cid="route.query.cid" />
@@ -44,7 +43,6 @@
 
 <script setup>
 import { useRoute } from 'vue-router'
-import Nav from '@/view/ToNav.vue'
 import CompCID from '@/components/ComparCID.vue'
 import { onMounted, ref } from 'vue'
 import { URL } from '@/components/global'

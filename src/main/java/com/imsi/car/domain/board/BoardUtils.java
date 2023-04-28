@@ -14,7 +14,7 @@ import com.imsi.car.domain.board.model.Reply;
 @Component
 public class BoardUtils {
     
-    public List<BoardDto> boardListToDtos(Page<Board> boards){
+    public List<BoardDto> boardListToDtos(List<Board> boards){
         List<BoardDto> boardDtos = new ArrayList<>();
         for(Board board : boards){
             boardDtos.add(new BoardDto(board));

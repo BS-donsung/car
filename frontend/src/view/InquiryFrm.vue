@@ -1,6 +1,4 @@
 <template>
-  <Nav />
-
   <body class="body">
     <div class="container">
       <div class="content">
@@ -90,7 +88,6 @@
 </template>
 
 <script setup>
-import Nav from '@/view/ToNav.vue'
 import { URL } from '@/components/global'
 import { reactive } from 'vue'
 import router from '@/router'

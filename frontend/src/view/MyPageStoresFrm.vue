@@ -1,5 +1,4 @@
 <template>
-  <Nav />
   <PNav />
   <div class="contain">
     <nav class="store-boxes">
@@ -18,7 +17,6 @@
 </template>
 
 <script setup>
-import Nav from '@/view/ToNav.vue'
 import PNav from '@/components/PrivateNav.vue'
 import { URL } from '@/components/global'
 import { reactive, onMounted } from 'vue'
