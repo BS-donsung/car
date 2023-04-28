@@ -1,26 +1,20 @@
 <template>
-  <router-view />
+  <router-view v-if="isRender" />
 </template>
 
 <script setup>
 import axios from 'axios'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useCompStore } from '@/store/index'
-import { URL } from '@/components/global'
+import { URL,credentials } from '@/components/global'
 
 const store = useCompStore()
+const isRender = ref(false)
 
-const getUsername = () => {
-  const credentials = {
-    withCredentials: 'include',
-  }
-  axios.get(`${URL}/user/getuser`,credentials)
-  .then(res => res.data)
-  .then(body => {
-    store.setUsername(body.username === undefined? '':body.username)
-    })
-  .catch(store.setUsername(''))
-
+const getUsername = async () => {
+  const data = await axios.get(`${URL}/user/getuser`,credentials)
+  store.setUser(data.data)
+  isRender.value = true
 }
 
 onMounted(()=>{

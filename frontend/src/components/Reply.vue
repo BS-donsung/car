@@ -22,8 +22,8 @@
         댓글
       </h4>
     </div>
-
     <div
+      v-if="store.getUsername()!==''"
       ref="contArea"
       class="reply-container">
       <div class="nick-text">
@@ -191,7 +191,7 @@ const addreply = () => {
   router.push({
     name: 'detailnotice'
   })
-  // window.location.reload(true)
+  window.location.reload(true)
 }
 
 // 댓글삭제

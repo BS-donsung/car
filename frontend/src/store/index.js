@@ -12,17 +12,17 @@ export const useCompStore = defineStore('compar', () => {
     }
   }
 
-  let username = ''
-  function setUsername(username){
-    this.username = username
+  let user = ''
+  function setUser(user){
+    this.user = user
   }
-  function getUsername(){
-    return this.username
+  function getUser(){
+    return this.user
   }
 
   return {
     CarInfomation, getCarInfo, 
-    username,
-    setUsername, getUsername
+    user,
+    setUser, getUser
   }
 })
