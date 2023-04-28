@@ -32,6 +32,7 @@ const routes = [
   {path: '/loginfrm', component: Login},
   {path: '/registerfrm', component: Register},
   {path: '/community', component: Community, name: 'community'},
+  {path: '/inquiry', component: Inquiry},
 
   {path: '/mypage', component: MyPage},
   {path: '/mypage/boards', component: MyPageBoards},
@@ -45,7 +46,6 @@ const routes = [
   {path: '/cratenotice', component: CreateNotice},
   {path: '/community/:bno', component: DetailNotice, name: 'detailnotice' , props:true},
   {path: '/editnotice/:bno/Edit', component: EditNotice, name: 'editnotice'},
-  {path: '/inquiry', component: Inquiry},
 
   {path: '/test', component: Test}
 

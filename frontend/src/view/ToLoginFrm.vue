@@ -1,15 +1,15 @@
 <template>
   <section class="container forms">
     <div class="form login">
-      <div class="logohome">
-        <router-link
-          to="/"
-          class="logo">
-          LOGO
+      <div class="logo">
+        <router-link to="/">
+          <img
+            src="@/components/img/logo2.png"
+            alt="" />
         </router-link>
       </div>
       <div class="form-content">
-        <header>Login</header>
+        <header>로그인</header>
 
         <form action="#">
           <div class="field input-field">
