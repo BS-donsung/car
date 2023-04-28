@@ -3,14 +3,14 @@
     <ul class="user-contain">
       <li class="user-item">
         <router-link
-          to="/"
+          to="/loginfrm"
           class="userfrm">
           로그인
         </router-link>
       </li>
       <li class="user-item">
         <router-link
-          to="/"
+          to="/registerfrm"
           class="userfrm">
           회원가입
         </router-link>

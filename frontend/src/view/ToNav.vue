@@ -1,150 +1,64 @@
 <template>
-  <header class="header">
-    <router-link
-      to="/"
-      class="logo">
-      LOGO
-    </router-link>
+  <div class="user-container">
+    <ul class="user-contain">
+      <li class="user-item">
+        <router-link
+          to="/"
+          class="userfrm">
+          HOME
+        </router-link>
+      </li>
+      <li class="user-item">
+        <router-link
+          to="/loginfrm"
+          class="userfrm">
+          로그인
+        </router-link>
+      </li>
+      <li class="user-item">
+        <router-link
+          to="/registerfrm"
+          class="userfrm">
+          회원가입
+        </router-link>
+      </li>
+    </ul>
+  </div>
 
-    <nav class="navbar">
-      <router-link to="/cars">
-        차량목록
-      </router-link>
-      <router-link to="/comparison">
-        모델비교
-      </router-link>
-      <router-link to="/community">
-        커뮤니티
-      </router-link>
-      <router-link to="/inquiry">
-        문의하기
-      </router-link>
-      <router-link
-        v-if="username != ''"
-        to="/mypage">
-        내 정보
-      </router-link>
-      <button
-        v-if="username != ''"
-        class="btnLogin-popup logout"
-        @click="logoutBtn">
-        로그아웃
-      </button>
-
-      <button
-        v-else
-        class="btnLogin-popup"
-        @click="openLogin">
-        로그인
-      </button>
-    </nav>
-  </header>
+  <Nav />
 </template>
 
 <script setup>
-import router from '@/router'
-import Cookies from 'js-cookie'
-import { onMounted, ref } from 'vue'
-import { URL } from '@/components/global'
-import axios from 'axios'
-
-const username = ref('')
-// const token = Cookies.get('Authorization')
-
-const openLogin = () => {
-  router.push({ path: '/loginfrm' })
-}
-
-const getUsername = () => {
-  const credentials = {
-    withCredentials: 'include',
-  }
-  axios.get(`${URL}/user/getuser`,credentials)
-  .then(res => res.data)
-  .then(body => username.value = body.username === undefined? '':body.username)
-  .catch(username.value='')
-}
-
-const logoutBtn = () => {
-  Cookies.remove('Authorization')
-  Cookies.remove('JSESSIONID')
-  if (username.value != '') {
-    username.value = ''
-  }
-}
-
-onMounted(() => {
-  getUsername()
-})
+import Nav from '@/components/NewNav.vue'
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+@import '@/assets/nav.css';
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Popins", sans-serif;
+.user-container {
+  width: 100%;
+  height: 30px;
+  display: flex;
 }
 
-span {
-  color: white;
+.user-contain {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  justify-content: end;
   margin-right: 30px;
 }
 
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 20px 100px;
-  background: transparent;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: black;
-  z-index: 1;
-}
-
-.logo {
-  font-size: 32px;
-  color: #fff;
-  text-decoration: none;
+.user-item {
+  width: 70px;
+  height: 30px;
+  font-size: 20px;
   font-weight: 700;
 }
 
-.navbar a {
-  font-size: 18px;
-  color: #fff;
+.userfrm {
   text-decoration: none;
-  font-weight: 500;
-  margin-right: 40px;
-}
-
-.navbar .btnLogin-popup {
-  position: relative;
-  background: transparent;
-  border: none;
-  outline: none;
-  font-size: 18px;
-  color: #fff;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.navbar .btnLogin-popup::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  background: #fff;
-  bottom: -4px;
-  left: 0;
-  opacity: 0.85;
-}
-
-.logout {
-  margin-left: 20px;
+  font-size: 14px;
+  color: #aeaeae;
 }
 </style>
