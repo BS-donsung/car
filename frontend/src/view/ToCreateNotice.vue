@@ -27,7 +27,7 @@
                 v-model:content="notice_data.content"
                 content-type="html"
                 :options="form.editorOption"
-                style="height:400px;"
+                style="height: 400px"
                 theme="snow" />
             </div>
 
@@ -63,6 +63,11 @@ import { reactive, ref } from 'vue'
 import { URL } from '@/components/global'
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
+import axios from 'axios'
+
+const credentials = {
+  withCredentials: 'include',
+}
 
 const form = ref({
   title: null, //제목
@@ -78,56 +83,39 @@ const form = ref({
         [{ indent: '-1' }, { indent: '+1' }],
         [{ color: [] }, { background: [] }],
         ['image'],
-      ]
+      ],
     },
   }, //내용
 })
 
-
 const notice_data = reactive({
   title: '',
-    writerDto: {
-      username:'username1',
-      nickname:'유저1',
-    },
-    content: '',
+  content: '',
 })
 
 const completeBtn = async () => {
   console.log(notice_data)
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(notice_data),
-  }
-  try {
-    const res = await fetch(URL + '/board/post', requestOptions)
-    console.log(res.json())
-    console.log('작성완료')
-    router.push({
-      path: '/community',
-    })
-  } catch (error) {
-    console.log('게시글 등록에 실패했습니다', error)
-  }
+
+  axios
+    .post(`${URL}/board/post`, notice_data, credentials)
+    .catch((err) => console.log('데이터를 못넣어따', err))
+  backComFrm()
 }
-  const backComFrm = () => {
-    router.push({
-      path: '/community',
-    })
-  }
+const backComFrm = () => {
+  router.push({
+    path: '/community',
+  })
+}
 </script>
 
 <style scoped>
 @charset "UTF-8";
 @import "@/assets/notice.css";
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Open+Sans:ital,wght@0,300;0,600;1,300;1,600&family=Poor+Story&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Open+Sans:ital,wght@0,300;0,600;1,300;1,600&family=Poor+Story&family=Poppins:wght@300;400;500;600;700&display=swap");
 
 * {
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 #wrap {
@@ -158,7 +146,6 @@ const completeBtn = async () => {
   background: white;
   box-shadow: 0 0 10px -3px #d0d0d0;
 }
-
 
 .wright_wrap .form_box {
   display: grid;
@@ -202,7 +189,7 @@ textarea {
   height: 40px;
   line-height: 38px;
   color: #333;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 textarea:focus {
@@ -228,12 +215,12 @@ textarea:focus {
 
 .writing_btn {
   border: none;
-  background: #1B1B1E;
+  background: #1b1b1e;
   color: white;
   padding: 8px 15px;
   font-size: 14px;
   cursor: pointer;
   transition: all 0.3s;
-  border: 1px solid #1B1B1E;
+  border: 1px solid #1b1b1e;
 }
 </style>

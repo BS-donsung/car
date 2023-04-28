@@ -40,4 +40,11 @@ public class UserServiceImpl implements UserService {
         return new UserDto(user);
     }
 
+    public UserDto saveNickname(UserDto userDto) {
+        User user = userRepo.findByUsername(userDto.getUsername());
+        user.setNickname(userDto.getNickname());
+        userRepo.save(user);
+
+        return null;
+    }
 }

@@ -47,4 +47,14 @@ public class UserController {
         }
         return result;
     }
+    @PostMapping("/nickname")
+    public String changeNick(HttpServletRequest req, @RequestBody UserDto userDto){
+        String username = (String)req.getAttribute("username");
+        userDto.setUsername(username);
+        log.info("/nickname : {}",userDto);
+        if(username != null){
+            userService.saveNickname(userDto);
+        }
+        return "";
+    }
 }
