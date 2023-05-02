@@ -64,20 +64,23 @@ textarea:focus {
   font-size: 14px;
 }
 
-button {
+.rewrite,
+.replyedit {
   float: right;
   border: none;
   background: none;
   color: #bebebe;
   cursor: pointer;
+  margin-left: 10px;
 }
-button:hover {
+.rewrite:hover
+.replyedit:hover {
   color: black;
 }
 
-.rewrite {
+/* .rewrite {
   margin-left: 10px;
-}
+} */
 
 /* 댓글공간 */
 .reply-content {
