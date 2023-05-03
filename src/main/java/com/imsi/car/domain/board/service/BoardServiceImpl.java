@@ -1,9 +1,7 @@
 package com.imsi.car.domain.board.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -33,7 +31,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<BoardDto> listBoardPage(int page) {
         Pageable pageable = PageRequest.of(page - 1, 100, Sort.by("bno").descending());
-        Page<Board> result = boardRepo.findAll(pageable);
+        List<Board> result = boardRepo.findAllPage(pageable);
         return boardUtils.boardListToDtos(result);
     }
 
@@ -72,8 +70,11 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public BoardDto listMyPage(String username, int page) {
-        return null;
+    public List<BoardDto> listMyPage(String username, int page) {
+        Pageable pageable = PageRequest.of(page - 1, 100, Sort.by("bno").descending());
+        List<Board> boards = boardRepo.findByUsername(username,pageable);
+        List<BoardDto> boardDtos = boardUtils.boardListToDtos(boards);
+        return boardDtos;
     }
 
 }

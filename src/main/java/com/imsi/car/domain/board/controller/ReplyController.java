@@ -1,15 +1,19 @@
 package com.imsi.car.domain.board.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imsi.car.domain.board.dto.ReplyDto;
+import com.imsi.car.domain.board.model.Reply;
 import com.imsi.car.domain.board.service.ReplyService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,18 +38,28 @@ public class ReplyController {
     }
 
     // 글 삭제 요청을 보내는 컨트롤러(YARC 이용)
-    @DeleteMapping("/delete/{rno}")
-    public void deleteReply(@PathVariable Long rno) {
+    @DeleteMapping("/delete")
+    public void deleteReply(@RequestParam int rno, HttpServletRequest req) {
+        String username = (String) req.getAttribute("username");
         log.info("댓글삭제 요청 로그 : {}", rno);
         replyService.deleteReply(rno);
     }
 
     // 글 수정 요청을 보내는 컨트롤러(YARC 이용)
-    @PutMapping("/modify/{rno}")
-    public ResponseEntity<Void> modifyReply(@PathVariable Long rno, @RequestBody ReplyDto replyDto) {
-        replyService.modifyReply(rno, replyDto);
-        log.info("댓글수정 요청 로그 : {}", rno, replyDto);
+    @PutMapping("/modify")
+    public ResponseEntity<Void> modifyReply( @RequestBody ReplyDto replyDto, HttpServletRequest req) {
+        String username = (String) req.getAttribute("username");
+        replyDto.setUsername(username);
+        log.info("/modify :  {}", replyDto);
+        replyService.modifyReply(replyDto);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/myreplies")
+    public List<ReplyDto> findMyReplies(@RequestParam(defaultValue = "1") Integer page,HttpServletRequest req){
+        String username = (String) req.getAttribute("username");
+        List<ReplyDto> replyDtos = replyService.listMyPage(username, page);
+        return replyDtos;
     }
 
 }

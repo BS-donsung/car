@@ -1,5 +1,4 @@
 <template>
-  <Nav />
   <PNav />
   <div class="contain">
     <div class="comp-box">
@@ -9,7 +8,6 @@
 </template>
 
 <script setup>
-import Nav from '@/view/ToNav.vue'
 import PNav from '@/components/PrivateNav.vue'
 import { useRoute } from 'vue-router'
 import CompCID from '@/components/ComparCID.vue'

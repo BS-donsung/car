@@ -18,6 +18,9 @@ public interface BoardRepo extends JpaRepository<Board, Long> {
     // 게시글 삭제
     void delete(Board board);
 
+    @Query(value = "select b from Board b")
+    List<Board> findAllPage(Pageable pageable);
+
     // 내림차순 검색
     List<Board> findByOrderByBnoDesc();
 

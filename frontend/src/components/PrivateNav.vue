@@ -24,7 +24,7 @@
 
 <style scoped>
 .private-body {
-  margin-top: 88px;
+  
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   text-align: center;
@@ -37,7 +37,8 @@ a button {
 }
 a.router-link-exact-active button,
 a button:hover {
-  background-color: black;
+  background-color: #8EA7E9;
   color: white;
+  font-weight: bold;
 }
 </style>

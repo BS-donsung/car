@@ -13,7 +13,7 @@
                 {{ form.title }}
               </p>
               <div class="notice_sub_title">
-                <p>작성자 : {{ form?.username }} </p>
+                <p>작성자 : {{ form?.nickname }} </p>
               </div>
               <div class="notice_sub_title">
                 <p>등록일 : {{ form.createdDate }}</p>
@@ -48,7 +48,7 @@
           <!-- 댓글공간 -->
           <Reply
             :bno="bno"
-            :replyDtos="form.replyDtos"
+            :reply-dtos="form.replyDtos"
             :replycount="form.replyCount" />
         </div>
       </div>
@@ -68,10 +68,11 @@ import Reply from '@/components/Reply.vue'
 const form = ref([])
 const route = useRoute()
 const router = useRouter()
-const bno = route.params.bno
+const bno = route.query.bno
 
 // 페이지 상세보기
 const fetchDetail = async () => {
+  console.log('bno',bno)
   try {
     await axios.get(URL + `/board/view/${bno}`)
       .then((res) => {

@@ -83,11 +83,13 @@ public class BoardController {
     }
 
     // 마이 페이지(내가 쓴 최근 게시글 10개, 최근 댓글 10개를 보여줄 수 있다(페이징 처리))
-    @GetMapping("/mypage/{username}")
-    public BoardDto getListMyPage(@PathVariable String username, @RequestParam(defaultValue = "1") Integer page) {
+    @GetMapping("/mypage")
+    public List<BoardDto> getListMyPage(@RequestParam(defaultValue = "1") Integer page, HttpServletRequest req) {
+        String username = (String) req.getAttribute("username");
         log.info("마이페이지 로그 : {}", username, page);
-        BoardDto boardDtoList = boardService.listMyPage(username, page);
-        return boardDtoList;
+        List<BoardDto> boardDtos = boardService.listMyPage(username, page);
+        log.info("boardDtos : {}",boardDtos);
+        return boardDtos;
     }
 
 }

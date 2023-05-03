@@ -44,7 +44,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.setHeader("Set-Cookie", accessTokenCookie.toString());
         // redirecet 할 주소
         String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:8080/")
-                .queryParam("token", token)
                 .build().toUriString();
         log.info("targetUrl : {}", targetUrl);
         getRedirectStrategy().sendRedirect(request, response, targetUrl);

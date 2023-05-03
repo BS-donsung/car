@@ -23,7 +23,7 @@
       </h4>
     </div>
     <div
-      v-if="store.getUsername()!==''"
+      v-if="store.getUser()!==''"
       ref="contArea"
       class="reply-container">
       <div class="nick-text">
@@ -79,7 +79,7 @@
           </div>
         </div>
         <div
-          v-if="reply?.username === store.username"
+          v-if="reply?.username === store.user.username"
           class="inneredit">
           <button
             v-if="reply.ismodify"
@@ -141,7 +141,6 @@
         </div>
       </div>
     </div>
-
     <!-- {{ props.replies }} -->
   </div>
 </template>
@@ -189,7 +188,10 @@ const addreply = () => {
     })
     .catch('댓글저장 실패')
   router.push({
-    name: 'detailnotice'
+    path: '/community/detail',
+    query: {
+      'bno': data.bno
+    } 
   })
   window.location.reload(true)
 }
@@ -243,12 +245,13 @@ const modifyreply = reply => {
 const remodifyreply = reply => {
   reply.ismodify = !reply.ismodify
   let data = {
+    bno: reply.bno,
+    rno: reply.rno,
     text: reply.text
   }
-  axios.put(URL + `/reply/modify/${reply.rno}`, data)
+  axios.put(URL + '/reply/modify', data, credentials)
   .then((res) => {
     console.log('수정된 데이터',res.data)
-    alert('댓글수정이 완료되었습니다.')
   })
   .catch(error => {
     console.log('댓글수정 실패하였습니다.', error)

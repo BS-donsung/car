@@ -1,6 +1,8 @@
 <template>
   <div class="user-container">
-    <ul class="user-contain">
+    <ul
+      v-if="store.user===''"
+      class="user-contain">
       <li class="user-item">
         <router-link
           to="/loginfrm"
@@ -16,11 +18,39 @@
         </router-link>
       </li>
     </ul>
+    <ul
+      v-if="store.user!==''"
+      class="user-contain">
+      <li class="user-item">
+        <router-link
+          to="/mypage"
+          class="userfrm">
+          내정보
+        </router-link>
+      </li>
+      <li class="user-item">
+        <a
+          class="userfrm"
+          @click="logout">
+          로그아웃
+        </a>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script setup>
+import { useCompStore } from '@/store/index'
+import Cookies from 'js-cookie'
+const store = useCompStore()
 
+const logout = () =>{
+  Cookies.remove('Authorization')
+  Cookies.remove('JSESSIONID')
+  if (store.user.username!='') {
+    store.user=''
+  }
+}
 </script>
 
 <style scoped>

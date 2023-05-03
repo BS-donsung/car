@@ -1,64 +1,61 @@
 <template>
-  <Nav />
-  <div class="comm-warp">
-    <div id="wrap">
-      <div class="container notice_container">
-        <div class="wright_wrap">
-          <div class="ListContainer">
-            <h3 class="box_title">
-              커뮤니티
-            </h3>
-            <button
-              type="button"
-              class="writing_btn btn_po"
-              @click="NoticeWrite()">
-              글쓰기
-            </button>
-            <table class="box">
-              <thead>
-                <th class="th_num">
-                  번호
-                </th>
-                <th class="th_title">
-                  제목
-                </th>
-                <th class="th_name">
-                  작성자
-                </th>
-                <th class="th_date">
-                  등록일자
-                </th>
-              </thead>
-  
-              <tbody>
-                <tr
-                  v-for="forms in posts"
-                  :key="forms.bno"
-                  style="cursor: pointer;"
-                  @click="NoticeDetail(forms.bno)">
-                  <p
-                    class="notice_date"
-                    style="text-align: center;">
-                    {{ forms.bno }}
-                  </p>
-                  <td
-                    class="td_title">
-                    {{ forms.title }}
-                  </td>
-                  <td class="text_center">
-                    {{ forms.username }}
-                  </td>
-                  <td class="text_center">
-                    {{ forms.createdDate }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <AppPagination
-              :current-page="params._page"
-              :page-count="pageCount"
-              @page="page => (params._page = page)" />
-          </div>
+  <div id="wrap">
+    <div class="container notice_container">
+      <div class="wright_wrap">
+        <div class="ListContainer">
+          <h3 class="box_title">
+            커뮤니티
+          </h3>
+          <button
+            type="button"
+            class="writing_btn btn_po"
+            @click="toWrite()">
+            글쓰기
+          </button>
+          <table class="box">
+            <thead>
+              <th class="th_num">
+                번호
+              </th>
+              <th class="th_title">
+                제목
+              </th>
+              <th class="th_name">
+                작성자
+              </th>
+              <th class="th_date">
+                등록일자
+              </th>
+            </thead>
+
+            <tbody>
+              <tr
+                v-for="forms in posts"
+                :key="forms.bno"
+                style="cursor: pointer;"
+                @click="toDetail(forms.bno)">
+                <p
+                  class="notice_date"
+                  style="text-align: center;">
+                  {{ forms.bno }}
+                </p>
+                <td
+                  class="td_title">
+                  {{ forms.title }}
+                </td>
+                <td class="text_center">
+                  {{ forms.nickname }}
+                </td>
+                <td class="text_center">
+                  {{ forms.createdDate }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <AppPagination
+            :current-page="params._page"
+            :page-count="pageCount"
+            @page="page => (params._page = page)" />
         </div>
       </div>
     </div>
@@ -66,7 +63,6 @@
 </template>
 
 <script setup>
-import Nav from '@/view/ToNav.vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 import { ref, computed } from 'vue'
@@ -109,20 +105,19 @@ const fetchPosts = async (params) => {
 fetchPosts()
 
 const router = useRouter()
-const NoticeWrite = () => {
+const toWrite = () => {
   router.push({
-    path: '/cratenotice',
+    path: '/community/create',
   })
 }
 
-const NoticeDetail = bno => {
+const toDetail = bno => {
   router.push({
-    name: 'detailnotice',
-    params: {
-      bno
+    path: '/community/detail',
+    query: {
+      'bno': bno
     }
   })
-  
 }
 </script>
 
@@ -135,6 +130,8 @@ const NoticeDetail = bno => {
 }
 #wrap {
   display: flex;
+  height: 100vh;
+  flex-direction: column;
   background: #F0F1F8;
   /* height: 100%; */
   /* flex-direction: column; */

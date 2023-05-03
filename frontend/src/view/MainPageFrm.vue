@@ -28,8 +28,6 @@ import Slider from '@/components/ToSwiperslider.vue'
 import Seleted from '@/components/ToSelect.vue'
 import News from '@/components/ToNews.vue'
 import Vedio from '@/components/ToVideo.vue'
-
-
 </script>
 
 <style scoped>
