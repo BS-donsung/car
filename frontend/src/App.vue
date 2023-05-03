@@ -1,5 +1,7 @@
 <template>
-  <router-view name="user" />
+  <router-view
+    v-if="isRender"
+    name="user" />
   <div
     v-if="route.path=='/'"
     class="logo">
@@ -30,6 +32,7 @@ const getUsername = async () => {
   try {
     const data = await axios.get(`${URL}/user/getuser`, credentials)
     store.setUser(data.data)
+    console.log('>>',store.getUser())
   } catch (error) {
     console.log('App 오류', error)
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <User />
+    <!-- <User />
     <div class="logo">
       <router-link to="/">
         <img
@@ -8,7 +8,7 @@
           alt="" />
       </router-link>
     </div>
-    <Nav />
+    <Nav /> -->
     <!-- 슬라이더 -->
     <Slider /> 
     <!-- 차량비교 -->
@@ -22,8 +22,8 @@
 </template>
 
 <script setup>
-import User from '@/components/Userpage.vue'
-import Nav from '@/components/NewNav.vue'
+// import User from '@/components/Userpage.vue'
+// import Nav from '@/components/NewNav.vue'
 import Slider from '@/components/ToSwiperslider.vue'
 import Seleted from '@/components/ToSelect.vue'
 import News from '@/components/ToNews.vue'
