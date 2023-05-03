@@ -24,8 +24,12 @@ const store = useCompStore()
 </script>
 
 <style scoped>
-.contain {
+.comp-container {
+  width: 100%;
+  height: 130vh;
   background: #F0F1F8;
+}
+.comp-contain {
   display: inline;
   display: grid;
   grid-template-rows: auto;

@@ -30,7 +30,7 @@
         <!-- 차종 -->
         <p>{{ InfoData.specifications.name }}</p>
         <!-- 출시일 -->
-        <p>{{ "2023.04.14" }}</p>
+        <p>{{ "2023.05.03" }}</p>
         <!-- 연료 -->
         <p>{{ InfoData.specifications.engine }}</p>
         <!-- 연비 -->
@@ -197,8 +197,7 @@ const clickstore = () => {
 
 <style scoped>
 .cidcontain {
-  margin-top: 50%;
-  /* height: 100vh; */
+  margin-top: 25%;
   background: #fff;
   border-radius: 6px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
@@ -214,6 +213,7 @@ const clickstore = () => {
   font-weight: bold;
   margin-bottom: 30px;
   margin-left: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .image-box {
@@ -253,13 +253,15 @@ p {
   color: blue;
   font-weight: 600;
   font-size: 22px;
+  margin-top: 20px;
+  background: white;
 }
 
 .addcarBtn {
   width: 200px;
   height: 30px;
   border: 1px solid black;
-  box-shadow: 1px 3px 3px 1px rgb(0, 0, 0, 0.5);
+  box-shadow: 1px 3px 3px 1px rgb(0, 0, 0, 0.6);
   margin-top: 10px;
   border-radius: 6px;
   color: black;
@@ -277,6 +279,7 @@ p {
   border-radius: 6px;
   font-size: 22px;
   font-weight: 600;
+  background: white;
 }
 
 button:hover {

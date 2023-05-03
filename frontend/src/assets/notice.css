@@ -1,5 +1,5 @@
 @charset "UTF-8";
-
+/* 
 html,
 body {
   margin: 0;
@@ -14,7 +14,7 @@ body {
   display: flex;
   flex-direction: column;
   background: #F0F1F8;
-}
+} */
 
 .content {
   flex: 1;

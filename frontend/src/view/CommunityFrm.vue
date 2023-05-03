@@ -123,12 +123,18 @@ const toDetail = bno => {
 
 <style scoped>
 @import "@/assets/notice.css";
-
+.comm-warp {
+  width: 100%;
+  height: 130vh;
+  background: #F0F1F8;
+}
 #wrap {
   display: flex;
   height: 100vh;
   flex-direction: column;
   background: #F0F1F8;
+  /* height: 100%; */
+  /* flex-direction: column; */
 }
 
 .writing_btn {
