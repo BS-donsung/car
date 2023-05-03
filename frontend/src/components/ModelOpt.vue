@@ -12,9 +12,9 @@
           v-for="car in getData.cars"
           :key="car"
           :v-model="m_text"
-          :value="car.name"
+          :value="car.cid"
           class="item"
-          @click="changeText">
+          @click="changeText(car)">
           {{ car.name }}
         </button>
       </div>
@@ -63,15 +63,32 @@ const getCar = async () => {
 
 // 클릭한 값으로 변경하기 위해 상위 컴포넌트와 연동
 const emit = defineEmits('changeEvent_m')
-const changeText = event => {
-  console.log(event.target.value)
-  if (event.target.classList.contains('item')) emit('changeEvent', event.target.value)
+// const changeText = event => {
+//   console.log('>>', event.target.dataset.name)
+//   console.log('>>', event.target.dataset.cid)
+//   if (event.target.classList.contains('item')) emit('changeEvent', event.dataset.name)
+// }
+
+const changeText = car => {
+  console.log('name >>', car.name)
+  console.log('cid >>', car.cid)
+  emit('changeEvent', car.name, car.cid)
 }
+
 
 onMounted(() => {
   getCar()
 })
 
+// const usecid = reactive({
+//   id: []
+// })
+// function getCid(car) {
+//   const get = car.cid
+//   usecid.id = get
+//   console.log('get', get )
+//   console.log('id', usecid.id)
+// }
 </script>
 
 <style scoped>

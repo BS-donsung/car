@@ -15,6 +15,10 @@
           :value="brand.brand"
           class="item"
           @click="changeText">
+          <img
+            class="brand-img"
+            :src="`/img/brand/${brand.brand}.jpg`" 
+            alt="img" />
           {{ brand.brand }}
         </button>
       </div>
@@ -58,6 +62,7 @@ onMounted(() => {
   getComp()
 })
 
+
 </script>
 
 <style scoped>
@@ -100,5 +105,11 @@ onMounted(() => {
   text-decoration: none;
   background: none;
   cursor: pointer;
+}
+
+.brand-img {
+  width: 30px; 
+  height: 30px;
+  margin-right: 3px;
 }
 </style>

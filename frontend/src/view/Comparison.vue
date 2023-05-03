@@ -1,14 +1,16 @@
 <template>
   <Nav />
-  <div class="contain">
-    <div class="containgrid">
-      <div>
-        <CompCID :cid="store.CarInfomation[0]" />
-      </div>
-      <div class="mid">
-      </div>
-      <div>
-        <CompCID :cid="store.CarInfomation[1]" />
+  <div class="comp-container">
+    <div class="comp-contain">
+      <div class="containgrid">
+        <div>
+          <CompCID :cid="store.CarInfomation[0]" />
+        </div>
+        <div class="mid">
+        </div>
+        <div>
+          <CompCID :cid="store.CarInfomation[1]" />
+        </div>
       </div>
     </div>
   </div>
@@ -26,8 +28,12 @@ const store = useCompStore()
 </script>
 
 <style scoped>
-.contain {
+.comp-container {
+  width: 100%;
+  height: 130vh;
   background: #F0F1F8;
+}
+.comp-contain {
   display: inline;
   display: grid;
   grid-template-rows: auto;

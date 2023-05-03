@@ -1,7 +1,8 @@
 <template>
   <div class="comp-contain">
     <div class="text-comp">
-      <p class="p-text">
+      <p
+        class="p-text">
         비교하기
       </p>
       <div class="select-model">
@@ -44,7 +45,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import { useCompStore } from '@/store/index'
 import router from '@/router'
 import optC from '@/components/CompanyOpt.vue'
@@ -65,6 +66,7 @@ const clickBtn = (num) => {
 const c_text = ref('제조사')
 const t_text = ref('차종')
 const m_text = ref('모델')
+const getcid = ref('')
 
 const changeEvent_c = (changeText) => {
   c_text.value = changeText
@@ -76,25 +78,24 @@ const changeEvent_t = (changeText) => {
   isOpt.value = 0
 }
 
-const changeEvent_m = (changeText) => {
+const changeEvent_m = (changeText, getCid) => {
   m_text.value = changeText
+  getcid.value = getCid
+  console.log('받아옴', m_text.value, getcid.value)
   isOpt.value = 0
 }
 
-const usecid = reactive({
-  id: []
-})
+
+// const usecid = reactive({
+//   id: []
+// })
 const store = useCompStore()
 
-// function getCid(e) {
-//   const get = e.target.value
-//   usecid.id = get
-//   console.log('cid', get)
-// }
 
 const postBtn = () => {
-  console.log('cid >> ', usecid)
-  store.getCarInfo(usecid.id)
+  console.log('클릭 >>', getcid.value)
+  // console.log('cid >> ', usecid)
+  store.getCarInfo(getcid.value)
 
   if (store.RIGHT_CAR != undefined) {
     console.log('CarInfomationL >> ', store.CarInfomation[1])
