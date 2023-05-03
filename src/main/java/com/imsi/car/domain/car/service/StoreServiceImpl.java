@@ -35,14 +35,10 @@ public class StoreServiceImpl implements StoreService {
         return result;
     }
 
-    public StoreDto optionInfo(String cid) {
-        Car car = carRepo.findById(Integer.parseInt(cid));
-        StoreDto optionDto = StoreDto.builder()
-                .options(carUtils.carOptionListToDtos(car.getCarOptions()))
-                .carDto(new CarDto(car))
-                .build();
-
-        return optionDto;
+    public StoreDto optionInfo(String spk) {
+        Store store = storeRepo.findByStoreId(spk);
+        StoreDto storeDto = new StoreDto(store);
+        return storeDto;
     }
 
     public void storeUserOption(StoreDto storeDto) {

@@ -26,16 +26,19 @@ public class StoreController {
 
     @GetMapping("/mystores")
     public List<StoreDto> findMyStores(HttpServletRequest req){
-        log.info("/mystores : {}", req.getAttribute("usernmae"));
-        
-        return storeService.listOptionByUsername("gi");
+        String username = (String)req.getAttribute("username");
+        log.info("/mystores : {}", username);
+        List<StoreDto> stroeDtos = storeService.listOptionByUsername(username);
+        return stroeDtos;
     }
     @GetMapping("/mystore")
-    public StoreDto findMyStore(HttpServletRequest req, @RequestParam String cid){
-        log.info("/mystore : {} , {}",req.getAttribute("username"), cid);
-        StoreDto storeDto = storeService.optionInfo(cid);
+    public StoreDto findMyStore(HttpServletRequest req, @RequestParam String spk){
+        String username = (String)req.getAttribute("username");
+        log.info("/mystore : {} , {}",username, spk);
+        StoreDto storeDto = storeService.optionInfo(spk);
         return storeDto;
     }
+    
 
     @PostMapping("/store")
     public void storeCar(@RequestBody StoreDto storeDto, HttpServletRequest req){

@@ -2,7 +2,7 @@
   <PNav />
   <div class="contain">
     <div class="comp-box">
-      <CompCID :cid="route.query.cid" />
+      <CompCID :spk="route.query.spk" />
     </div>
   </div>
 </template>

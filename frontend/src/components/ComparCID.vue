@@ -63,24 +63,46 @@
 
     <div class="opt">
       <hr />
-      <div class="opttitle">
+      <div
+        v-if="props.spk===undefined"
+        class="opttitle">
         옵션
       </div>
+      <div class="optinner">
+        <div
+          v-for="caropt in InfoData.specifications.options"
+          :key="caropt">
+          <p v-if="props.spk===undefined">
+            <label>
+              <input
+                v-model="caropt.userchk"
+                :disabled="!caropt.chk"
+                type="checkbox"
+                @change="clickbox(caropt)" />
+              {{ caropt.oname }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ isNaN(Number(caropt.cost)) ? '' :
+                Number(caropt.cost).toLocaleString() }}
+            </label>
+          </p>
+        </div>
+      </div>
       <div
-        v-for="caropt in InfoData.specifications.options"
-        :key="caropt"
+        v-if="props.cid===undefined"
         class="optinner">
-        <p>
-          <label>
-            <input
-              v-model="caropt.userchk"
-              :disabled="!caropt.chk"
-              type="checkbox"
-              @change="clickbox(caropt)" />
-            {{ caropt.oname }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ isNaN(Number(caropt.cost)) ? '' :
-              Number(caropt.cost).toLocaleString() }}
-          </label>
-        </p>
+        <div
+          v-for="caropt in InfoData.specifications.options"
+          :key="caropt">
+          <p v-if="props.spk===undefined">
+            <label>
+              <input
+                v-model="caropt.userchk"
+                :disabled="!caropt.chk"
+                type="checkbox"
+                @change="clickbox(caropt)" />
+              {{ caropt.oname }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ isNaN(Number(caropt.cost)) ? '' :
+                Number(caropt.cost).toLocaleString() }}
+            </label>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -109,6 +131,7 @@ const store = useCompStore()
 
 const props = defineProps({
   cid: Number,
+  spk: Number,
 })
 
 // true ==> 이미지가 보이게 하고, false ==> button이 보이게한다.
@@ -138,14 +161,23 @@ const InfoData = reactive({
 })
 const total = ref('') // 기본 차값 금액
 
-const getInfo = async () => {
-  if (props.cid == '' || props.cid == undefined) {
-    return
-  } else {
-    isimg.value = true
+const getInfo = () => {
+  // if (props.cid == '' || props.cid == undefined) {
+  //   return
+  // } else {
+  //   isimg.value = true
+  // }
+  if(props.spk === undefined){
+    getByCid()
+  }else if(props.cid === undefined){
+    getBySpk()
+  }else{
+    console.log('둘 다 없음')
   }
+}
+const getByCid = async() => {
   try {
-    const res = await axios.get(URL + `/car/search/car?cid=${props.cid}`)
+    const res = await axios.get(`${URL}/car/search/car?cid=${props.cid}`)
     InfoData.specifications = res.data
 
     console.log('specifications data : ', res.data)
@@ -153,6 +185,22 @@ const getInfo = async () => {
       caropt['userchk'] = false
     })
     total.value = InfoData.specifications.cost
+  } catch (error) {
+    console.log('제원 주세요', error)
+  }
+}
+const getBySpk = async() => {
+  try {
+    const res = await axios.get(`${URL}/store/mystore?spk=${props.spk}`)
+    console.log(res.data)
+    InfoData.specifications = res.data
+    total.value = InfoData.specifications.carDto.cost
+    for (let i = 0; i < res.data.options.length; i++) {
+      if(res.data.options[i].chk){
+        total.value += InfoData.specifications.carDto.options[i].cost
+      }
+      
+    }
   } catch (error) {
     console.log('제원 주세요', error)
   }
