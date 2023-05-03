@@ -18,7 +18,7 @@
         </li>
         <li class="nav-item">
           <router-link
-            to="/"
+            to="/column"
             class="navfrm">
             칼럼
           </router-link>

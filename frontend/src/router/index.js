@@ -25,6 +25,9 @@ import Inquiry from '@/view/InquiryFrm.vue'
 
 import Test from '@/view/TestFrm.vue'
 
+import Column from '@/view/ColumnFrm.vue'
+
+
 const AppLayout = (component) => {
   let components = {
     default: component,
@@ -72,6 +75,9 @@ const routes = [
   { path: '/community/edit', components: AppLayout(EditNotice), },
 
   { path: '/test', component: Test },
+
+  {path: '/column', component: Column, name: 'column'},
+  
 ]
 
 const router = createRouter({
