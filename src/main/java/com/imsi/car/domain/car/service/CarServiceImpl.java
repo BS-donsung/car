@@ -34,26 +34,26 @@ public class CarServiceImpl implements CarService {
     public List<CarDto> listCar(){
         List<Car> list = carRepo.findAll();
 
-        return carUtils.CarListToDtos(list);
+        return carUtils.carListToDtos(list);
     }
 
     public List<CarDto> listCarByBrand(CarDto carDto) {
         List<Car> list = carRepo.findAllByBrand(new Brand(carDto.getBrand()));
  
-        return carUtils.CarListToDtos(list);
+        return carUtils.carListToDtos(list);
     }
 
     public List<CarDto> listCarBySegment(CarDto carDto) {
         List<Car> list = carRepo.findAllBySegment(new Segment(0, carDto.getSegment()));
 
-        return carUtils.CarListToDtos(list);
+        return carUtils.carListToDtos(list);
     }
 
     public List<CarDto> listCarByBrandAndSegment(CarDto carDto) {
         List<Car> list = carRepo.findAllByBrandAndSegment(new Brand(carDto.getBrand()),
                 new Segment(0, carDto.getSegment()));
 
-        return carUtils.CarListToDtos(list);
+        return carUtils.carListToDtos(list);
     }
 
 }

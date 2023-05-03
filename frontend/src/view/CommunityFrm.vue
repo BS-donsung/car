@@ -45,7 +45,7 @@
                   {{ forms.title }}
                 </td>
                 <td class="text_center">
-                  {{ forms.writerDto.username }}
+                  {{ forms.username }}
                 </td>
                 <td class="text_center">
                   {{ forms.createdDate }}

@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.imsi.car.domain.board.model.Board;
 import com.imsi.car.domain.board.model.Reply;
-import com.imsi.car.domain.board.model.Review;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -46,12 +45,9 @@ public class User {
 
 	private String nickname;
 
-	@JsonIgnore
 	@Column(nullable = false)
 	private String password;
-	@JsonIgnore
 	private String email;
-	@JsonIgnore
 	private String role; // ROLE_USER, ROLE_ADMIN
 	@ColumnDefault("0")
 	private int exp;
@@ -69,9 +65,7 @@ public class User {
 
 	private String provider;
 	private String providerId;
-	@Column(unique = true)
-	private int sid;
-	@OneToMany(mappedBy = "writer", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<Board> boards = new ArrayList<>();
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)

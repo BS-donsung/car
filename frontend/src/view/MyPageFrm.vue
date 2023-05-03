@@ -12,10 +12,12 @@
           class="changeNick"
           @click="changeNick">수정하기</button>
       </span>
-      <span> 이메일 : <input
-        v-model="user.email"
-        type="email"
-        disabled /> </span>
+      <span>
+        이메일 : <input
+          v-model="user.email"
+          type="email"
+          disabled />
+      </span>
       <span>
         exp :
         <progress
@@ -44,28 +46,28 @@
 import Nav from '@/view/ToNav.vue'
 import PNav from '@/components/PrivateNav.vue'
 import { ref, onMounted } from 'vue'
-import { URL } from '@/components/global'
+import { URL, credentials } from '@/components/global'
+import axios from 'axios'
+import { useCompStore } from '@/store/index'
+const store = useCompStore()
 
 const user = ref('')
 const isCloak = ref(['', '', ''])
-const requestOptions = {
-  credentials: 'include',
-}
 
 const changeNick = () => {
-  
+  console.log('>>', user.value.nickname)
+  let data = {
+    nickname: user.value.nickname,
+  }
+  axios.post(`${URL}/user/nickname`, data, credentials)
 }
 const getUserInfo = () => {
-  fetch(`${URL}/user/getuser`, requestOptions)
-    .then((res) => res.json())
-    .then((body) => {
-      user.value = body
-      isCloak.value = [
-        user.value.provider == 'google' ? '' : 'cloaking',
-        user.value.provider == 'naver' ? '' : 'cloaking',
-        user.value.provider == 'facebook' ? '' : 'cloaking',
-      ]
-    })
+  user.value = store.getUser()
+  isCloak.value = [
+    user.value.provider == 'google' ? '' : 'cloaking',
+    user.value.provider == 'naver' ? '' : 'cloaking',
+    user.value.provider == 'facebook' ? '' : 'cloaking',
+  ]
 }
 
 onMounted(() => {
@@ -74,8 +76,8 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.contain{
-  background: #F0F1F8;
+.contain {
+  background: #f0f1f8;
   height: 100vh;
   padding-top: 50px;
 }

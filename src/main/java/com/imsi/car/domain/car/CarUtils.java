@@ -18,12 +18,11 @@ import com.imsi.car.domain.car.model.StoreOption;
 @Component
 public class CarUtils {
     // util
-    public List<CarDto> CarListToDtos(List<Car> cars) {
+    public List<CarDto> carListToDtos(List<Car> cars) {
         List<CarDto> carDtos = new ArrayList<>();
         for (Car car : cars) {
             carDtos.add(new CarDto(car));
         }
-
         return carDtos;
     }
 

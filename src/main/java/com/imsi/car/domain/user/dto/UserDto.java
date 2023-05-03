@@ -2,16 +2,12 @@ package com.imsi.car.domain.user.dto;
 
 import com.imsi.car.domain.user.model.User;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -40,7 +36,6 @@ public class UserDto {
         this.email = user.getEmail();
         this.exp = user.getExp();
         this.provider = user.getProvider();
-        this.sid = user.getSid();
     }
 
 

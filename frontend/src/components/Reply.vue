@@ -22,12 +22,11 @@
         댓글
       </h4>
     </div>
-
     <div
+      v-if="store.getUsername()!==''"
       ref="contArea"
       class="reply-container">
       <div class="nick-text">
-        {{ 'username1' }}
       </div>
       <div class="reply-text">
         <textarea
@@ -50,14 +49,14 @@
 
     <div class="reply-content">
       <div
-        v-for="reply in replies"
+        v-for="reply in replyDtos"
         ref="innerTextArea"
         :key="reply"
         class="innerText">
         <div
           v-if="reply.ismodify"
           class="inneruser">
-          {{ reply?.user?.nickname }}({{ reply?.user?.username }})
+          {{ reply?.nickname }}({{ reply?.username }})
         </div>
         <div
           v-if="reply.ismodify"
@@ -80,7 +79,7 @@
           </div>
         </div>
         <div
-          v-if="reply?.user.username === username"
+          v-if="reply?.username === store.username"
           class="inneredit">
           <button
             v-if="reply.ismodify"
@@ -102,7 +101,7 @@
           <div
             v-if="!reply.ismodify"
             class="inneruser">
-            {{ reply?.user?.nickname }}({{ reply?.user?.username }})
+            {{ reply?.nickname }}({{ reply?.username }})
           </div>
 
           <div
@@ -150,39 +149,39 @@
 <script setup>
 import { onMounted, ref, reactive } from 'vue'
 import { defineProps } from 'vue'
-import { URL } from '@/components/global'
+import { URL, credentials } from '@/components/global'
 import router from '@/router'
 import axios from 'axios'
+import { useCompStore } from '@/store/index'
 
+const store = useCompStore()
 
 const textArea = ref()
 const contArea = ref()
 const innerTextArea = ref()
 const reply_form = ref()
-const username = ref('username1')
+
+
 
 const props = defineProps({
   bno: Number,
-  replies: Array,
+  replyDtos: Array,
   replycount: Number
 })
 
 // 댓글 저장
 const reply_data = reactive({
-  username: 'username1',
   text: '',
   bno: props.bno
 })
 
 const addreply = () => {
   let data = {
-    username: reply_data.username,
     text: reply_data.text,
     bno: props.bno
   }
-  console.log(data)
-
-  axios.post(URL + '/reply/post', data)
+  console.log(credentials)
+  axios.post(`${URL}/reply/post`, data, credentials)
     .then((res) => {
       console.log(res.data)
       reply_form.value = res.data
@@ -194,7 +193,6 @@ const addreply = () => {
   })
   window.location.reload(true)
 }
-console.log('댓글저장성공')
 
 // 댓글삭제
 const removereply = async (rno) => {

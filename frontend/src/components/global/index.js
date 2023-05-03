@@ -11,6 +11,9 @@
 
 export const URL = 'http://localhost:9000'
 
+export const credentials = {
+    withCredentials: 'include',
+}
 
 // 동규씨 ip
 // export const URL = 'http://192.168.0.194:9000'

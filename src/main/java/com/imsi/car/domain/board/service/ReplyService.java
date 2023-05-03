@@ -4,9 +4,7 @@ import com.imsi.car.domain.board.dto.ReplyDto;
 
 public interface ReplyService {
 
-    // public ReplyDto ReplyCount(Long rno);
 
-    // public void writeReviewReply(ReplyDto replyDto);
 
     public void writeReply(ReplyDto replyDto);
 
