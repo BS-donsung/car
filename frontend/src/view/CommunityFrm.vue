@@ -1,62 +1,64 @@
 <template>
   <Nav />
-  <div id="wrap">
-    <div class="container notice_container">
-      <div class="wright_wrap">
-        <div class="ListContainer">
-          <h3 class="box_title">
-            커뮤니티
-          </h3>
-          <button
-            type="button"
-            class="writing_btn btn_po"
-            @click="NoticeWrite()">
-            글쓰기
-          </button>
-          <table class="box">
-            <thead>
-              <th class="th_num">
-                번호
-              </th>
-              <th class="th_title">
-                제목
-              </th>
-              <th class="th_name">
-                작성자
-              </th>
-              <th class="th_date">
-                등록일자
-              </th>
-            </thead>
-
-            <tbody>
-              <tr
-                v-for="forms in posts"
-                :key="forms.bno"
-                style="cursor: pointer;"
-                @click="NoticeDetail(forms.bno)">
-                <p
-                  class="notice_date"
-                  style="text-align: center;">
-                  {{ forms.bno }}
-                </p>
-                <td
-                  class="td_title">
-                  {{ forms.title }}
-                </td>
-                <td class="text_center">
-                  {{ forms.username }}
-                </td>
-                <td class="text_center">
-                  {{ forms.createdDate }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <AppPagination
-            :current-page="params._page"
-            :page-count="pageCount"
-            @page="page => (params._page = page)" />
+  <div class="comm-warp">
+    <div id="wrap">
+      <div class="container notice_container">
+        <div class="wright_wrap">
+          <div class="ListContainer">
+            <h3 class="box_title">
+              커뮤니티
+            </h3>
+            <button
+              type="button"
+              class="writing_btn btn_po"
+              @click="NoticeWrite()">
+              글쓰기
+            </button>
+            <table class="box">
+              <thead>
+                <th class="th_num">
+                  번호
+                </th>
+                <th class="th_title">
+                  제목
+                </th>
+                <th class="th_name">
+                  작성자
+                </th>
+                <th class="th_date">
+                  등록일자
+                </th>
+              </thead>
+  
+              <tbody>
+                <tr
+                  v-for="forms in posts"
+                  :key="forms.bno"
+                  style="cursor: pointer;"
+                  @click="NoticeDetail(forms.bno)">
+                  <p
+                    class="notice_date"
+                    style="text-align: center;">
+                    {{ forms.bno }}
+                  </p>
+                  <td
+                    class="td_title">
+                    {{ forms.title }}
+                  </td>
+                  <td class="text_center">
+                    {{ forms.username }}
+                  </td>
+                  <td class="text_center">
+                    {{ forms.createdDate }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <AppPagination
+              :current-page="params._page"
+              :page-count="pageCount"
+              @page="page => (params._page = page)" />
+          </div>
         </div>
       </div>
     </div>
@@ -126,12 +128,16 @@ const NoticeDetail = bno => {
 
 <style scoped>
 @import "@/assets/notice.css";
-
+.comm-warp {
+  width: 100%;
+  height: 130vh;
+  background: #F0F1F8;
+}
 #wrap {
   display: flex;
-  height: 100%;
-  flex-direction: column;
   background: #F0F1F8;
+  /* height: 100%; */
+  /* flex-direction: column; */
 }
 
 .writing_btn {

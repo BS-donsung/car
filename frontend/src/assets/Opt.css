@@ -1,0 +1,57 @@
+.opt-container {
+  width: 800px;
+  height: 300px;
+  border: 1px solid red;
+  border-radius: 6px;
+  display: flex;
+  margin: 0 auto;
+  background: white;
+  position: relative;
+}
+
+.comp-text {
+  width: 100%;
+  margin: 10px;
+}
+
+.p-text {
+  display: flex;
+  font-size: 13px;
+  font-family: 'Poppins', sans-serif;
+  padding: 10px
+}
+.p-text-t,
+.p-text-m {
+  display: flex;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.s-text {
+  font-size: 13px;
+  font-family: 'Poppins', sans-serif;
+  color: red;
+}
+
+.domestic {
+  margin-top: 15px;
+  display: flex;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.brand-text {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item {
+  width: 20%;
+  margin-bottom: 10px;
+  border: none;
+  text-decoration: none;
+  background: none;
+  cursor: pointer;
+}
