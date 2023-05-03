@@ -82,8 +82,6 @@ public class SecurityConfig {
                         // .loginPage("/")
                         .successHandler(successHandler)
                         .userInfoEndpoint().userService(principalOAuth2UserService)
-                        .and()
-                        
                 )
                 .logout(form -> form
                         .deleteCookies(jwtProperties.HEADER_AUTH))

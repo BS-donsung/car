@@ -94,6 +94,7 @@ import router from '@/router'
 import { reactive } from 'vue'
 import { URL } from '@/components/global'
 import Cookies from 'js-cookie'
+// import axios from 'axios'
 
 
 
@@ -109,7 +110,6 @@ const login_data = reactive({
 })
 
 const loginBtn = async () => {
-  console.log(login_data)
   const requestOptions = {
     method: 'POST',
     headers: {
@@ -125,10 +125,12 @@ const loginBtn = async () => {
     if(token === undefined){
       throw new Error('no token!!')
     }else{
-      router.push({ path: '/' })
+      // router.push({ path: '/' })
+      window.location.href='http://localhost:8080/'
     }
   } catch (error) {
     alert('로그인에 실패했습니다', error)
+    console.log('error ',error)
   }
 }
 </script>

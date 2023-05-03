@@ -100,7 +100,7 @@
 <script setup>
 import axios from 'axios'
 import router from '@/router'
-import { URL } from '@/components/global'
+import { URL, credentials } from '@/components/global'
 import { onMounted, reactive, ref } from 'vue'
 import { defineProps } from 'vue'
 import { useCompStore } from '@/store/index'
@@ -186,7 +186,7 @@ const clickstore = () => {
   }
   console.log('데이터 post',data)
 
-  axios.post(URL, data)
+  axios.post(`${URL}/store/store`, data, credentials)
     .then((res) => {
       console.log(res.data)
     })

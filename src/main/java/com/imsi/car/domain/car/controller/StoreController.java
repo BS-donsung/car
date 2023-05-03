@@ -38,7 +38,7 @@ public class StoreController {
     }
 
     @PostMapping("/store")
-    public void storeCar(@RequestBody StoreDto storeDto){
+    public void storeCar(@RequestBody StoreDto storeDto, HttpServletRequest req){
         // http://localhost:9000/car/store
         /*
         {
@@ -51,6 +51,8 @@ public class StoreController {
             ]
         }
          */
+        String username = (String) req.getAttribute("username");
+        storeDto.setUser(username);
         log.info("/stroe : {}",storeDto);
         storeService.storeUserOption(storeDto);
     }
