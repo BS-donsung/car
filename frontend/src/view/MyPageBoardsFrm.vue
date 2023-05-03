@@ -44,11 +44,9 @@
 import PNav from '@/components/PrivateNav.vue'
 import axios from 'axios'
 import { reactive, onMounted } from 'vue'
-import { URL } from '@/components/global'
-import { useCompStore } from '@/store'
+import { URL,credentials } from '@/components/global'
 import { useRouter } from 'vue-router'
 
-const store = useCompStore()
 const router = useRouter()
 // 대충 board comp 가져다가 붙여버리기
 const data = reactive({
@@ -65,7 +63,7 @@ const toDetail = bno => {
   })
 }
 const getBoard = () => {
-  axios.get(`${URL}/board/mypage/${store.getUser().username}`)
+  axios.get(`${URL}/board/mypage`,credentials)
   .then((res) => data.boards = res.data)
 }
 onMounted(() => {
