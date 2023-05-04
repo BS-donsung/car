@@ -2,6 +2,7 @@ package com.imsi.car.domain.car.repo;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -16,4 +17,6 @@ public interface StoreRepo extends JpaRepository<Store, Integer> {
     @Query(value = "select s from Store s where s.user like :user")
     List<Store> findByUsername(User user);
 
+    @Query(value = "select s from Store s", nativeQuery = false)
+    List<Store> findAllPage(Pageable pageable);
 }

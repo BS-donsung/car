@@ -89,10 +89,11 @@ const form = ref({
 const notice_data = reactive({
   title: '',
   content: '',
+  spk: 0
 })
 
 const completeBtn = async () => {
-  console.log(notice_data)
+  console.log('notice_data',notice_data)
 
   axios
     .post(`${URL}/board/post`, notice_data, credentials)

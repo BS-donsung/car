@@ -10,8 +10,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.imsi.car.domain.board.model.Board;
+import com.imsi.car.domain.car.repo_custom.BoardCustomRepo;
 
-public interface BoardRepo extends JpaRepository<Board, Long> {
+public interface BoardRepo extends JpaRepository<Board, Long>,BoardCustomRepo {
 
     Board findByBno(int bno);
 

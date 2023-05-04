@@ -43,7 +43,7 @@
 
 <script setup>
 import { useRoute } from 'vue-router'
-import CompCID from '@/components/ComparCID.vue'
+import CompCID from '@/components/CompareCid.vue'
 import { onMounted, ref } from 'vue'
 import { URL } from '@/components/global'
 import axios from 'axios'

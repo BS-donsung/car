@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.imsi.car.domain.board.BoardUtils;
 import com.imsi.car.domain.board.model.Board;
+import com.imsi.car.domain.car.model.Store;
 import com.imsi.car.domain.user.dto.UserDto;
 import com.imsi.car.domain.user.model.User;
 
@@ -36,6 +37,7 @@ public class BoardDto {
     private String createdDate;
     private String modifyDate;
     private List<ReplyDto> replyDtos;
+    private int spk;
 
     public BoardDto(Board board) {
         BoardUtils BoardUtils = new BoardUtils();
@@ -50,7 +52,6 @@ public class BoardDto {
         this.createdDate = board.getFormattedCreatedDate();
         this.modifyDate = board.getFormattedModifyDate();
         this.replyDtos = BoardUtils.replyListToDtos(board.getReplies());
-
     }
 
     public Board toEntity() {

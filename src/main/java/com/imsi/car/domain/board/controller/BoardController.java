@@ -42,7 +42,7 @@ public class BoardController {
     /* 게시글 상세 보기 */
     @GetMapping("/view/{bno}")
     public BoardDto boardView(@PathVariable int bno) {
-        log.info("/board/view{} : ", bno);
+        log.info("/board/view{} ", bno);
         return boardService.boardView(bno);
     }
 
@@ -62,7 +62,7 @@ public class BoardController {
     // 글 삭제 요청을 보내는 컨트롤러(YARC 이용)
     @DeleteMapping("/delete/{bno}")
     public void deleteBoard(@PathVariable int bno) {
-        log.info("글삭제 요청 로그", bno);
+        log.info("/delete: {}", bno);
         boardService.deleteBoard(bno);
     }
 

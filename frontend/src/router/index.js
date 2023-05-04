@@ -7,20 +7,23 @@ import User from '@/components/Userpage.vue'
 import Nav from '@/components/NewNav.vue'
 
 
-import MyPage from '@/view/MyPageFrm.vue'
-import MyPageBoards from '@/view/MyPageBoardsFrm.vue'
-import MyPageReplies from '@/view/MyPageRepliesFrm.vue'
-import MyPageAlerts from '@/view/MyPageAlertsFrm.vue'
-import MyPageStores from '@/view/MyPageStoresFrm.vue'
-import MyPageStore from '@/view/MyPageStoreFrm.vue'
+import MyPage from '@/view/mypage/MyPageFrm.vue'
+import MyPageBoards from '@/view/mypage/MyPageBoardsFrm.vue'
+import MyPageReplies from '@/view/mypage/MyPageRepliesFrm.vue'
+import MyPageAlerts from '@/view/mypage/MyPageAlertsFrm.vue'
+import MyPageStores from '@/view/mypage/MyPageStoresFrm.vue'
+import MyPageStore from '@/view/mypage/MyPageStoreFrm.vue'
 
 import Cars from '@/view/CarListFrm.vue'
 import Car from '@/view/CarFrm.vue'
 
-import Community from '@/view/CommunityFrm.vue'
-import CreateNotice from '@/view/ToCreateNotice.vue'
-import DetailNotice from '@/view/ToDetailNotice.vue'
-import EditNotice from '@/view/ToEditNotice.vue'
+import Community from '@/view/community/CommunityFrm.vue'
+import CreateNotice from '@/view/community/ToCreateNotice.vue'
+import DetailNotice from '@/view/community/ToDetailNotice.vue'
+import EditNotice from '@/view/community/ToEditNotice.vue'
+import StoreCommunity from '@/view/community/StoreCommunity.vue'
+import DetailStore from '@/view/community/StoreDetail.vue'
+
 import Inquiry from '@/view/InquiryFrm.vue'
 
 import Test from '@/view/TestFrm.vue'
@@ -70,6 +73,8 @@ const routes = [
   { path: '/community/create', components: AppLayout(CreateNotice) },
   { path: '/community/detail', components: AppLayout(DetailNotice), props: true },
   { path: '/community/edit', components: AppLayout(EditNotice), },
+  { path: '/community/store', components: AppLayout(StoreCommunity)},
+  { path: '/community/store/detail', components: AppLayout(DetailStore), },
 
   { path: '/test', component: Test },
 ]

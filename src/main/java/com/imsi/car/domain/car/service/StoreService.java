@@ -9,6 +9,10 @@ public interface StoreService {
     public void storeUserOption(StoreDto storeDto);
 
     public StoreDto optionInfo(String cid);
+
+    public StoreDto viewStore(String spk);
     
     public List<StoreDto> listOptionByUsername(String username);
+
+    public List<StoreDto> listStorePage(int page);
 }

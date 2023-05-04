@@ -1,6 +1,18 @@
 <template>
   <div id="wrap">
     <div class="container notice_container">
+      <nav>
+        <router-link
+          to="/community?"
+          class="navfrm">
+          차량정보
+        </router-link>
+        <router-link
+          to="/community/store"
+          class="navfrm">
+          차량정보
+        </router-link>
+      </nav>
       <div class="wright_wrap">
         <div class="ListContainer">
           <h3 class="box_title">
@@ -65,7 +77,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import axios from 'axios'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { URL } from '@/components/global'
 import AppPagination from '@/components/AppPagination.vue'
 
@@ -89,20 +101,21 @@ const posts = computed(() => {
   })
 })
 
-const fetchPosts = async (params) => {
-  axios.get(URL + '/board', {
+const getPosts = async (params) => {
+  const res = await axios.get(`${URL}/board`, {
     params: {
       params
     }
   })
-    .then((res) => {
-      console.log('데이터',res.data)
-      const allPosts = res.data
-      form.value = allPosts
-      totalCount.value = allPosts.length
-    })
+  console.log('데이터',res.data)
+  const allPosts = res.data
+  form.value = allPosts
+  totalCount.value = allPosts.length
 }
-fetchPosts()
+
+onMounted(()=>{
+  getPosts()
+})
 
 const router = useRouter()
 const toWrite = () => {
@@ -142,5 +155,8 @@ const toDetail = bno => {
   display: flex;
   float: right;
   margin-bottom: 20px;
+}
+.navfrm {
+  color: black;
 }
 </style>

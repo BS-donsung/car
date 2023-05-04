@@ -40,6 +40,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void writeBoard(BoardDto boardDto) {
         Board board = boardDto.toEntity();
+        log.info("board : {}",board);
         boardRepo.save(board);
     }
     // 게시글 수정
@@ -52,7 +53,8 @@ public class BoardServiceImpl implements BoardService {
 
     // 게시글 삭제
     public void deleteBoard(int bno) {
-
+        Long l_bno = new Long(bno);
+        boardRepo.deleteById(l_bno);
     }
 
     @Override

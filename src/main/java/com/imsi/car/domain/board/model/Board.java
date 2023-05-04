@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.imsi.car.domain.board.dto.ReplyDto;
+import com.imsi.car.domain.car.model.Store;
 import com.imsi.car.domain.user.model.User;
 
 import jakarta.persistence.CascadeType;
