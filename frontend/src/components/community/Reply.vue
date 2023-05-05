@@ -56,7 +56,7 @@
         <div
           v-if="reply.ismodify"
           class="inneruser">
-          {{ reply?.nickname }}({{ reply?.username }})
+          {{ reply?.nickname }}
         </div>
         <div
           v-if="reply.ismodify"
@@ -101,7 +101,7 @@
           <div
             v-if="!reply.ismodify"
             class="inneruser">
-            {{ reply?.nickname }}({{ reply?.username }})
+            {{ reply?.nickname }}
           </div>
 
           <div

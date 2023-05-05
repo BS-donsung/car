@@ -35,21 +35,21 @@
             </thead>
             <tbody>
               <tr
-                v-for="form in forms"
-                :key="form.spk"
+                v-for="form in posts"
+                :key="form.bno"
                 style="cursor: pointer;"
-                @click="toDetail(form.spk)">
+                @click="toDetail(form.bno)">
                 <p
                   class="notice_date"
                   style="text-align: center;">
-                  {{ form.spk }}
+                  {{ form.bno }}
                 </p>
                 <td
                   class="td_title">
-                  {{ form.carDto.name }}
+                  {{ form.title }}
                 </td>
                 <td class="text_center">
-                  {{ form.user }}
+                  {{ form.nickname }}
                 </td>
                 <td class="text_center">
                   {{ form.createdDate }}
@@ -57,10 +57,10 @@
               </tr>
             </tbody>
           </table>
-        <!-- <AppPagination
-          :current-page="params._page"
-          :page-count="pageCount"
-          @page="page => (params._page = page)" /> -->
+          <AppPagination
+            :current-page="params._page"
+            :page-count="pageCount"
+            @page="page => (params._page = page)" />
         </div>
       </div>
     </div>
@@ -68,28 +68,44 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { URL } from '@/components/global'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import AppPagination from '@/components/AppPagination.vue'
 
 const totalCount = ref(0)
 const forms = ref([])
+const params = ref({
+  _page: 1,
+  _order: 'desc',
+  _limit: 10,
+})
 
-// import AppPagination from '@/components/AppPagination.vue'
+const pageCount = computed(() => {
+  return Math.ceil(totalCount.value / params.value._limit)
+})
+const posts = computed(() => {
+  return forms.value.filter((post, index) => {
+    const { _limit, _page } = params.value
+    const p = _page - 1
+    const length = p * _limit
+    return (index >= length && index < length + _limit)
+  })
+})
+
 const getStores = async (params) => {
-  const res = await axios.get(`${URL}/store/allstores`,{params:{params}})
+  const res = await axios.get(`${URL}/board?type=1`,{params:{params}})
   forms.value = res.data
-  console.log('allPosts:',forms.value)
   totalCount.value = res.data.length
 }
 
 const router = useRouter()
-const toDetail = spk => {
+const toDetail = bno => {
   router.push({
     path: '/community/store/detail',
     query: {
-      'spk': spk
+      'bno': bno
     }
   })
 }

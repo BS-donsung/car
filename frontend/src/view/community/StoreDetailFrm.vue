@@ -13,14 +13,16 @@
                 {{ form.user }}의 {{ form?.carDto?.name }}
               </p>
               <div class="notice_sub_title">
-                <p>작성자 : {{ form?.user }} </p>
+                <p>작성자 : {{ form?.user }}</p>
               </div>
               <div class="notice_sub_title">
                 <p>등록일 : {{ form.createdDate }}</p>
               </div>
             </div>
             <div>
-              <PostSpk :spk="route.query.spk" />
+              <PostSpk
+                v-if="form.spk"
+                :spk="form.spk" />
             </div>
           </div>
           <div class="detail_button_wrap">
@@ -59,28 +61,27 @@ import { URL } from '@/components/global'
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import PostSpk from '@/components/PostSpk.vue'
-import Reply from '@/components/Reply.vue'
+import PostSpk from '@/components/mypage/PostSpk.vue'
+import Reply from '@/components/community/Reply.vue'
 
 const route = useRoute()
-const spk = route.query.spk
+const bno = route.query.bno
 const form = ref([])
 
+
 const getDetail = async () => {
-  console.log('spk : ',spk)
+  console.log('bno : ', bno)
   try {
-    const res = await axios.get(`${URL}/store/view/${spk}`)
-    console.log('>> ',res.data)
+    const res = await axios.get(`${URL}/board/view/${bno}`)
+    console.log('>> ', res.data)
     form.value = res.data
-    
   } catch (error) {
-    console.log(error)    
+    console.log(error)
   }
 }
 
-onMounted(()=>{
+onMounted(() => {
   getDetail()
 })
 </script>
-<style scoped>
-</style>
+<style scoped></style>

@@ -1,6 +1,8 @@
 <template>
   <PNav />
-  <div class="contain">
+  <div
+    v-if="user.role=='ROLE_ADMIN'||user.role=='ROLE_USER'"
+    class="contain">
     <div class="myBody">
       <span>{{ user.username }}님 반갑습니다</span>
       <span>
@@ -79,6 +81,7 @@ onMounted(() => {
   height: 100vh;
   padding-top: 50px;
 }
+
 .myBody {
   margin: 0 auto;
   display: grid;
@@ -123,10 +126,12 @@ progress {
   width: 50%;
   appearance: none;
 }
+
 progress::-webkit-progress-bar {
   border-radius: 4px;
   box-shadow: inset 3px 3px 4px #ebebeb;
 }
+
 progress::-webkit-progress-value {
   border-radius: 10px;
   background: #93f9b9;
@@ -145,6 +150,7 @@ progress::-webkit-progress-value {
   background: url(https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg);
   background-size: contain;
 }
+
 .naver-icon {
   display: inline-block;
   background: url(https://image.rocketpunch.com/company/5466/naver_logo.png?s=400x400&t=inside);

@@ -19,12 +19,14 @@ public class UserDto {
     private int exp;
     private String provider;
     private int sid;
+    private String role;
 
 
     public User toEntity() {
         User user = User.builder()
                 .username(username)
                 .nickname(nickname)
+                .role(role)
                 .build();
         return user;
     }
@@ -36,6 +38,7 @@ public class UserDto {
         this.email = user.getEmail();
         this.exp = user.getExp();
         this.provider = user.getProvider();
+        this.role = user.getRole();
     }
 
 

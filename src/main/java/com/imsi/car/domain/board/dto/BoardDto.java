@@ -5,7 +5,6 @@ import java.util.List;
 import com.imsi.car.domain.board.BoardUtils;
 import com.imsi.car.domain.board.model.Board;
 import com.imsi.car.domain.car.model.Store;
-import com.imsi.car.domain.user.dto.UserDto;
 import com.imsi.car.domain.user.model.User;
 
 import lombok.AllArgsConstructor;
@@ -14,7 +13,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.log4j.Log4j2;
 
 @ToString
 @Getter
@@ -37,7 +35,10 @@ public class BoardDto {
     private String createdDate;
     private String modifyDate;
     private List<ReplyDto> replyDtos;
-    private int spk;
+    private Integer spk;
+    private int type;
+    private String thumbnail;
+
 
     public BoardDto(Board board) {
         BoardUtils BoardUtils = new BoardUtils();
@@ -52,6 +53,9 @@ public class BoardDto {
         this.createdDate = board.getFormattedCreatedDate();
         this.modifyDate = board.getFormattedModifyDate();
         this.replyDtos = BoardUtils.replyListToDtos(board.getReplies());
+        this.type = board.getType();
+        this.thumbnail = board.getThumbnail();
+        this.spk = board.getStore()==null?0:board.getStore().getSpk();
     }
 
     public Board toEntity() {
@@ -63,6 +67,9 @@ public class BoardDto {
                 .viewCount(viewCount)
                 .likes(likes)
                 .replyCount(replyCount)
+                .type(type)
+                .thumbnail(thumbnail)
+                .store(Store.builder().spk(spk).build())
                 .build();
         return board;
     }

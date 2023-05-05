@@ -43,7 +43,7 @@
 import { useCompStore } from '@/store/index'
 import Cookies from 'js-cookie'
 const store = useCompStore()
-
+  
 const logout = () =>{
   Cookies.remove('Authorization')
   Cookies.remove('JSESSIONID')

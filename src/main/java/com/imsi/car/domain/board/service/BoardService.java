@@ -11,7 +11,7 @@ public interface BoardService {
     public BoardDto boardView(int bno);
 
     // page번째 게시물들 가져오기
-    public List<BoardDto> listBoardPage(int page);
+    public List<BoardDto> listBoardPage(int page, int type);
 
     // 게시물 검색. 메소드 안에서 댓글,제목,내용,아이디 검색 모두 구현
     public List<BoardDto> searchBoard(String keyword, int flag, int page);

@@ -61,27 +61,28 @@ import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import { URL, credentials } from '@/components/global'
-import Reply from '@/components/Reply.vue'
+import Reply from '@/components/community/Reply.vue'
 
 const form = ref([])
 const route = useRoute()
 const router = useRouter()
 const bno = route.query.bno
-
+onMounted(() => {
+  getDetail()
+})
 // 페이지 상세보기
-const getDetail = async () => {
-  console.log('bno', bno)
+const getDetail = () => {
+  axios.get(`${URL}/board/view/${bno}`)
+    .then(res => form.value = res.data)
+  console.log('>> ', form.value)
   try {
-    const res = await axios.get(URL + `/board/view/${bno}`)
-    console.log('>> ', res.data)
-    form.value = res.data
     form.value.replyDtos.forEach((reply) => {
       reply['ismodify'] = true
     })
-    console.log('상세보기 페이지 성공')
   } catch (error) {
-    console.log(error)
+    console.log(error)    
   }
+  console.log('상세보기 페이지 성공')
 }
 
 const back = () => {
@@ -112,9 +113,7 @@ const deletepost = async () => {
   }
 }
 
-onMounted(() => {
-  getDetail()
-})
+
 </script>
 
 <style scoped>

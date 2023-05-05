@@ -17,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -66,5 +67,16 @@ public class Board extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<Reply> replies = new ArrayList<>();
+
+    // 0: 일반 게시물
+    // 1: 차량 게시물
+    // 2: 칼럼 ... 
+    private int type;
+
+    private String thumbnail;
+
+    @OneToOne
+    @JoinColumn(name = "spk")
+    private Store store;
 
 }
