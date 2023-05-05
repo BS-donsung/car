@@ -15,10 +15,10 @@
 <script setup>
 import PNav from '@/components/PrivateNav.vue'
 import { useRoute } from 'vue-router'
-import PostSpk from '@/components/PostSpk.vue'
+import PostSpk from '@/components/mypage/PostSpk.vue'
 import { useCompStore } from '@/store'
 import axios from 'axios'
-import { credentials } from '@/components/global'
+import { URL,credentials } from '@/components/global'
 
 const route = useRoute()
 const store = useCompStore()
@@ -27,6 +27,7 @@ const poststore = async () => {
   let notice_data = {
     title: `${store.getUser().username}님의 차량`,
     content: '',
+    type: 1,
     spk: route.query.spk
   }
   try {
