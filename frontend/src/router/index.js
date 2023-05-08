@@ -26,6 +26,7 @@ import Inquiry from '@/view/InquiryFrm.vue'
 import Test from '@/view/TestFrm.vue'
 
 import Column from '@/view/ColumnFrm.vue'
+import Update from '@/view/ToUpdate.vue'
 
 
 const AppLayout = (component) => {
@@ -77,6 +78,7 @@ const routes = [
   { path: '/test', component: Test },
 
   {path: '/column', component: Column, name: 'column'},
+  {path: '/update', component: Update, name: 'update'},
   
 ]
 

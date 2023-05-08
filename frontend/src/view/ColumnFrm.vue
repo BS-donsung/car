@@ -97,4 +97,5 @@ import Nav from '@/view/ToNav.vue'
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-}</style>
+}
+</style>

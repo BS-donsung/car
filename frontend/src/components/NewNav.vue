@@ -32,6 +32,13 @@
         </li>
         <li class="nav-item">
           <router-link
+            to="/update"
+            class="navfrm">
+            새소식
+          </router-link>
+        </li>
+        <li class="nav-item">
+          <router-link
             to="/inquiry"
             class="navfrm">
             문의하기
