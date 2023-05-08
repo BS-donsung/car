@@ -18,7 +18,7 @@
         </li>
         <li class="nav-item">
           <router-link
-            to="/"
+            to="/column"
             class="navfrm">
             칼럼
           </router-link>
@@ -28,6 +28,13 @@
             to="/community"
             class="navfrm">
             커뮤니티
+          </router-link>
+        </li>
+        <li class="nav-item">
+          <router-link
+            to="/update"
+            class="navfrm">
+            새소식
           </router-link>
         </li>
         <li class="nav-item">

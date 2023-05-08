@@ -1,0 +1,122 @@
+.info-warp {
+  max-width: 1280px;
+  margin: 0 auto;
+  min-height: 100%;
+  height: auto;
+  padding: 200px 16px 160px 16px;
+  flex: 1;
+}
+
+.hr_tag {
+  border: none;
+  border-top: 1px solid #cacaca;
+  color: #cacaca;
+  text-align: center;
+  overflow: visible;
+  margin: 0;
+}
+
+.hr_tag::after {
+  content: "News";
+  position: relative;
+  top: -25px;
+  background-color: white;
+  padding: 0 10px;
+  font-size: 30px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+}
+
+.info-news {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0 auto;
+  max-width: 1280px;
+  border-bottom: 1px solid #1B1B1E;
+  padding: 0px 16px 35px 16px;
+  align-items: center;
+  justify-items: center;
+}
+
+.title_news {
+  font-size: 26px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: start;
+}
+
+.sub_title {
+  padding: 15px 0;
+  font-size: 24px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: bold;
+  line-height: 1.3;
+  text-align: start;
+  
+}
+
+.content_p {
+  font-size: 18px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: bold;
+  word-break: keep-all;
+  line-height: 1.3;
+  text-align: start;
+}
+
+/* 개발페이지 */
+.develog-container {
+  max-width: 960px;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+
+.develog-box{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 960px;
+  box-shadow: 2px 2px 15px -3px #777;
+  margin: 0 auto;
+  padding: 16px;
+  border-radius: 20px;
+  align-items: center;
+  justify-items: center;
+  margin-top: 100px;
+}
+
+.develog_img{
+  width: 400px;
+  height: 250px;
+  border-radius: 8px;
+}
+
+.dayfont{
+  font-size: 16px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.dayfont_span{
+  background-color: #fdff6b;
+  color: #1B1B1E;
+  padding: 5px;
+  border-radius: 8px;
+}
+
+.month_font{
+  padding: 15px 0;
+  font-size: 24px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: bold;
+  line-height: 1.3;
+}
+
+.box_font{
+  font-size: 14px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: bold;
+  word-break: keep-all;
+  line-height: 1.3;
+}
