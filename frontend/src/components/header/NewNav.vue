@@ -18,6 +18,13 @@
         </li>
         <li class="nav-item">
           <router-link
+            to="/cars"
+            class="navfrm">
+            차량목록  
+          </router-link>
+        </li>
+        <li class="nav-item">
+          <router-link
             to="/column"
             class="navfrm">
             칼럼

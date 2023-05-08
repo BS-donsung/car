@@ -10,16 +10,17 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.imsi.car.domain.board.model.Board;
+import com.imsi.car.domain.car.repo_custom.BoardCustomRepo;
 
-public interface BoardRepo extends JpaRepository<Board, Long> {
+public interface BoardRepo extends JpaRepository<Board, Long>,BoardCustomRepo {
 
     Board findByBno(int bno);
 
     // 게시글 삭제
     void delete(Board board);
 
-    @Query(value = "select b from Board b")
-    List<Board> findAllPage(Pageable pageable);
+    @Query(value = "select b from Board b where b.type = :type")
+    List<Board> findAllPageByType(Pageable pageable, int type);
 
     // 내림차순 검색
     List<Board> findByOrderByBnoDesc();

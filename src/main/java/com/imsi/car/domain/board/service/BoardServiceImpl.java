@@ -29,9 +29,9 @@ public class BoardServiceImpl implements BoardService {
     private final BoardUtils boardUtils;
 
     @Override
-    public List<BoardDto> listBoardPage(int page) {
+    public List<BoardDto> listBoardPage(int page,int type) {
         Pageable pageable = PageRequest.of(page - 1, 100, Sort.by("bno").descending());
-        List<Board> result = boardRepo.findAllPage(pageable);
+        List<Board> result = boardRepo.findAllPageByType(pageable, type);
         return boardUtils.boardListToDtos(result);
     }
 
@@ -40,6 +40,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void writeBoard(BoardDto boardDto) {
         Board board = boardDto.toEntity();
+        log.info("board : {}",board);
         boardRepo.save(board);
     }
     // 게시글 수정
@@ -52,14 +53,14 @@ public class BoardServiceImpl implements BoardService {
 
     // 게시글 삭제
     public void deleteBoard(int bno) {
-
+        Long l_bno = new Long(bno);
+        boardRepo.deleteById(l_bno);
     }
 
     @Override
     public BoardDto boardView(int bno) {
         Board board = boardRepo.findByBno(bno);
         BoardDto boardDto = new BoardDto(board);
-        log.info("boardDto : {}", boardDto);
         return boardDto;
     }
 

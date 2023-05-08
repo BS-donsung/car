@@ -63,24 +63,27 @@
 
     <div class="opt">
       <hr />
-      <div class="opttitle">
+      <div
+        class="opttitle">
         옵션
       </div>
       <div
-        v-for="caropt in InfoData.specifications.options"
-        :key="caropt"
         class="optinner">
-        <p>
-          <label>
-            <input
-              v-model="caropt.userchk"
-              :disabled="!caropt.chk"
-              type="checkbox"
-              @change="clickbox(caropt)" />
-            {{ caropt.oname }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ isNaN(Number(caropt.cost)) ? '' :
-              Number(caropt.cost).toLocaleString() }}
-          </label>
-        </p>
+        <div
+          v-for="caropt in InfoData.specifications.options"
+          :key="caropt">
+          <p>
+            <label>
+              <input
+                v-model="caropt.userchk"
+                :disabled="!caropt.chk"
+                type="checkbox"
+                @change="clickbox(caropt)" />
+              {{ caropt.oname }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ isNaN(Number(caropt.cost)) ? '' :
+                Number(caropt.cost).toLocaleString() }}
+            </label>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -135,17 +138,16 @@ const InfoData = reactive({
   specifications: {
     imgurl: '/imsi.jpg',
   },
+  storeoptions:{
+
+  }
 })
 const total = ref('') // 기본 차값 금액
 
-const getInfo = async () => {
-  if (props.cid == '' || props.cid == undefined) {
-    return
-  } else {
-    isimg.value = true
-  }
-  try {
-    const res = await axios.get(URL + `/car/search/car?cid=${props.cid}`)
+const getInfo = async() => {
+  if(props.cid !== undefined){
+    try {
+    const res = await axios.get(`${URL}/car/search/car?cid=${props.cid}`)
     InfoData.specifications = res.data
 
     console.log('specifications data : ', res.data)
@@ -153,8 +155,10 @@ const getInfo = async () => {
       caropt['userchk'] = false
     })
     total.value = InfoData.specifications.cost
+    isimg.value = true
   } catch (error) {
     console.log('제원 주세요', error)
+  }
   }
 }
 
@@ -286,4 +290,5 @@ button:hover {
   background: black;
   color: white;
 }
+
 </style>

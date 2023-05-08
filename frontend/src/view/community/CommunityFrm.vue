@@ -1,6 +1,18 @@
 <template>
   <div id="wrap">
     <div class="container notice_container">
+      <nav>
+        <router-link
+          to="/community?"
+          class="navfrm">
+          차량정보
+        </router-link>
+        <router-link
+          to="/community/store"
+          class="navfrm">
+          차량정보
+        </router-link>
+      </nav>
       <div class="wright_wrap">
         <div class="ListContainer">
           <h3 class="box_title">
@@ -30,24 +42,24 @@
 
             <tbody>
               <tr
-                v-for="forms in posts"
-                :key="forms.bno"
+                v-for="post in posts"
+                :key="post.bno"
                 style="cursor: pointer;"
-                @click="toDetail(forms.bno)">
+                @click="toDetail(post.bno)">
                 <p
                   class="notice_date"
                   style="text-align: center;">
-                  {{ forms.bno }}
+                  {{ post.bno }}
                 </p>
                 <td
                   class="td_title">
-                  {{ forms.title }}
+                  {{ post.title }}
                 </td>
                 <td class="text_center">
-                  {{ forms.nickname }}
+                  {{ post.nickname }}
                 </td>
                 <td class="text_center">
-                  {{ forms.createdDate }}
+                  {{ post.createdDate }}
                 </td>
               </tr>
             </tbody>
@@ -65,23 +77,23 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import axios from 'axios'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { URL } from '@/components/global'
 import AppPagination from '@/components/AppPagination.vue'
 
-
-const form = ref([])
+const totalCount = ref(0)
+const forms = ref([])
 const params = ref({
   _page: 1,
   _order: 'desc',
   _limit: 10,
 })
-const totalCount = ref(0)
+
 const pageCount = computed(() => {
   return Math.ceil(totalCount.value / params.value._limit)
 })
 const posts = computed(() => {
-  return form.value.filter((post, index) => {
+  return forms.value.filter((post, index) => {
     const { _limit, _page } = params.value
     const p = _page - 1
     const length = p * _limit
@@ -89,20 +101,11 @@ const posts = computed(() => {
   })
 })
 
-const fetchPosts = async (params) => {
-  axios.get(URL + '/board', {
-    params: {
-      params
-    }
-  })
-    .then((res) => {
-      console.log('데이터',res.data)
-      const allPosts = res.data
-      form.value = allPosts
-      totalCount.value = allPosts.length
-    })
+const getPosts = async (params) => {
+  const res = await axios.get(`${URL}/board?type=0`, {params:{params}})
+  forms.value = res.data
+  totalCount.value = res.data.length
 }
-fetchPosts()
 
 const router = useRouter()
 const toWrite = () => {
@@ -119,6 +122,10 @@ const toDetail = bno => {
     }
   })
 }
+
+onMounted(()=>{
+  getPosts()
+})
 </script>
 
 <style scoped>
@@ -142,5 +149,8 @@ const toDetail = bno => {
   display: flex;
   float: right;
   margin-bottom: 20px;
+}
+.navfrm {
+  color: black;
 }
 </style>

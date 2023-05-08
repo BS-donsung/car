@@ -33,7 +33,7 @@ public class Store {
     @JoinColumn(name = "user")
     private User user;
     
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "store")
     private List<StoreOption> storeOptions;
 }

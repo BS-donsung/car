@@ -2,19 +2,19 @@
   <div class="contain">
     <div class="containgrid">
       <div>
-        <CompCID :cid="store.CarInfomation[0]" />
+        <CompCid :cid="store.CarInfomation[0]" />
       </div>
       <div class="mid">
       </div>
       <div>
-        <CompCID :cid="store.CarInfomation[1]" />
+        <CompCid :cid="store.CarInfomation[1]" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import CompCID from '@/components/ComparCID.vue'
+import CompCid from '@/components/CompareCid.vue'
 import { useCompStore } from '@/store/index'
 
 

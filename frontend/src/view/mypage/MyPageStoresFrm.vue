@@ -6,7 +6,7 @@
         v-for="store in data.stores"
         :key="store"
         class="store-box">
-        <router-link :to="'/mypage/store?cid='+store.carDto.cid">
+        <router-link :to="'/mypage/store?spk='+store.spk">
           <button class="store-inner">
             {{ store.carDto.name }}
           </button>
@@ -18,7 +18,8 @@
 
 <script setup>
 import PNav from '@/components/PrivateNav.vue'
-import { URL } from '@/components/global'
+import { URL, credentials } from '@/components/global'
+import axios from 'axios'
 import { reactive, onMounted } from 'vue'
 
 const data = reactive({
@@ -26,12 +27,13 @@ const data = reactive({
 })
 
 const getStores = () => {
-  const requestOptions = {
-    credentials: 'include',
-  }
-  fetch(`${URL}/store/mystores`, requestOptions)
-    .then((res) => res.json())
-    .then((body) => (data.stores = body))
+  
+  axios.get(`${URL}/store/mystores`, credentials)
+    .then((res) => res.data)
+    .then((body) => {
+      data.stores = body
+      console.log(data.stores)
+    })
 }
 
 onMounted(() => {

@@ -96,8 +96,6 @@ import { URL } from '@/components/global'
 import Cookies from 'js-cookie'
 // import axios from 'axios'
 
-
-
 const registerfrm = () => {
   alert('회원가입 하시겠습니까?')
   router.push({ path: '/registerfrm' })
@@ -125,7 +123,6 @@ const loginBtn = async () => {
     if(token === undefined){
       throw new Error('no token!!')
     }else{
-      // router.push({ path: '/' })
       window.location.href='http://localhost:8080/'
     }
   } catch (error) {
@@ -223,7 +220,7 @@ form {
   padding: 5px;
   font-size: 18px;
   color: #8b8b8b;
-  cursor: pointer;
+    sor: pointer;
 }
 
 .field button {

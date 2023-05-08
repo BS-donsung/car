@@ -10,25 +10,26 @@
           <div class="notice_content_wrap">
             <div class="notice_top">
               <p class="notice_title">
-                {{ form.title }}
+                {{ form.user }}의 {{ form?.carDto?.name }}
               </p>
               <div class="notice_sub_title">
-                <p>작성자 : {{ form?.nickname }} </p>
+                <p>작성자 : {{ form?.user }}</p>
               </div>
               <div class="notice_sub_title">
                 <p>등록일 : {{ form.createdDate }}</p>
               </div>
             </div>
-            <div
-              class="content_box"
-              v-html="form.content">
+            <div>
+              <PostSpk
+                v-if="form.spk"
+                :spk="form.spk" />
             </div>
           </div>
           <div class="detail_button_wrap">
             <button
               type="button"
               class="writing_btn back_btn"
-              @click="back()">
+              @click="back">
               목록
             </button>
             <button
@@ -40,7 +41,7 @@
             <button
               type="button"
               class="writing_btn del_btn"
-              @click="deletepost()">
+              @click="deletepost">
               삭제
             </button>
           </div>
@@ -55,79 +56,32 @@
     </div>
   </div>
 </template>
-
 <script setup>
-import { useRoute, useRouter } from 'vue-router'
-import { onMounted, ref } from 'vue'
-import axios from 'axios'
-import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import { URL } from '@/components/global'
-import Reply from '@/components/Reply.vue'
+import axios from 'axios'
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import PostSpk from '@/components/mypage/PostSpk.vue'
+import Reply from '@/components/community/Reply.vue'
 
-
-const form = ref([])
 const route = useRoute()
-const router = useRouter()
 const bno = route.query.bno
+const form = ref([])
 
-// 페이지 상세보기
-const fetchDetail = async () => {
-  console.log('bno',bno)
+
+const getDetail = async () => {
+  console.log('bno : ', bno)
   try {
-    await axios.get(URL + `/board/view/${bno}`)
-      .then((res) => {
-        console.log('받아오는 데이터', res.data)
-        form.value = res.data
-        form.value.replyDtos.forEach(reply => {
-          reply['ismodify'] = true
-        })
-
-        console.log('상세보기 페이지 성공')
-      })
+    const res = await axios.get(`${URL}/board/view/${bno}`)
+    console.log('>> ', res.data)
+    form.value = res.data
   } catch (error) {
     console.log(error)
   }
 }
-
-const back = () => {
-  router.push({
-    path: '/community',
-  })
-}
-
-const editpage = bno => {
-  router.push({
-    name: 'editnotice',
-    params: {
-      bno
-    }
-  })
-}
-
-// 게시글 삭제
-const deletepost = async () => {
-  try {
-    if (confirm('삭제하시겠습니까?')) {
-      await axios.delete(URL + `/board/delete/${bno}`)
-        .then((res) => {
-          console.log(res.data)
-          form.value = res.data
-        })
-      router.push({ name: 'community' })
-    }
-  } catch (error) {
-    alert('삭제실패')
-    console.log(error)
-  }
-}
-
 
 onMounted(() => {
-  fetchDetail()
+  getDetail()
 })
 </script>
-
-<style scoped>
-@import "@/assets/notice.css";
-
-</style>
+<style scoped></style>

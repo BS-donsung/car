@@ -33,18 +33,19 @@ public class BoardController {
     /* 게시글 목록 출력 */
     @GetMapping("")
     // http://localhost:9000/board?page=2와 같은 식으로 찍어준다.
-    public List<BoardDto> getBoardlist(@RequestParam(defaultValue = "1") Integer page) {
-        log.info("페이징 로그 : {}", page);
-        List<BoardDto> boardDtoList = boardService.listBoardPage(page);
+    public List<BoardDto> getBoardlist(@RequestParam(defaultValue = "1") Integer page, @RequestParam Integer type) {
+        log.info("/board : {}, {}", page, type);
+        List<BoardDto> boardDtoList = boardService.listBoardPage(page, type);
         return boardDtoList;
     }
 
     /* 게시글 상세 보기 */
     @GetMapping("/view/{bno}")
     public BoardDto boardView(@PathVariable int bno) {
-        log.info("/board/view{} : ", bno);
+        log.info("/board/view{}", bno);
         return boardService.boardView(bno);
     }
+
 
 
 
@@ -62,7 +63,7 @@ public class BoardController {
     // 글 삭제 요청을 보내는 컨트롤러(YARC 이용)
     @DeleteMapping("/delete/{bno}")
     public void deleteBoard(@PathVariable int bno) {
-        log.info("글삭제 요청 로그", bno);
+        log.info("/delete: {}", bno);
         boardService.deleteBoard(bno);
     }
 
