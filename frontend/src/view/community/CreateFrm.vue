@@ -58,14 +58,10 @@
 <script setup>
 import router from '@/router'
 import { reactive, ref } from 'vue'
-import { URL } from '@/components/global'
+import { URL, credentials } from '@/components/global'
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import axios from 'axios'
-
-const credentials = {
-  withCredentials: 'include',
-}
 
 const form = ref({
   title: null, //제목
