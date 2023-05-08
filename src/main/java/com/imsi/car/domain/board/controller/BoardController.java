@@ -39,6 +39,13 @@ public class BoardController {
         return boardDtoList;
     }
 
+    @GetMapping("/newest")
+    public List<BoardDto> getNewestBoardList() {
+        log.info("/newest");
+        List<BoardDto> boardDtoList = boardService.newestBoard();
+        return boardDtoList;
+    }
+
     /* 게시글 상세 보기 */
     @GetMapping("/view/{bno}")
     public BoardDto boardView(@PathVariable int bno) {
@@ -92,5 +99,6 @@ public class BoardController {
         log.info("boardDtos : {}",boardDtos);
         return boardDtos;
     }
+
 
 }

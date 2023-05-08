@@ -1,16 +1,20 @@
 .info-warp {
-  max-width: 1280px;
+  max-width: 80%;
   margin: 0 auto;
   min-height: 100%;
   height: auto;
-  padding: 200px 16px 160px 16px;
+  padding:30px 16px 160px 16px;
   flex: 1;
+  background: #fff;
+  border-radius: 6px;
+  padding: 20px 60px 40px 40px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .hr_tag {
   border: none;
   border-top: 1px solid #cacaca;
-  color: #cacaca;
+  color: black;
   text-align: center;
   overflow: visible;
   margin: 0;
@@ -44,6 +48,7 @@
   font-weight: 700;
   line-height: 1.3;
   text-align: start;
+  color: black;
 }
 
 .sub_title {
@@ -86,9 +91,10 @@
 }
 
 .develog_img{
-  width: 400px;
+  /* width: 400px; */
   height: 250px;
   border-radius: 8px;
+  aspect-ratio: 1 / 1;
 }
 
 .dayfont{
@@ -119,4 +125,8 @@
   font-weight: bold;
   word-break: keep-all;
   line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

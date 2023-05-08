@@ -63,12 +63,10 @@
 
     <div class="opt">
       <hr />
-      <div
-        class="opttitle">
+      <div class="opttitle">
         옵션
       </div>
-      <div
-        class="optinner">
+      <div class="optinner">
         <div
           v-for="caropt in InfoData.specifications.options"
           :key="caropt">
@@ -79,8 +77,11 @@
                 :disabled="!caropt.chk"
                 type="checkbox"
                 @change="clickbox(caropt)" />
-              {{ caropt.oname }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ isNaN(Number(caropt.cost)) ? '' :
-                Number(caropt.cost).toLocaleString() }}
+              {{ caropt.oname }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{
+                isNaN(Number(caropt.cost))
+                  ? ""
+                  : Number(caropt.cost).toLocaleString()
+              }}
             </label>
           </p>
         </div>
@@ -89,12 +90,11 @@
   </div>
   <div class="totalcost">
     <div class="totalbox">
-      {{ isNaN(Number(total)) ? '' : Number(total).toLocaleString() }}
+      {{ isNaN(Number(total)) ? "" : Number(total).toLocaleString() }}
     </div>
   </div>
   <div class="postBtn">
-    <button 
-      @click="clickstore">
+    <button @click="clickstore">
       저장
     </button>
   </div>
@@ -138,27 +138,25 @@ const InfoData = reactive({
   specifications: {
     imgurl: '/imsi.jpg',
   },
-  storeoptions:{
-
-  }
+  storeoptions: {},
 })
 const total = ref('') // 기본 차값 금액
 
-const getInfo = async() => {
-  if(props.cid !== undefined){
+const getInfo = async () => {
+  if (props.cid !== undefined) {
     try {
-    const res = await axios.get(`${URL}/car/search/car?cid=${props.cid}`)
-    InfoData.specifications = res.data
+      const res = await axios.get(`${URL}/car/search/car?cid=${props.cid}`)
+      InfoData.specifications = res.data
 
-    console.log('specifications data : ', res.data)
-    InfoData.specifications.options.forEach(caropt => {
-      caropt['userchk'] = false
-    })
-    total.value = InfoData.specifications.cost
-    isimg.value = true
-  } catch (error) {
-    console.log('제원 주세요', error)
-  }
+      console.log('specifications data : ', res.data)
+      InfoData.specifications.options.forEach((caropt) => {
+        caropt['userchk'] = false
+      })
+      total.value = InfoData.specifications.cost
+      isimg.value = true
+    } catch (error) {
+      console.log('제원 주세요', error)
+    }
   }
 }
 
@@ -171,32 +169,30 @@ const clickbox = (caropt) => {
   }
 }
 
-
 const clickstore = () => {
   // console.log(InfoData.specifications.options)
   let data = {
     carDto: {
-      cid: props.cid
+      cid: props.cid,
     },
-    options: []
+    options: [],
   }
   for (const option of InfoData.specifications.options) {
     // console.log('>>',)
     let imsi_opt = {
       opk: option.opk,
-      chk: option.userchk
+      chk: option.userchk,
     }
     data.options.push(imsi_opt)
   }
-  console.log('데이터 post',data)
+  console.log('데이터 post', data)
 
-  axios.post(`${URL}/store/store`, data, credentials)
-    .then((res) => {
-      console.log(res.data)
-    })
-    .catch('데이터 저장 실패')
+  axios.post(`${URL}/store/store`, data, credentials).then((res) => {
+    console.log(res.data)
+  })
+  .catch('데이터 저장 실패')
+  window.location.href = 'http://localhost:8080/mypage/stores'
 }
-
 </script>
 
 <style scoped>
@@ -217,7 +213,7 @@ const clickstore = () => {
   font-weight: bold;
   margin-bottom: 30px;
   margin-left: 10px;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 .image-box {
@@ -290,5 +286,4 @@ button:hover {
   background: black;
   color: white;
 }
-
 </style>

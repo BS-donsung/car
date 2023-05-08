@@ -64,4 +64,9 @@ public class StoreServiceImpl implements StoreService {
         List<Store> result = storeRepo.findAllPage(pageable);
         return carUtils.storeListToStoreDtos(result);
     }
+
+    public void deleteStore(StoreDto storeDto){
+        storeRepo.deleteById(storeDto.getSpk());
+    }
+
 }

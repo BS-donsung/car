@@ -15,4 +15,6 @@ public interface StoreService {
     public List<StoreDto> listOptionByUsername(String username);
 
     public List<StoreDto> listStorePage(int page);
+
+    public void deleteStore(StoreDto storeDto);
 }

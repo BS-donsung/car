@@ -9,6 +9,11 @@
         글쓰기
       </button>
     </div>
+    <div class="postBtn">
+      <button @click="deletestore">
+        삭제하기
+      </button>
+    </div>
   </div>
 </template>
 
@@ -32,6 +37,15 @@ const poststore = async () => {
   }
   try {
     await axios.post(`${URL}/board/post`,notice_data,credentials)
+    window.location.href = 'http://localhost:8080/community/store'
+  } catch (error) {
+    console.log(error)
+  }
+}
+const deletestore = async () => {
+  try {
+    await axios.delete(`${URL}/store/delete?spk=${route.query.spk}`,credentials)
+    window.location.href = 'http://localhost:8080/mypage/stores'
   } catch (error) {
     console.log(error)
   }

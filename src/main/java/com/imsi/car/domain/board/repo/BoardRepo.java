@@ -22,6 +22,9 @@ public interface BoardRepo extends JpaRepository<Board, Long>,BoardCustomRepo {
     @Query(value = "select b from Board b where b.type = :type")
     List<Board> findAllPageByType(Pageable pageable, int type);
 
+    @Query(value = "select b from Board b where b.type = 2 order by createdDate limit 3")
+    List<Board> findNewestByDate();
+
     // 내림차순 검색
     List<Board> findByOrderByBnoDesc();
 

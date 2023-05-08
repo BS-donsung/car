@@ -2,6 +2,7 @@ package com.imsi.car.domain.car.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,5 +72,14 @@ public class StoreController {
         storeDto.setUser(username);
         log.info("/stroe : {}",storeDto);
         storeService.storeUserOption(storeDto);
+    }
+
+    @DeleteMapping("/delete")
+    public void deleteCar(@RequestParam int spk, HttpServletRequest req){
+        StoreDto storeDto = new StoreDto(spk, null, null, null);
+        String username = (String) req.getAttribute("username");
+        storeDto.setUser(username);
+        log.info("/delete : {}",storeDto);
+        storeService.deleteStore(storeDto);
     }
 }

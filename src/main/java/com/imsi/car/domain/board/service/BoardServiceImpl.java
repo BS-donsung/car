@@ -31,8 +31,8 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<BoardDto> listBoardPage(int page,int type) {
         Pageable pageable = PageRequest.of(page - 1, 100, Sort.by("bno").descending());
-        List<Board> result = boardRepo.findAllPageByType(pageable, type);
-        return boardUtils.boardListToDtos(result);
+        List<Board> boardList = boardRepo.findAllPageByType(pageable, type);
+        return boardUtils.boardListToDtos(boardList);
     }
 
     // 게시글 쓰기 요청을 수락하는 서비스
@@ -43,6 +43,12 @@ public class BoardServiceImpl implements BoardService {
         log.info("board : {}",board);
         boardRepo.save(board);
     }
+
+    public List<BoardDto> newestBoard(){
+        List<Board> boardList = boardRepo.findNewestByDate();
+        return boardUtils.boardListToDtos(boardList);
+    }
+
     // 게시글 수정
     @Override
     public void modifyBoard(int bno, BoardDto boardDto) {

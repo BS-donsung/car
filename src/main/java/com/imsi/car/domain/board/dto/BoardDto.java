@@ -69,7 +69,7 @@ public class BoardDto {
                 .replyCount(replyCount)
                 .type(type)
                 .thumbnail(thumbnail)
-                .store(Store.builder().spk(spk).build())
+                .store(spk==0?null:Store.builder().spk(spk).build())
                 .build();
         return board;
     }
