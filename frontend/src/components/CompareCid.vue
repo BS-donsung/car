@@ -191,7 +191,7 @@ const clickstore = () => {
     console.log(res.data)
   })
   .catch('데이터 저장 실패')
-  window.location.href = 'http://localhost:8080/mypage/stores'
+  window.location.href = 'http://carmunis.com:8080/mypage/stores'
 }
 </script>
 

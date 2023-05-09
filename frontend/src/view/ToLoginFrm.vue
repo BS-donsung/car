@@ -61,7 +61,7 @@
       <!-- 로그인 a => button으로 교환 -->
       <div class="media-options">
         <a
-          href="http://localhost:9000/oauth2/authorization/facebook"
+          href="http://carmunis.com:9000/oauth2/authorization/facebook"
           class="field facebook">
           <span class="facebook-icon"></span>
           <span>Facebook 로그인</span>
@@ -70,7 +70,7 @@
 
       <div class="media-options">
         <a
-          href="http://localhost:9000/oauth2/authorization/google"
+          href="http://carmunis.com:9000/oauth2/authorization/google"
           class="field google">
           <span class="google-icon"></span>
           <span>Google 로그인</span>
@@ -79,7 +79,7 @@
 
       <div class="media-options">
         <a
-          href="http://localhost:9000/oauth2/authorization/naver"
+          href="http://carmunis.com:9000/oauth2/authorization/naver"
           class="field naver">
           <span class="naver-icon"></span>
           <span>NAVER 로그인</span>
@@ -123,7 +123,7 @@ const loginBtn = async () => {
     if(token === undefined){
       throw new Error('no token!!')
     }else{
-      window.location.href='http://localhost:8080/'
+      window.location.href='http://carmunis.com:8080/'
     }
   } catch (error) {
     alert('로그인에 실패했습니다', error)

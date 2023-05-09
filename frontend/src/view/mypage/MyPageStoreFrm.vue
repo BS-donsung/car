@@ -37,7 +37,7 @@ const poststore = async () => {
   }
   try {
     await axios.post(`${URL}/board/post`,notice_data,credentials)
-    window.location.href = 'http://localhost:8080/community/store'
+    window.location.href = 'http://carmunis.com:8080/community/store'
   } catch (error) {
     console.log(error)
   }
@@ -45,7 +45,7 @@ const poststore = async () => {
 const deletestore = async () => {
   try {
     await axios.delete(`${URL}/store/delete?spk=${route.query.spk}`,credentials)
-    window.location.href = 'http://localhost:8080/mypage/stores'
+    window.location.href = 'http://carmunis.com:8080/mypage/stores'
   } catch (error) {
     console.log(error)
   }

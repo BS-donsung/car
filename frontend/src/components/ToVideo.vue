@@ -42,9 +42,9 @@
 
 <script setup>
 // 메모장에 키코드 복사 후 실행
-// const videoUrl1 = 'https://www.youtube.com/embed/DFbMMuALDPQ'
-// const videoUrl2 = 'https://www.youtube.com/embed/_krw6RILcm0'
-// const videoUrl3 = 'https://www.youtube.com/embed/piB5XgJwUN8'
+const videoUrl1 = 'https://www.youtube.com/embed/DFbMMuALDPQ'
+const videoUrl2 = 'https://www.youtube.com/embed/_krw6RILcm0'
+const videoUrl3 = 'https://www.youtube.com/embed/piB5XgJwUN8'
 </script>
 
 <style scoped>

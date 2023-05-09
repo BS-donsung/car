@@ -43,7 +43,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                 .build();
         response.setHeader("Set-Cookie", accessTokenCookie.toString());
         // redirecet 할 주소
-        String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:8080/")
+        String targetUrl = UriComponentsBuilder.fromUriString("http://carmunis.com:8080/")
                 .build().toUriString();
         log.info("targetUrl : {}", targetUrl);
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
