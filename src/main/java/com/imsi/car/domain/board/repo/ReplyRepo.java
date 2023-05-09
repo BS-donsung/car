@@ -23,6 +23,7 @@ public interface ReplyRepo extends JpaRepository<Reply, Long> {
     @Query("UPDATE Reply r SET r.text = :text WHERE r.rno = :rno")
     void modifyReply(@Param("rno") Long rno, @Param("text") String text);
 
-    Page<Reply> findByUserUsername(String username, Pageable pageable);
+    @Query(value = "select r from Reply r where r.user.username = :username", nativeQuery = false)
+    List<Reply> findByUsername(String username, Pageable pageable);
 
 }

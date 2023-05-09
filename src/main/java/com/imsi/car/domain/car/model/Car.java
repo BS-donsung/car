@@ -2,8 +2,6 @@ package com.imsi.car.domain.car.model;
 
 import java.util.List;
 
-import com.imsi.car.domain.board.model.Review;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;

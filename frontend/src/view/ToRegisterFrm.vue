@@ -1,5 +1,12 @@
 <template>
   <body>
+    <div class="logo">
+      <router-link to="/">
+        <img
+          src="@/components/img/logo2.png"
+          alt="" />
+      </router-link>
+    </div>
     <section class="container forms">
       <div class="form login">
         <div class="form-content">
@@ -141,7 +148,7 @@ const registerBtn = async () => {
   }
 }
 
-if (register_data == '') {
+if (register_data.value == '') {
   alert('경고')
 }
 </script>
@@ -163,10 +170,6 @@ header {
   text-align: center;
 }
 
-form {
-  margin-top: 30px;
-}
-
 .container {
   height: 100vh;
   width: 100%;
@@ -184,6 +187,7 @@ form {
   border-radius: 6px;
   background: #fff;
   border: 1px solid #cacaca;
+  margin-top: 30px;
 }
 
 /* 미디어 field 버튼 */

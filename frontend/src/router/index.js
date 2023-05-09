@@ -1,59 +1,96 @@
-import {createRouter, createWebHistory} from 'vue-router/dist/vue-router'
-import Home from '@/view/ReMainPage.vue'
+import { createRouter, createWebHistory } from 'vue-router/dist/vue-router'
+import Home from '@/view/MainPageFrm.vue'
 import Comparison from '@/view/Comparison.vue'
 import Login from '@/view/ToLoginFrm.vue'
 import Register from '@/view/ToRegisterFrm.vue'
-
-import MyPage from '@/view/MyPageFrm.vue'
-import MyPageBoards from '@/view/MyPageBoardsFrm.vue'
-import MyPageReplies from '@/view/MyPageRepliesFrm.vue'
-import MyPageAlerts from '@/view/MyPageAlertsFrm.vue'
-import MyPageStores from '@/view/MyPageStoresFrm.vue'
-import MyPageStore from '@/view/MyPageStoreFrm.vue'
+import User from '@/components//header/Userpage.vue'
+import Nav from '@/components/header/NewNav.vue'
 
 
-import Cars from '@/view/CarListFrm.vue'
-import Car from '@/view/CarFrm.vue'
+import MyPage from '@/view/mypage/MyPageFrm.vue'
+import MyPageBoards from '@/view/mypage/MyPageBoardsFrm.vue'
+import MyPageReplies from '@/view/mypage/MyPageRepliesFrm.vue'
+import MyPageAlerts from '@/view/mypage/MyPageAlertsFrm.vue'
+import MyPageStores from '@/view/mypage/MyPageStoresFrm.vue'
+import MyPageStore from '@/view/mypage/MyPageStoreFrm.vue'
 
-import Community from '@/view/CommunityFrm.vue'
-import CreateNotice from '@/view/ToCreateNotice.vue'
-import DetailNotice from '@/view/ToDetailNotice.vue'
-import EditNotice from '@/view/ToEditNotice.vue'
+import Cars from '@/view/car/CarListFrm.vue'
+import Car from '@/view/car/CarFrm.vue'
+
+import Community from '@/view/community/CommunityFrm.vue'
+import CreateNotice from '@/view/community/CreateFrm.vue'
+import DetailNotice from '@/view/community/DetailFrm.vue'
+import EditNotice from '@/view/community/EditFrm.vue'
+import StoreCommunity from '@/view/community/StoreCommunityFrm.vue'
+import DetailStore from '@/view/community/StoreDetailFrm.vue'
+
 import Inquiry from '@/view/InquiryFrm.vue'
 
 import Test from '@/view/TestFrm.vue'
 
+import Column from '@/view/column/ColumnFrm.vue'
+import Update from '@/view/column/ToUpdate.vue'
 
+
+const AppLayout = (component) => {
+  let components = {
+    default: component,
+    user: User,
+    header: Nav,
+  }
+  return components
+}
 
 
 const routes = [
-  {path: '/', component: Home},
-  {path: '/comparison', component: Comparison},
-  {path: '/loginfrm', component: Login},
-  {path: '/registerfrm', component: Register},
-  {path: '/community', component: Community, name: 'community'},
+  {
+    path: '/',
+    components : AppLayout(Home)
+  },
+  {
+    path: '/comparison',
+    components: AppLayout(Comparison)
+  },
+  {
+    path: '/loginfrm',
+    components: {
+      default: Login,
+    },
+  },
+  {
+    path: '/registerfrm',
+    components: {
+      default: Register,
+    },
+  },
+  { path: '/inquiry', components: AppLayout(Inquiry) },
+  
+  { path: '/mypage', components: AppLayout(MyPage) },
+  { path: '/mypage/boards', components: AppLayout(MyPageBoards) },
+  { path: '/mypage/replies', components: AppLayout(MyPageReplies) },
+  { path: '/mypage/alerts', components: AppLayout(MyPageAlerts) },
+  { path: '/mypage/stores', components: AppLayout(MyPageStores) },
+  { path: '/mypage/store', components: AppLayout(MyPageStore) },
+  { path: '/cars', components: AppLayout(Cars) },
+  { path: '/car', components: AppLayout(Car) },
+  
+  { path: '/community', components: AppLayout(Community) },
+  { path: '/community/create', components: AppLayout(CreateNotice) },
+  { path: '/community/detail', components: AppLayout(DetailNotice), props: true },
+  { path: '/community/edit', components: AppLayout(EditNotice), },
+  { path: '/community/store', components: AppLayout(StoreCommunity)},
+  { path: '/community/store/detail', components: AppLayout(DetailStore), },
 
-  {path: '/mypage', component: MyPage},
-  {path: '/mypage/boards', component: MyPageBoards},
-  {path: '/mypage/replies', component: MyPageReplies},
-  {path: '/mypage/alerts', component: MyPageAlerts},
-  {path: '/mypage/stores', component: MyPageStores},
-  {path: '/mypage/store', component: MyPageStore},
-  {path: '/cars', component: Cars},
-  {path: '/car', component: Car},
+  { path: '/test', component: Test },
 
-  {path: '/cratenotice', component: CreateNotice},
-  {path: '/community/:bno', component: DetailNotice, name: 'detailnotice' , props:true},
-  {path: '/editnotice/:bno/Edit', component: EditNotice, name: 'editnotice'},
-  {path: '/inquiry', component: Inquiry},
-
-  {path: '/test', component: Test}
-
+  {path: '/column', components: AppLayout(Column), name: 'column'},
+  {path: '/update', components: AppLayout(Update), name: 'update'},
+  
 ]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
 })
 
 export default router

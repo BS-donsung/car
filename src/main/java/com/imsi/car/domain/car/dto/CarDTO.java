@@ -25,6 +25,14 @@ public class CarDto {
     private String segment;
     private String imgurl;
     private int cost;
+    private int length;
+    private int width;
+    private int height;
+    private int wheelBase;
+    private int frontThread;
+    private int rearTrhead;
+    private String frontSuspesion;
+    private String rearSuspension;
 
     private List<OptionDto> options;
     private List<ReviewDto> reviews;
@@ -42,6 +50,14 @@ public class CarDto {
         this.cost = car.getCost();
         this.options = carUtils.carOptionListToDtos(car.getCarOptions());
         this.reviews = carUtils.reviewListToReviewDtos(car.getReviews());
+        this.length = car.getLength();
+        this.width = car.getWidth();
+        this.height = car.getHeight();
+        this.wheelBase = car.getWheelBase();
+        this.frontThread = car.getFrontThread();
+        this.rearTrhead = car.getRearThread();
+        this.frontSuspesion = car.getFrontSuspension();
+        this.rearSuspension = car.getRearSuspension();
     }
 
     public Car toEntity(){

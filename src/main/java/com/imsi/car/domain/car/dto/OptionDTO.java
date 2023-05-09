@@ -45,7 +45,7 @@ public class OptionDto {
     }
     
     public OptionDto(CarOption carOption){
-        this.opk = carOption.getCopk();
+        this.opk = carOption.getOption().getOpk();
         this.oname = carOption.getOption().getOname();
         this.oimg = carOption.getOption().getOimg();
         this.oexpl = carOption.getOption().getOexpl();

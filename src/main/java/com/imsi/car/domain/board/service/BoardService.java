@@ -8,10 +8,12 @@ import com.imsi.car.domain.board.model.Board;
 
 public interface BoardService {
 
-    public BoardDto boardView(Long bno);
+    public BoardDto boardView(int bno);
 
     // page번째 게시물들 가져오기
-    public List<BoardDto> listBoardPage(int page);
+    public List<BoardDto> listBoardPage(int page, int type);
+
+    public List<BoardDto> newestBoard();
 
     // 게시물 검색. 메소드 안에서 댓글,제목,내용,아이디 검색 모두 구현
     public List<BoardDto> searchBoard(String keyword, int flag, int page);
@@ -20,13 +22,13 @@ public interface BoardService {
     public void writeBoard(BoardDto boardDto);
 
     // board 삭제
-    public void deleteBoard(Long bno);
+    public void deleteBoard(int bno);
 
     // board 수정
-    public void modifyBoard(Long bno, BoardDto boardDto);
+    public void modifyBoard(int bno, BoardDto boardDto);
 
     // public List<BoardDto> listMyPage(int page);
-    public BoardDto listMyPage(String username, int page);
+    public List<BoardDto> listMyPage(String username, int page);
 
 
 }

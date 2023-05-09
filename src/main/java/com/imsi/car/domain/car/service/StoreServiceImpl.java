@@ -2,6 +2,9 @@ package com.imsi.car.domain.car.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.imsi.car.domain.car.CarUtils;
@@ -35,15 +38,18 @@ public class StoreServiceImpl implements StoreService {
         return result;
     }
 
-    public StoreDto optionInfo(String cid) {
-        Car car = carRepo.findById(Integer.parseInt(cid));
-        StoreDto optionDto = StoreDto.builder()
-                .options(carUtils.carOptionListToDtos(car.getCarOptions()))
-                .carDto(new CarDto(car))
-                .build();
-
-        return optionDto;
+    public StoreDto optionInfo(String spk) {
+        Store store = storeRepo.findByStoreId(spk);
+        StoreDto storeDto = new StoreDto(store);
+        return storeDto;
     }
+
+    public StoreDto viewStore(String spk){
+        Store store = storeRepo.findByStoreId(spk);
+        StoreDto storeDto = new StoreDto(store);
+        return storeDto;
+    }
+
 
     public void storeUserOption(StoreDto storeDto) {
         Store store = storeDto.toEntity();
@@ -52,4 +58,15 @@ public class StoreServiceImpl implements StoreService {
         storeOptionRepo.saveAll(options);
 
     }
+
+    public List<StoreDto> listStorePage(int page){
+        Pageable pageable = PageRequest.of(page - 1,100, Sort.by("spk").descending());
+        List<Store> result = storeRepo.findAllPage(pageable);
+        return carUtils.storeListToStoreDtos(result);
+    }
+
+    public void deleteStore(StoreDto storeDto){
+        storeRepo.deleteById(storeDto.getSpk());
+    }
+
 }

@@ -1,15 +1,15 @@
 <template>
   <section class="container forms">
     <div class="form login">
-      <div class="logohome">
-        <router-link
-          to="/"
-          class="logo">
-          LOGO
+      <div class="logo">
+        <router-link to="/">
+          <img
+            src="@/components/img/logo2.png"
+            alt="" />
         </router-link>
       </div>
       <div class="form-content">
-        <header>Login</header>
+        <header>로그인</header>
 
         <form action="#">
           <div class="field input-field">
@@ -94,8 +94,7 @@ import router from '@/router'
 import { reactive } from 'vue'
 import { URL } from '@/components/global'
 import Cookies from 'js-cookie'
-
-
+// import axios from 'axios'
 
 const registerfrm = () => {
   alert('회원가입 하시겠습니까?')
@@ -109,7 +108,6 @@ const login_data = reactive({
 })
 
 const loginBtn = async () => {
-  console.log(login_data)
   const requestOptions = {
     method: 'POST',
     headers: {
@@ -125,10 +123,11 @@ const loginBtn = async () => {
     if(token === undefined){
       throw new Error('no token!!')
     }else{
-      router.push({ path: '/' })
+      window.location.href='http://localhost:8080/'
     }
   } catch (error) {
     alert('로그인에 실패했습니다', error)
+    console.log('error ',error)
   }
 }
 </script>
@@ -221,7 +220,7 @@ form {
   padding: 5px;
   font-size: 18px;
   color: #8b8b8b;
-  cursor: pointer;
+    sor: pointer;
 }
 
 .field button {

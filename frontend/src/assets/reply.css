@@ -1,6 +1,7 @@
 .wrap {
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   margin-top: 20px;
 }
@@ -55,24 +56,31 @@ textarea:focus {
   box-shadow: 0 0 10px -5px #bebebe;
 }
 
-.addBtn {
+.addreplyBtn {
   width: 100%;
   height: 30px;
-  margin-top: 20px;
-  padding-right: 20px;
+  margin-top: 12px;
+  padding-right: 15px;
+  font-size: 14px;
 }
 
-button {
+.rewrite,
+.replyedit {
   float: right;
   border: none;
   background: none;
   color: #bebebe;
   cursor: pointer;
-}
-
-.rewrite {
   margin-left: 10px;
 }
+.rewrite:hover
+.replyedit:hover {
+  color: black;
+}
+
+/* .rewrite {
+  margin-left: 10px;
+} */
 
 /* 댓글공간 */
 .reply-content {

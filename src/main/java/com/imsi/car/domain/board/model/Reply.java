@@ -18,6 +18,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -25,34 +26,30 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-@Getter
+@Data
 @Entity
-@ToString(exclude = { "board",  "user" })
+@ToString(exclude = { "board", "user" })
 public class Reply extends BaseTimeEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long rno;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int rno;
 
-  private String text;
+    private String text;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JsonIgnore // 무한참조 방지코드
-  @JoinColumn(name = "parent")
-  private Reply parent;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "parent")
+    private Reply parent;
 
-  @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST }, orphanRemoval = false)
-  @JsonIgnore // 무한참조 방지코드
-  private List<Reply> child = new ArrayList<>();
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST }, orphanRemoval = false)
+    private List<Reply> child = new ArrayList<>();
 
-  // 유저, 보드를 직렬화에서 제외한 것을 취소함
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "user")
-  // @JsonBackReference(value = "user-replies")
-  private User user;
+    // 유저, 보드를 직렬화에서 제외한 것을 취소함
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user")
+    private User user;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = true)
-  @JoinColumn(name = "board")
-  @JsonBackReference // 무한 참조 방지용
-  private Board board;
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "board")
+    private Board board;
 
 }

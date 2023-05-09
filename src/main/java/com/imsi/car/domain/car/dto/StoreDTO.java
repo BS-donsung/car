@@ -18,23 +18,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StoreDto {
+    private int spk;
     private CarDto carDto;
     private String user; // 이건 user 테이블의 name, user의 아이디를 통해 어떤 유저가 이걸 저장했는지를 알려줌
     private List<OptionDto> options; 
 
-    @Autowired
-    private CarUtils carUtils;
-
 
     public StoreDto (Store store){
+        CarUtils carUtils = new CarUtils();
+        this.spk = store.getSpk();
         // .options(storeOptionListToDtos(store.getStoreOptions())) 
         this.carDto = new CarDto(store.getCar());
         this.user = store.getUser().getUsername();
-        this.options = null;
+        this.options = carUtils.storeOptionListToDtos(store.getStoreOptions());
     }
 
     public Store toEntity(){
         Store store = Store.builder()
+        .spk(this.spk)
         .car(this.carDto.toEntity())
         .user(User.builder().username(this.user).build())
         .build();

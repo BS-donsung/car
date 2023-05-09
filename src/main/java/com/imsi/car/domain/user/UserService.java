@@ -10,5 +10,7 @@ public interface UserService {
     public boolean isDupUser(User user);
 
     public UserDto findUserByUsername(String username);
+
+    public UserDto saveNickname(UserDto userDto);
     
 }
